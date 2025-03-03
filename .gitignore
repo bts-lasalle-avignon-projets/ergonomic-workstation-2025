@@ -1,0 +1,11 @@
+#Base de données locale (éviter d’ajouter des données sensibles)
+database/*.sqlite
+database/*.sql.bak
+
+#Fichiers de configuration utilisateur
+.vscode/
+
+#Fichiers compilés de Qt
+*.o
+*.exe
+*.a
