@@ -21,19 +21,19 @@ Le projet est structuré en **deux modules principaux** :
 
 ## Recette
 
-| **Module**            | **Étape**                                      | **A faire**      | **En Cours** | **Terminé** |
+| **Module**            | **Étape**                                      | **A faire**  | **En Cours** | **Terminé** |
 |-----------------------|------------------------------------------------|--------------|--------------|-------------|
 | **Création (IR1)**    |                                                |              |              |             |
-|                       | Créer un processus                             |              | 🔄 En cours  |             |
-|                       | Produire des séquences d'opération             | ⏳ À faire   |              |             |
-|                       | Partager un processus                          | ⏳ À faire   |              |             |
-|                       | Visualiser les statistiques                    | ⏳ À faire   |              |             |
+|                       | Créer un processus                             |              |       X      |             |
+|                       | Produire des séquences d'opération             |       X      |              |             |
+|                       | Partager un processus                          |       X      |              |             |
+|                       | Visualiser les statistiques                    |       X      |              |             |
 | **Guidage (IR2)**     |                                                |              |              |             |
-|                       | Affichage des étapes                           |              | 🔄 En cours  |             |
-|                       | Validation des étapes par l'opérateur          | ⏳ À faire   |              |             |
-|                       | Enregistrement de la progression               | ⏳ À faire   |              |             |
-|                       | Connexion au backend pour récupérer les données| ⏳ À faire   |              |             |
-|                       | Interaction avec la base de données            | ⏳ À faire   |              |             |
+|                       | Affichage des étapes                           |              |       X      |             |
+|                       | Validation des étapes par l'opérateur          |       X      |              |             |
+|                       | Enregistrement de la progression               |       X      |              |             |
+|                       | Connexion au backend pour récupérer les données|       X      |              |             |
+|                       | Interaction avec la base de données            |       X      |              |             |
 
 
 
