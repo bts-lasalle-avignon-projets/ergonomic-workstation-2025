@@ -1,4 +1,4 @@
-# ergonomic-workstation-2025
+# Ergonomic-Workstation-2025
 
 - [Projet: ergonomic-workstation](#ergonomic-workstation-2025)
   - [Présentation](#présentation)
@@ -59,7 +59,20 @@ Le projet est structuré en **deux modules principaux** :
   - [ ] Gérer les erreurs
   - [ ] Sauvegarder la progression de l’opérateur
 
-## Diagramme de cas d'utilisation
+## Diagramme de Cas d'Utilisation
+### Module de Création
+![diagrammeCasUtilisationCreation](docs/diagramme/diagrammeCasUtilisationModuleCreation.png)
+
+### Module de Guidage
+![diagrammeCasUtilisationGuidage](docs/diagramme/diagrammeCasUtilisationModuleGuidage.png)
+
+## Diagramme de Séquence
+### Module de Création
+![diagrammeSequenceCreation](docs/diagramme/diagrammeSequenceModuleCreation.png)
+
+### Module de Guidage
+
+![diagrammeSequenceGuidage](docs/diagramme/diagrammeSequenceModuleGuidage.png)
 
 ## Équipe de développement
 
