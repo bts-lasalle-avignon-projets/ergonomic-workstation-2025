@@ -41,21 +41,27 @@ $processus = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </head>
     <body>
         <h2>Ajouter une étape</h2>
-        <form action="ajouterEtape.php" method="POST" enctype="multipart/form-data">
-            <label for="idProcessus">Processus :</label>
+        <form action="../backend/creation/ajouterEtape.php" method="POST" enctype="multipart/form-data">
+            <label for="processus">Sélectionner un processus :</label>
             <select name="idProcessus" required>
-                <?php foreach ($processus as $p) : ?>
-                    <option value="<?= $p['idProcessus'] ?>"><?= htmlspecialchars($p['nom']) ?></option>
-                <?php endforeach; ?>
+                <?php
+                require_once "../backend/creation/connectionDB.php";
+                $sql = "SELECT idProcessus, nom FROM Processus";
+                $stmt = $pdo->query($sql);
+                while ($processus = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value='{$processus['idProcessus']}'>{$processus['nom']}</option>";
+                }
+                ?>
             </select>
 
-            <label for="texte">Texte de l’étape :</label>
+            <label for="texte">Texte de l'étape :</label>
             <textarea name="texte" required></textarea>
 
             <label for="image">Image :</label>
             <input type="file" name="image" accept="image/*">
 
-            <button type="submit">Ajouter l’étape</button>
-        </form>    
+            <button type="submit">Ajouter l'étape</button>
+        </form>
+   
     </body>
 </html>

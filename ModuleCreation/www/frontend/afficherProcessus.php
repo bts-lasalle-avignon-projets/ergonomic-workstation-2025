@@ -19,6 +19,7 @@ try {
     <?php foreach ($processus as $p): ?>
         <tr>
             <td><a href="./frontend/formulaireEtape.php?idProcessus=<?= urlencode($p['idProcessus']) ?>"><?= htmlspecialchars($p['nom']) ?></a></td>
+            <td><a href="./frontend/afficherEtape.php?idProcessus=<?= urlencode($p['idProcessus']) ?>">Voir les Etapes</a></td>
         </tr>
     <?php endforeach; ?>
 </table>

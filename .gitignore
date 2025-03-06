@@ -5,6 +5,8 @@ database/*.sql.bak
 #Fichiers de configuration utilisateur
 .vscode/
 
+ModuleCreation/www/images
+
 #Fichiers compilés de Qt
 *.o
 *.exe
