@@ -8,3 +8,13 @@ CREATE TABLE IF NOT EXISTS Processus (
     nom VARCHAR(255) NOT NULL,
     dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Table Etapes
+CREATE TABLE IF NOT EXISTS Etapes (
+    idEtape INT AUTO_INCREMENT PRIMARY KEY,
+    idProcessus INT NOT NULL,
+    texte TEXT NOT NULL,
+    image VARCHAR(255) DEFAULT NULL,
+    ordre INT NOT NULL,
+    FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
+);
