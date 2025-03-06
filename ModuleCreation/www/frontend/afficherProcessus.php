@@ -3,7 +3,7 @@ require_once "./backend/creation/connectionDB.php"; // Inclure la connexion à l
 
 try {
     // Requête pour récupérer tous les processus
-    $sql = "SELECT nom FROM Processus";
+    $sql = "SELECT idProcessus, nom FROM Processus";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $processus = $stmt->fetchAll(PDO::FETCH_ASSOC); // Récupérer les résultats sous forme de tableau associatif
@@ -18,7 +18,7 @@ try {
     </tr>
     <?php foreach ($processus as $p): ?>
         <tr>
-            <td><a href="./backend/creation/traiterProcessus.php?nom=<?= urlencode($p['nom']) ?>"><?= htmlspecialchars($p['nom']) ?></a></td>
+            <td><a href="./frontend/formulaireEtape.php?idProcessus=<?= urlencode($p['idProcessus']) ?>"><?= htmlspecialchars($p['nom']) ?></a></td>
         </tr>
     <?php endforeach; ?>
 </table>
