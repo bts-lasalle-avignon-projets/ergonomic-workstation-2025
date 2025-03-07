@@ -1,6 +1,6 @@
 <?php
-require_once './connectionDB.php';
-require_once './class/Processus.php';
+require_once './connectionDB.inc.php';
+require_once './class/Processus.class.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["nom"])) {
     $nom = trim($_POST["nom"]);

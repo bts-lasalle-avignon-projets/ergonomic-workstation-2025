@@ -1,5 +1,5 @@
 <?php
-require_once "../backend/creation/connectionDB.php";
+require_once "../backend/creation/connectionDB.inc.php";
 
 if (isset($_GET['idProcessus'])) {
     // Vérifier et valider l'ID

@@ -1,5 +1,5 @@
 <?php
-require_once "./backend/creation/connectionDB.php"; // Inclure la connexion à la BDD
+require_once "./backend/creation/connectionDB.inc.php"; // Inclure la connexion à la BDD
 
 try {
     // Requête pour récupérer tous les processus
