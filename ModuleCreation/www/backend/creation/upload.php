@@ -1,1 +1,0 @@
-<!--Gestion de l'upload d'images-->

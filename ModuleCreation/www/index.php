@@ -1,18 +1,28 @@
-<!--INDEX-->
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Gestion des Processus</title>
-        <link rel="stylesheet" href="#">
-        
-        </script>
-    </head>
-    <body>
+<?php
+// Start Session
+session_start();
 
-        <h1>Créer un Processus</h1>
-        <?php require_once('./frontend/formulaireProcessus.php'); ?>
-        <?php require_once('./frontend/afficherProcessus.php'); ?>    
+// Include Config
+require('config.php');
 
-    </body>
-</html>
+require('classes/messages.php');
+require('classes/bootstrap.php');
+require('classes/controller.php');
+require('classes/model.php');
+
+require('controllers/home.php');
+require('controllers/shares.php');
+require('controllers/users.php');
+
+require('models/home.php');
+require('models/share.php');
+require('models/user.php');
+
+$bootstrap = new Bootstrap($_GET); // Get all url parameters
+$controller = $bootstrap->createController();
+
+if($controller){
+	$controller->executeAction();
+}
+
+?>
