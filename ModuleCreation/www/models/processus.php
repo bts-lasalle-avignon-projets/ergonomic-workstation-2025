@@ -4,13 +4,23 @@ class ProcessusModel extends Model
 {
 	public function index()
 	{
-		$this->query("SELECT idProcessus, nomProcessus, dateCreation FROM Processus ORDER BY dateCreation DESC");
+		$this->query("
+			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage
+			FROM Processus p
+			ORDER BY p.dateCreation
+		");
+		
 		$processus = $this->resultSet();
 
-		foreach ($processus as &$process) {
-			$this->query("SELECT contenuBlob, typeMIME FROM Image i LEFT JOIN Processus p p.idImage = i.idImage LIMIT 1");
-			$imageData = $this->single();
-			$process['image'] = $imageData ? $imageData : null; 
+		foreach ($processus as &$p) {
+			if (!empty($p['idImage'])) {  // Vérifier si une image est associée
+				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
+				$this->bind(':idImage', $p['idImage']);
+				$imageData = $this->single();
+				$p['image'] = $imageData ? $imageData : null;
+			} else {
+				$p['image'] = null; // Aucune image associée
+			}
 		}
 
 		return $processus;
