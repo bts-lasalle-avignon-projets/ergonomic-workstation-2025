@@ -43,7 +43,31 @@ class ProcessusModel extends Model
         }
     }
 
-	
+	    private function ajouterImage($idProcessus, $typeImage)
+    {
+        $nomFichier = $_FILES['image']['name'];
+        $typeMIME = $_FILES['image']['type'];
+        $tailleImage = $_FILES['image']['size'];
+        $contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+
+        $typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($typeMIME, $typesAutorises)) {
+            Message::afficher("Format d'image non autorisé !", "erreur");
+            return;
+        }
+
+        $this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage, idProcessus, typeImage) 
+                      VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage, :idProcessus, :typeImage)");
+
+        $this->bind(':nomFichier', $nomFichier);
+        $this->bind(':typeMIME', $typeMIME);
+        $this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+        $this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+        $this->bind(':idProcessus', $idProcessus, PDO::PARAM_INT);
+        $this->bind(':typeImage', $typeImage);
+
+        $this->execute();
+    }
 
 	public function edit() {}
 
