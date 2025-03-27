@@ -10,12 +10,8 @@ class Processus extends Controller
 
 	protected function add()
 	{
-		if (!isset($_SESSION['is_logged_in'])) {
-			header('Location: ' . URL_PATH . 'shares');
-		} else {
-			$viewmodel = new ProcessusModel();
-			$this->returnView($viewmodel->add(), true);
-		}
+		$viewmodel = new ProcessusModel();
+		$this->returnView($viewmodel->add(), true);
 	}
 
 	protected function edit()
