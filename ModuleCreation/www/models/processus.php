@@ -8,8 +8,7 @@ class ProcessusModel extends Model
 		$processus = $this->resultSet();
 
 		foreach ($processus as &$process) {
-			$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idProcessus = :idProcessus LIMIT 1");
-			$this->bind(':idProcessus', $process['idProcessus']);
+			$this->query("SELECT contenuBlob, typeMIME FROM Image i LEFT JOIN Processus p p.idImage = i.idImage LIMIT 1");
 			$imageData = $this->single();
 			$process['image'] = $imageData ? $imageData : null; 
 		}
@@ -17,57 +16,64 @@ class ProcessusModel extends Model
 		return $processus;
 	}
 
-    public function add()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-            $titre = trim($_POST['title']);
+	public function add()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+			$titre = trim($_POST['title']);
 
-            if (empty($titre)) {
-                Message::afficher("Le titre est requis !", "erreur");
-                return;
-            }
+			if (empty($titre)) {
+				Message::afficher("Le titre est requis !", "erreur");
+				return;
+			}
 
-            try {
-                $this->query("INSERT INTO Processus (nomProcessus) VALUES (:nomProcessus)");
-                $this->bind(':nomProcessus', $titre);
-                $this->execute();
-                $idProcessus = $this->lastInsertId();
+			try {
+				$idImage = null;
 
-                if (!empty($_FILES['image']['name'])) {
-                    $this->ajouterImage($idProcessus, 'processus');
-                }
-                exit;
-            } catch (PDOException $e) {
-                Message::afficher("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
-            }
-        }
-    }
+				if (!empty($_FILES['image']['name'])) {
+					$idImage = $this->ajouterImage(); // Ajoute l'image et récupère son ID
+				}
 
-	    private function ajouterImage($idProcessus, $typeImage)
-    {
-        $nomFichier = $_FILES['image']['name'];
-        $typeMIME = $_FILES['image']['type'];
-        $tailleImage = $_FILES['image']['size'];
-        $contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+				// Insérer le processus avec idImage (NULL si pas d'image)
+				$this->query("INSERT INTO Processus (nomProcessus, idImage) VALUES (:nomProcessus, :idImage)");
+				$this->bind(':nomProcessus', $titre);
+				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+				$this->execute();
 
-        $typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
-        if (!in_array($typeMIME, $typesAutorises)) {
-            Message::afficher("Format d'image non autorisé !", "erreur");
-            return;
-        }
+				Message::afficher("Processus ajouté avec succès !", "success");
 
-        $this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage, idProcessus, typeImage) 
-                      VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage, :idProcessus, :typeImage)");
+			} catch (PDOException $e) {
+				Message::afficher("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
+			}
+		}
+	}
 
-        $this->bind(':nomFichier', $nomFichier);
-        $this->bind(':typeMIME', $typeMIME);
-        $this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
-        $this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
-        $this->bind(':idProcessus', $idProcessus, PDO::PARAM_INT);
-        $this->bind(':typeImage', $typeImage);
+	private function ajouterImage()
+	{
+		$nomFichier = $_FILES['image']['name'];
+		$typeMIME = $_FILES['image']['type'];
+		$tailleImage = $_FILES['image']['size'];
+		$contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
 
-        $this->execute();
-    }
+		$typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+		if (!in_array($typeMIME, $typesAutorises)) {
+			Message::afficher("Format d'image non autorisé !", "erreur");
+			return null;
+		}
+
+		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+		$this->bind(':nomFichier', $nomFichier);
+		$this->bind(':typeMIME', $typeMIME);
+		$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+		$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+		$this->execute();
+
+		$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
+		$this->bind(':nomFichier', $nomFichier);
+		$image = $this->single();
+
+		return $image['idImage'] ?? null;
+	}
 
 	public function edit() {}
 
