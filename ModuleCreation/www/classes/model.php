@@ -20,7 +20,11 @@ abstract class Model
 	public function __construct()
 	{
 		if (DB_DRIVER) {
-			$this->dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+			if (!in_array("PDO", get_loaded_extensions()))
+				die("L’extension PDO n’est pas présente !<br><br>");
+			if (!in_array("pdo_mysql", get_loaded_extensions()))
+				die("L’extension pdo_mysql n’est pas présente !<br><br>");
+			$this->dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS) or die("Echec de la création de l’instance PDO !");
 		}
 	}
 
