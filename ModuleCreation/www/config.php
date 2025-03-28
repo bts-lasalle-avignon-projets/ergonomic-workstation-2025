@@ -3,6 +3,9 @@
 // Pour le debug
 define("DEBUG", false);
 
+// Pour les tests
+define("NO_LOGIN", true);
+
 // Pour la base de données
 define("DB_DRIVER", true); // true pour MySQL, false sans base de données
 define("DB_HOST", "127.0.0.1");

@@ -12,7 +12,7 @@
 				<label for='image'>Image :</label>
 				<input type='file' name='image' accept='image/*'>
 			</div>
-			<input class="btn btn-primary" name="submit" type="submit" value="Submit" />
+			<input class="btn btn-primary" name="submit" type="submit" value="Envoyer" />
 			<a class="btn btn-danger" href="<?php echo ROOT_PATH; ?>processus">Annuler</a>
 		</form>
 	</div>
