@@ -5,5 +5,11 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_DATABASE: 'ergonomic_workstation'
+            MYSQL_USER: 'ergoWork'
+            MYSQL_PASSWORD: 'password'
         ports:
             - 3306:3306
+        volumes:
+            - bdd:/var/lib/mysql
+volumes:
+    bdd:
