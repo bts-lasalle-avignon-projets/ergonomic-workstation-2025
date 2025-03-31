@@ -17,7 +17,7 @@
 				<input type="text" name="link" class="form-control" id="link" value="<?php echo $viewmodel['link']; ?>" />
 			</div>
 			<input type="hidden" name="id" value="<?php echo $viewmodel['id']; ?>" />
-			<input class="btn btn-primary" name="submit" type="submit" value="Update" />
+			<input class="btn btn-primary" name="submit" type="submit" value="Envoyer" />
 			<a class="btn btn-danger" href="<?php echo ROOT_PATH; ?>processus">Annuler</a>
 		</form>
 	</div>
