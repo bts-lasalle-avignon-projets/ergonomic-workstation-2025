@@ -14,8 +14,8 @@
  */
 abstract class Model
 {
-	protected $dbh = null;
-	protected $stmt;
+	protected $dbh = null; // ?PDO
+	protected $stmt; // PDOStatement
 
 	public function __construct()
 	{

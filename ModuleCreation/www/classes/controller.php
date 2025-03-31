@@ -14,8 +14,8 @@
  */
 abstract class Controller
 {
-	protected $request;
-	protected $action;
+	protected $request; // array
+	protected $action; // string
 
 	public function __construct($action, $request)
 	{

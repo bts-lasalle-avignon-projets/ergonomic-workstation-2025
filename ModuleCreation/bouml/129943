@@ -1,0 +1,70 @@
+format 224
+"Processus" // www::views::Processus
+  revision 1
+  modified_by 23 "tvaira"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/views/Processus/"
+  deploymentview 129943 "Processus"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 132375 "edit"
+      stereotype "source"
+      php_src "<div class=\"card col col-lg-5 mx-3 mx-lg-auto p-0\">
+	<div class=\"card-header\">
+		<h3 class=\"card-title\">Editer processus</h3>
+	</div>
+	<div class=\"card-body\">
+		<form method=\"post\" action=\"<?php $_SERVER['PHP_SELF']; ?>\">
+			<div class=\"form-group\">
+				<label for=\"title\">Titre</label>
+				<input type=\"text\" name=\"title\" class=\"form-control\" id=\"title\" value=\"<?php echo $viewmodel['title']; ?>\" />
+			</div>
+			<div class=\"form-group\">
+				<label for=\"body\">Description</label>
+				<textarea name=\"body\" class=\"form-control\" id=\"body\"><?php echo $viewmodel['body']; ?>"
+      associated_elems
+      end
+    end
+
+    artifact 132503 "index"
+      stereotype "source"
+      php_src "<div class=\"col-12\">
+		<a class=\"btn btn-primary btn-share mt-0\" href=\"<?php echo ROOT_PATH; ?>processus/add\">Ajouter processus</a>
+	<?php foreach ($viewmodel as $item) : ?>
+		<div class=\"card mb-4\">
+			<h3 class=\"card-header\"><?php echo $item['nomProcessus']; ?></h3>
+			<div class=\"card-body\">
+				<small class=\"card-subtitle\"><?php echo $item['dateCreation']; ?>"
+      associated_elems
+      end
+    end
+  end
+end
