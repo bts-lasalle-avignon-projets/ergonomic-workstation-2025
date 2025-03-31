@@ -1,7 +1,7 @@
 format 224
 "classes" // www::classes
-  revision 2
-  modified_by 23 "tvaira"
+  revision 5
+  modified_by 42 "tv"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -30,36 +30,52 @@ format 224
   activitydiagramsettings
    end
   
-  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/classes/"
+  php_dir "./classes/"
   deploymentview 129175 "classes"
     //deployment diagram settings
     deploymentdiagramsettings
      end
     artifact 130583 "controller"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 129431 // Controller
       end
     end
 
     artifact 130711 "message"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 129559 // Message
       end
     end
 
     artifact 130839 "messages"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 129687 // Messages
       end
     end
 
     artifact 130967 "model"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 129815 // Model
       end
     end
 
@@ -92,7 +108,7 @@ format 224
     activitydiagramsettings
      end
     class 129431 "Controller"
-      visibility package 
+      abstract visibility package 
       cpp_decl ""
       java_decl ""
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -139,7 +155,7 @@ ${members}}
 	comment " array"
       end
 
-      operation 1073175 "__construct"
+      operation 144298 "__construct"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "action" explicit_type ""
@@ -155,7 +171,7 @@ ${members}}
 	comment " string"
       end
 
-      operation 1073303 "executeAction"
+      operation 144426 "executeAction"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -168,51 +184,7 @@ ${members}}
 	
       end
 
-      operation 1073431 "returnView"
-	protected explicit_return_type ""
-	nparams 2
-	  param in name "viewmodel" explicit_type ""
-	  param in name "fullview" explicit_type ""
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 129943 "__construct"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "action" explicit_type ""
-	  param in name "request" explicit_type ""
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
-{
-  ${body}}
-"
-	
-	
-	comment " string"
-      end
-
-      operation 130071 "executeAction"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130199 "returnView"
+      operation 144554 "returnView"
 	protected explicit_return_type ""
 	nparams 2
 	  param in name "viewmodel" explicit_type ""
@@ -240,22 +212,7 @@ ${members}}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 1073559 "afficher"
-	class_operation public explicit_return_type ""
-	nparams 2
-	  param in name "message" explicit_type ""
-	  param in name "type" explicit_type ""
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130327 "afficher"
+      operation 134954 "afficher"
 	class_operation public explicit_return_type ""
 	nparams 2
 	  param in name "message" explicit_type ""
@@ -283,7 +240,7 @@ ${members}}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 1073687 "setMsg"
+      operation 135082 "setMsg"
 	class_operation public explicit_return_type ""
 	nparams 2
 	  param in name "text" explicit_type ""
@@ -298,35 +255,7 @@ ${members}}
 	
       end
 
-      operation 1073815 "display"
-	class_operation public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130455 "setMsg"
-	class_operation public explicit_return_type ""
-	nparams 2
-	  param in name "text" explicit_type ""
-	  param in name "type" explicit_type ""
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130583 "display"
+      operation 135210 "display"
 	class_operation public explicit_return_type ""
 	nparams 0
 	
@@ -341,7 +270,7 @@ ${members}}
     end
 
     class 129815 "Model"
-      visibility package 
+      abstract visibility package 
       cpp_decl ""
       java_decl ""
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -389,7 +318,7 @@ ${members}}
 	comment " ?PDO"
       end
 
-      operation 1073943 "__construct"
+      operation 135338 "__construct"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -403,7 +332,7 @@ ${members}}
 	comment " PDOStatement"
       end
 
-      operation 1074071 "query"
+      operation 135466 "query"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "query" explicit_type ""
@@ -417,7 +346,7 @@ ${members}}
 	
       end
 
-      operation 1074199 "bind"
+      operation 135594 "bind"
 	public explicit_return_type ""
 	nparams 3
 	  param in name "param" explicit_type ""
@@ -434,7 +363,7 @@ ${members}}
 	
       end
 
-      operation 1074327 "execute"
+      operation 135722 "execute"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -447,7 +376,7 @@ ${members}}
 	
       end
 
-      operation 1074455 "resultSet"
+      operation 135850 "resultSet"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -460,7 +389,7 @@ ${members}}
 	
       end
 
-      operation 1074583 "single"
+      operation 135978 "single"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -473,7 +402,7 @@ ${members}}
 	
       end
 
-      operation 1074711 "countSet"
+      operation 136106 "countSet"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -486,117 +415,7 @@ ${members}}
 	
       end
 
-      operation 1074839 "lastInsertId"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130711 "__construct"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-	comment " PDOStatement"
-      end
-
-      operation 130839 "query"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "query" explicit_type ""
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 130967 "bind"
-	public explicit_return_type ""
-	nparams 3
-	  param in name "param" explicit_type ""
-	  param in name "value" explicit_type ""
-	  param in name "type" explicit_type ""
-	    defaultvalue "null"
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 131095 "execute"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 131223 "resultSet"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 131351 "single"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 131479 "countSet"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 131607 "lastInsertId"
+      operation 136234 "lastInsertId"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -662,10 +481,10 @@ ${members}}
       operation 131735 "__construct"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "request" explicit_type ""
+	  param in name "request" explicit_type "array"
 	
 	
-	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}${)}${type}
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${t0} ${p0}${v0}${)}${type}
 {
   ${body}}
 "

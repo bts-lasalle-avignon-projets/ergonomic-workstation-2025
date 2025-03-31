@@ -1,5 +1,5 @@
 class Processus
-!!!1075479.php!!!	__construct(in action : , in request : )
+!!!1075479.php!!!	__construct(in action : string, in request : array)
 		parent::__construct($action, $request);
 		$this->viewmodel = new ProcessusModel();
 !!!1075607.php!!!	index()
@@ -35,58 +35,6 @@ class Processus
 			}
 		}
 !!!1075991.php!!!	delete()
-		if (!empty($this->request['id'])) {
-			$this->id = $this->request['id'];
-		} else {
-			header('Location: ' . URL_PATH . 'processus');
-		}
-		if (NO_LOGIN) {
-			//$viewmodel = new ProcessusModel();
-			$this->returnView($this->viewmodel->delete(), true);
-		} else {
-			if (!isset($_SESSION['is_logged_in'])) {
-				header('Location: ' . URL_PATH . 'processus');
-			} else {
-				//$viewmodel = new ProcessusModel();
-				$this->returnView($this->viewmodel->delete(), true);
-			}
-		}
-!!!1066647.php!!!	__construct(in action : , in request : )
-		parent::__construct($action, $request);
-		$this->viewmodel = new ProcessusModel();
-!!!132503.php!!!	index()
-		//$viewmodel = new ProcessusModel();
-		$this->returnView($this->viewmodel->index(), true);
-!!!132631.php!!!	add()
-		if (NO_LOGIN) {
-			//$viewmodel = new ProcessusModel();
-			$this->returnView($this->viewmodel->add(), true);
-		} else {
-			if (!isset($_SESSION['is_logged_in'])) {
-				header('Location: ' . URL_PATH . 'processus');
-			} else {
-				//$viewmodel = new ProcessusModel();
-				$this->returnView($this->viewmodel->add(), true);
-			}
-		}
-!!!132759.php!!!	edit()
-		if (!empty($this->request['id'])) {
-			$this->id = $this->request['id'];
-		} else {
-			header('Location: ' . URL_PATH . 'processus');
-		}
-		if (NO_LOGIN) {
-			//$viewmodel = new ProcessusModel();
-			$this->returnView($this->viewmodel->edit(), true);
-		} else {
-			if (!isset($_SESSION['is_logged_in'])) {
-				header('Location: ' . URL_PATH . 'processus');
-			} else {
-				//$viewmodel = new ProcessusModel();
-				$this->returnView($this->viewmodel->edit(), true);
-			}
-		}
-!!!132887.php!!!	delete()
 		if (!empty($this->request['id'])) {
 			$this->id = $this->request['id'];
 		} else {

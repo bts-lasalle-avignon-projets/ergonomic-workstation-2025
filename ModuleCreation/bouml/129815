@@ -1,7 +1,7 @@
 format 224
 "Accueil" // www::views::Accueil
-  revision 1
-  modified_by 23 "tvaira"
+  revision 2
+  modified_by 42 "tv"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -30,7 +30,7 @@ format 224
   activitydiagramsettings
    end
   
-  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/views/Accueil/"
+  php_dir "./views/Accueil/"
   deploymentview 129815 "Accueil"
     //deployment diagram settings
     deploymentdiagramsettings

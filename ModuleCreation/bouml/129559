@@ -1,7 +1,7 @@
 format 224
 "models" // www::models
-  revision 2
-  modified_by 23 "tvaira"
+  revision 3
+  modified_by 42 "tv"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -30,29 +30,41 @@ format 224
   activitydiagramsettings
    end
   
-  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/models/"
+  php_dir "./models/"
   deploymentview 129559 "models"
     //deployment diagram settings
     deploymentdiagramsettings
      end
     artifact 131735 "accueil"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 130455 // AccueilModel
       end
     end
 
     artifact 131863 "operateur"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 130583 // OperateurModel
       end
     end
 
     artifact 131991 "processus"
       stereotype "source"
-      php_src "<?php"
+      php_src "<?php
+${definition}
+
+"
       associated_elems
+	class_ref 130711 // ProcessusModel
       end
     end
   end
@@ -97,7 +109,7 @@ ${members}}
 	  b parent class_ref 129815 // Model
       end
 
-      operation 1076119 "index"
+      operation 136874 "index"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -110,18 +122,6 @@ ${members}}
 	
       end
 
-      operation 133015 "index"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
     end
 
     class 130583 "OperateurModel"
@@ -144,7 +144,7 @@ ${members}}
 	  b parent class_ref 129815 // Model
       end
 
-      operation 1076247 "register"
+      operation 137002 "register"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -157,7 +157,7 @@ ${members}}
 	
       end
 
-      operation 1076375 "login"
+      operation 137130 "login"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -170,31 +170,6 @@ ${members}}
 	
       end
 
-      operation 133143 "register"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 133271 "login"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
     end
 
     class 130711 "ProcessusModel"
@@ -217,7 +192,7 @@ ${members}}
 	  b parent class_ref 129815 // Model
       end
 
-      operation 1076503 "index"
+      operation 137258 "index"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -230,7 +205,7 @@ ${members}}
 	
       end
 
-      operation 1076631 "add"
+      operation 137386 "add"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -243,7 +218,7 @@ ${members}}
 	
       end
 
-      operation 1076759 "ajouterImage"
+      operation 137514 "ajouterImage"
 	private explicit_return_type ""
 	nparams 0
 	
@@ -256,7 +231,7 @@ ${members}}
 	
       end
 
-      operation 1076887 "edit"
+      operation 137642 "edit"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -269,7 +244,7 @@ ${members}}
 	
       end
 
-      operation 1077015 "delete"
+      operation 137770 "delete"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -282,70 +257,6 @@ ${members}}
 	
       end
 
-      operation 133399 "index"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 133527 "add"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 133655 "ajouterImage"
-	private explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 133783 "edit"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 133911 "delete"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
     end
   end
 end

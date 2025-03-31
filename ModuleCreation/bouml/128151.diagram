@@ -22,7 +22,7 @@ classcanvas 128919 class_ref 130199 // Operateurs
 end
 classcanvas 129175 class_ref 130711 // ProcessusModel
   classdiagramsettings member_max_width 0 end
-  xyz 896 422 2006
+  xyz 1049 451 2006
 end
 classcanvas 130071 class_ref 130327 // Processus
   classdiagramsettings member_max_width 0 end
@@ -30,7 +30,7 @@ classcanvas 130071 class_ref 130327 // Processus
 end
 relationcanvas 129431 relation_ref 129559 // <unidirectional association>
   from ref 128279 z 2001 to ref 128023
-  role_a_pos 260 106 3000 no_role_b
+  role_a_pos 239 92 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129687 relation_ref 136087 // <generalisation>
@@ -55,7 +55,7 @@ relationcanvas 130199 relation_ref 136343 // <generalisation>
 end
 relationcanvas 130327 relation_ref 136855 // <unidirectional association>
   from ref 130071 z 2007 to ref 129175
-  role_a_pos 816 503 3000 no_role_b
+  role_a_pos 945 491 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

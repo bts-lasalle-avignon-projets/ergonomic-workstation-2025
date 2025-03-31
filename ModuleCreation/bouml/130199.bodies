@@ -1,23 +1,11 @@
 class Operateurs
-!!!1075095.php!!!	register()
+!!!136490.php!!!	register()
 		$viewmodel = new OperateurModel();
 		$this->returnView($viewmodel->register(), true);
-!!!1075223.php!!!	login()
+!!!136618.php!!!	login()
 		$viewmodel = new OperateurModel();
 		$this->returnView($viewmodel->login(), true);
-!!!1075351.php!!!	logout()
-		unset($_SESSION['is_logged_in']);
-		unset($_SESSION['user_data']);
-		session_destroy();
-		// Redirect
-		header('Location: ' . URL_PATH);
-!!!132119.php!!!	register()
-		$viewmodel = new OperateurModel();
-		$this->returnView($viewmodel->register(), true);
-!!!132247.php!!!	login()
-		$viewmodel = new OperateurModel();
-		$this->returnView($viewmodel->login(), true);
-!!!132375.php!!!	logout()
+!!!136746.php!!!	logout()
 		unset($_SESSION['is_logged_in']);
 		unset($_SESSION['user_data']);
 		session_destroy();
