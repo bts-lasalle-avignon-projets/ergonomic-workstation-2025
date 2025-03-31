@@ -4,12 +4,13 @@ class ProcessusModel extends Model
 {
 	public function index()
 	{
+		echo 'index<br>';
 		$this->query("
 			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage
 			FROM Processus p
 			ORDER BY p.dateCreation
 		");
-		
+
 		$processus = $this->resultSet();
 
 		foreach ($processus as &$p) {
@@ -28,6 +29,8 @@ class ProcessusModel extends Model
 
 	public function add()
 	{
+		echo 'add<br>';
+		var_dump($_POST);
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 			$titre = trim($_POST['title']);
 
@@ -50,7 +53,6 @@ class ProcessusModel extends Model
 				$this->execute();
 
 				Message::afficher("Processus ajouté avec succès !", "success");
-
 			} catch (PDOException $e) {
 				Message::afficher("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
 			}

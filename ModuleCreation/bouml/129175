@@ -1,0 +1,700 @@
+format 224
+"classes" // www::classes
+  revision 2
+  modified_by 23 "tvaira"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/classes/"
+  deploymentview 129175 "classes"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 130583 "controller"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+
+    artifact 130711 "message"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+
+    artifact 130839 "messages"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+
+    artifact 130967 "model"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+
+    artifact 131095 "router"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+  end
+
+  classview 128535 "classes"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 129431 "Controller"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@file controller.php
+@brief Définit la classe abstraite Controller du modèle MVC
+@author BERNARD Clément
+@version 1.0
+
+
+@class Controller
+@brief Déclaration de la classe Controller
+@details C'est la classe mère de tous les contrôleurs. Elle contient les méthodes communes à tous les contrôleurs.
+"
+      attribute 128023 "request"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128151 "action"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " array"
+      end
+
+      operation 1073175 "__construct"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "action" explicit_type ""
+	  param in name "request" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment " string"
+      end
+
+      operation 1073303 "executeAction"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1073431 "returnView"
+	protected explicit_return_type ""
+	nparams 2
+	  param in name "viewmodel" explicit_type ""
+	  param in name "fullview" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 129943 "__construct"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "action" explicit_type ""
+	  param in name "request" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment " string"
+      end
+
+      operation 130071 "executeAction"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130199 "returnView"
+	protected explicit_return_type ""
+	nparams 2
+	  param in name "viewmodel" explicit_type ""
+	  param in name "fullview" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 129559 "Message"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 1073559 "afficher"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "message" explicit_type ""
+	  param in name "type" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130327 "afficher"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "message" explicit_type ""
+	  param in name "type" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 129687 "Messages"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 1073687 "setMsg"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "text" explicit_type ""
+	  param in name "type" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1073815 "display"
+	class_operation public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130455 "setMsg"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "text" explicit_type ""
+	  param in name "type" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130583 "display"
+	class_operation public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 129815 "Model"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@file model.php
+@brief Définit la classe abstraite Model du modèle MVC
+@author BERNARD Clément
+@version 1.0
+
+
+@class Model
+@brief Déclaration de la classe Model
+@details C'est la classe mère de tous les modèles. Elle contient les méthodes communes à tous les modèles.
+"
+      attribute 128279 "dbh"
+	protected explicit_type ""
+	init_value " null"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128407 "stmt"
+	protected explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " ?PDO"
+      end
+
+      operation 1073943 "__construct"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment " PDOStatement"
+      end
+
+      operation 1074071 "query"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "query" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074199 "bind"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "param" explicit_type ""
+	  param in name "value" explicit_type ""
+	  param in name "type" explicit_type ""
+	    defaultvalue "null"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074327 "execute"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074455 "resultSet"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074583 "single"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074711 "countSet"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 1074839 "lastInsertId"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130711 "__construct"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment " PDOStatement"
+      end
+
+      operation 130839 "query"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "query" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 130967 "bind"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "param" explicit_type ""
+	  param in name "value" explicit_type ""
+	  param in name "type" explicit_type ""
+	    defaultvalue "null"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}, ${p2}${v2}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 131095 "execute"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 131223 "resultSet"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 131351 "single"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 131479 "countSet"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 131607 "lastInsertId"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 129943 "Router"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "
+@file router.php
+@brief Définit la classe Router du modèle MVC
+@author BERNARD Clément
+@version 1.0
+
+
+@class Router
+@brief Déclaration de la classe Router
+@details C'est le point d'entrée de l'application. Elle est chargée d'instancier le contrôleur approprié et d'exécuter l'action associée. L'URL, après réécriture, est de la forme : http://root/controleur/action/id
+"
+      attribute 128663 "action"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " string"
+      end
+
+      attribute 128791 "request"
+	private explicit_type "array"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " string"
+      end
+
+      operation 131735 "__construct"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "request" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment " array"
+      end
+
+      operation 131863 "createController"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      classrelation 129559 // controller (<unidirectional association>)
+	relation 129559 --->
+	  a role_name "controller" private
+	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	    classrelation_ref 129559 // controller (<unidirectional association>)
+	  b parent class_ref 129431 // Controller
+      end
+    end
+  end
+end

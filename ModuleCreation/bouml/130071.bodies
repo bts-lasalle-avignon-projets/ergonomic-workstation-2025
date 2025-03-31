@@ -1,0 +1,7 @@
+class Accueil
+!!!1074967.php!!!	index()
+		$viewmodel = new AccueilModel();
+		$this->returnView($viewmodel->index(), true);
+!!!131991.php!!!	index()
+		$viewmodel = new AccueilModel();
+		$this->returnView($viewmodel->index(), true);

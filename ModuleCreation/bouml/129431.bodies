@@ -1,0 +1,27 @@
+class Controller
+!!!1073175.php!!!	__construct(in action : , in request : )
+		$this->action = $action;
+		$this->request = $request;
+!!!1073303.php!!!	executeAction()
+		return $this->{$this->action}();
+!!!1073431.php!!!	returnView(in viewmodel : , in fullview : )
+		$view = 'views/' . get_class($this) . '/' . $this->action . '.php';
+
+		if ($fullview) {
+			require('views/main.php');
+		} else {
+			require($view);
+		}
+!!!129943.php!!!	__construct(in action : , in request : )
+		$this->action = $action;
+		$this->request = $request;
+!!!130071.php!!!	executeAction()
+		return $this->{$this->action}();
+!!!130199.php!!!	returnView(in viewmodel : , in fullview : )
+		$view = 'views/' . get_class($this) . '/' . $this->action . '.php';
+
+		if ($fullview) {
+			require('views/main.php');
+		} else {
+			require($view);
+		}

@@ -1,0 +1,67 @@
+format 224
+"frontend" // www::frontend
+  revision 1
+  modified_by 23 "tvaira"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "/home/tvaira/Documents/git/projets/ergonomic-workstation-2025/ModuleCreation/www/frontend/"
+  deploymentview 129431 "frontend"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 131607 "afficherProcessus"
+      stereotype "source"
+      php_src "<?php
+require_once \"./backend/creation/connectionDB.php\"; // Inclure la connexion à la BDD
+
+try {
+    // Requête pour récupérer tous les processus
+    $sql = \"SELECT nom FROM Processus\";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $processus = $stmt->fetchAll(PDO::FETCH_ASSOC); // Récupérer les résultats sous forme de tableau associatif
+} catch (PDOException $e) {
+    die(\"Erreur : \" . $e->getMessage());
+}
+?>
+<h2>Liste des Processus</h2>
+<table border=\"1\">
+    <tr>
+        <th>Nom du processus</th>
+    </tr>
+    <?php foreach ($processus as $p): ?>
+        <tr>
+            <td><a href=\"./backend/creation/traiterProcessus.php?nom=<?= urlencode($p['nom']) ?>\"><?= htmlspecialchars($p['nom']) ?></a></td>
+        </tr>
+    <?php endforeach; ?>"
+      associated_elems
+      end
+    end
+  end
+end
