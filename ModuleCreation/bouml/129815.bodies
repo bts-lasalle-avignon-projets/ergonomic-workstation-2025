@@ -1,5 +1,5 @@
 class Model
-!!!1073943.php!!!	__construct()
+!!!135338.php!!!	__construct()
 		if (DB_DRIVER) {
 			if (!in_array("PDO", get_loaded_extensions()))
 				die("L’extension PDO n’est pas présente !<br><br>");
@@ -7,11 +7,11 @@ class Model
 				die("L’extension pdo_mysql n’est pas présente !<br><br>");
 			$this->dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS) or die("Echec de la création de l’instance PDO !");
 		}
-!!!1074071.php!!!	query(in query : )
+!!!135466.php!!!	query(in query : )
 		if ($this->dbh) {
 			$this->stmt = $this->dbh->prepare($query);
 		}
-!!!1074199.php!!!	bind(in param : , in value : , in type :  = null)
+!!!135594.php!!!	bind(in param : , in value : , in type :  = null)
 		if (is_null($type)) {
 			switch (true) {
 				case is_int($value):
@@ -28,58 +28,16 @@ class Model
 			}
 		}
 		$this->stmt->bindValue($param, $value, $type);
-!!!1074327.php!!!	execute()
+!!!135722.php!!!	execute()
 		$this->stmt->execute();
-!!!1074455.php!!!	resultSet()
+!!!135850.php!!!	resultSet()
 		$this->execute();
 		return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
-!!!1074583.php!!!	single()
+!!!135978.php!!!	single()
 		$this->execute();
 		return $this->stmt->fetch(PDO::FETCH_ASSOC);
-!!!1074711.php!!!	countSet()
+!!!136106.php!!!	countSet()
 		$this->execute();
 		return $this->stmt->fetchColumn();
-!!!1074839.php!!!	lastInsertId()
-		return $this->dbh->lastInsertId();
-!!!130711.php!!!	__construct()
-		if (DB_DRIVER) {
-			if (!in_array("PDO", get_loaded_extensions()))
-				die("L’extension PDO n’est pas présente !<br><br>");
-			if (!in_array("pdo_mysql", get_loaded_extensions()))
-				die("L’extension pdo_mysql n’est pas présente !<br><br>");
-			$this->dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS) or die("Echec de la création de l’instance PDO !");
-		}
-!!!130839.php!!!	query(in query : )
-		if ($this->dbh) {
-			$this->stmt = $this->dbh->prepare($query);
-		}
-!!!130967.php!!!	bind(in param : , in value : , in type :  = null)
-		if (is_null($type)) {
-			switch (true) {
-				case is_int($value):
-					$type = PDO::PARAM_INT;
-					break;
-				case is_bool($value):
-					$type = PDO::PARAM_BOOL;
-					break;
-				case is_null($value):
-					$type = PDO::PARAM_NULL;
-					break;
-				default:
-					$type = PDO::PARAM_STR;
-			}
-		}
-		$this->stmt->bindValue($param, $value, $type);
-!!!131095.php!!!	execute()
-		$this->stmt->execute();
-!!!131223.php!!!	resultSet()
-		$this->execute();
-		return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
-!!!131351.php!!!	single()
-		$this->execute();
-		return $this->stmt->fetch(PDO::FETCH_ASSOC);
-!!!131479.php!!!	countSet()
-		$this->execute();
-		return $this->stmt->fetchColumn();
-!!!131607.php!!!	lastInsertId()
+!!!136234.php!!!	lastInsertId()
 		return $this->dbh->lastInsertId();

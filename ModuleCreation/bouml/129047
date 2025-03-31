@@ -1,7 +1,7 @@
 format 224
 "www" // www
-  revision 2
-  modified_by 23 "tvaira"
+  revision 5
+  modified_by 42 "tv"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -130,7 +130,7 @@ if ($controller) {
     activitydiagramsettings
      end
     classdiagram 128151 "iteration-1"
-      classdiagramsettings member_max_width 0 end
+      classdiagramsettings show_members_full_definition no show_members_visibility yes member_max_width 0 show_relation_visibility yes end
       size A0
     end
   end
