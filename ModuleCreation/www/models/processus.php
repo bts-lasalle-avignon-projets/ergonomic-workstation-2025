@@ -4,7 +4,6 @@ class ProcessusModel extends Model
 {
 	public function index()
 	{
-		echo 'index<br>';
 		$this->query("
 			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage
 			FROM Processus p
@@ -29,8 +28,6 @@ class ProcessusModel extends Model
 
 	public function add()
 	{
-		echo 'add<br>';
-		var_dump($_POST);
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 			$titre = trim($_POST['title']);
 
