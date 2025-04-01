@@ -1,6 +1,6 @@
 format 224
 "bouml"
-  revision 5
+  revision 6
   modified_by 42 "tv"
   php_root_dir "../www/"
 

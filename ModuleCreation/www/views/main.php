@@ -18,7 +18,6 @@
 </head>
 
 <body>
-
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="<?php echo URL_PATH; ?>"><?php echo TITRE_SITE; ?></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">

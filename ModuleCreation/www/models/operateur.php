@@ -26,7 +26,7 @@ class OperateurModel extends Model
 			$this->execute();
 
 			// Verify
-			if ($this->lastInsertId()) {
+			if ($this->getLastInsertId()) {
 				Messages::setMsg('Account created. You can now login', 'success');
 				// Redirect
 				header('Location: ' . ROOT_PATH . 'users/login');
@@ -50,7 +50,7 @@ class OperateurModel extends Model
 			// Check if email match in database
 			$this->query('SELECT * FROM users WHERE email = :email');
 			$this->bind(':email', $post['email']);
-			$row = $this->single();
+			$row = $this->getResult();
 
 			if ($row) {
 				if (password_verify($post['password'], $row['password'])) {

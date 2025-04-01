@@ -14,9 +14,9 @@ define("DB_PASS", "password");
 define("DB_NAME", "ergonomic_workstation");
 
 // URL
-define("ROOT_PATH", "/");
-//define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/ergonomic-workstation/");
-define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/");
+define("ROOT_PATH", "/ergonomic-workstation/");
+define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/ergonomic-workstation/");
+//define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/");
 
 // Divers
 define("TITRE_SITE", "Ergonomic Workstation");

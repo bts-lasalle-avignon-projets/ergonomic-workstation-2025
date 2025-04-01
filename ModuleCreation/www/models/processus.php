@@ -4,20 +4,19 @@ class ProcessusModel extends Model
 {
 	public function index()
 	{
-		echo 'index<br>';
 		$this->query("
 			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage
 			FROM Processus p
 			ORDER BY p.dateCreation
 		");
 
-		$processus = $this->resultSet();
+		$processus = $this->getResults();
 
 		foreach ($processus as &$p) {
 			if (!empty($p['idImage'])) {  // Vérifier si une image est associée
 				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
 				$this->bind(':idImage', $p['idImage']);
-				$imageData = $this->single();
+				$imageData = $this->getResult();
 				$p['image'] = $imageData ? $imageData : null;
 			} else {
 				$p['image'] = null; // Aucune image associée
@@ -29,13 +28,11 @@ class ProcessusModel extends Model
 
 	public function add()
 	{
-		echo 'add<br>';
-		var_dump($_POST);
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-			$titre = trim($_POST['title']);
+			$nomProcessus = trim($_POST['nomProcessus']);
 
-			if (empty($titre)) {
-				Message::afficher("Le titre est requis !", "erreur");
+			if (empty($nomProcessus)) {
+				Message::afficher("Le nom est requis !", "erreur");
 				return;
 			}
 
@@ -48,7 +45,7 @@ class ProcessusModel extends Model
 
 				// Insérer le processus avec idImage (NULL si pas d'image)
 				$this->query("INSERT INTO Processus (nomProcessus, idImage) VALUES (:nomProcessus, :idImage)");
-				$this->bind(':nomProcessus', $titre);
+				$this->bind(':nomProcessus', $nomProcessus);
 				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
 				$this->execute();
 
@@ -82,7 +79,7 @@ class ProcessusModel extends Model
 
 		$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
 		$this->bind(':nomFichier', $nomFichier);
-		$image = $this->single();
+		$image = $this->getResult();
 
 		return $image['idImage'] ?? null;
 	}

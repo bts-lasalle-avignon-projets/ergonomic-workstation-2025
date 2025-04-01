@@ -2,16 +2,24 @@
 
 class Operateurs extends Controller
 {
+	private $viewmodel;
+
+	public function __construct($action, $request)
+	{
+		parent::__construct($action, $request);
+		$this->viewmodel = new OperateurModel();
+	}
+
 	protected function register()
 	{
-		$viewmodel = new OperateurModel();
-		$this->returnView($viewmodel->register(), true);
+		$this->viewmodel->register();
+		$this->display();
 	}
 
 	protected function login()
 	{
-		$viewmodel = new OperateurModel();
-		$this->returnView($viewmodel->login(), true);
+		$this->viewmodel->login();
+		$this->display();
 	}
 
 	protected function logout()

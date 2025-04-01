@@ -4,7 +4,7 @@
 		</p>
 	</div>
 	<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-		<input type="hidden" name="id" value="<?php echo $viewmodel; ?>" />
+		<input type="hidden" name="id" value="<?php echo $datas; ?>" />
 		<input type="submit" name="submit" class="btn btn-danger" value="Oui" />
 		<a class="btn btn-light" href="<?php echo ROOT_PATH; ?>processus">non</a>
 	</form>

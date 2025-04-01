@@ -30,14 +30,14 @@ class Model
 		$this->stmt->bindValue($param, $value, $type);
 !!!135722.php!!!	execute()
 		$this->stmt->execute();
-!!!135850.php!!!	resultSet()
+!!!151210.php!!!	getResults(in mode :  = PDO::FETCH_ASSOC)
 		$this->execute();
-		return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
-!!!135978.php!!!	single()
+		return $this->stmt->fetchAll($mode);
+!!!151338.php!!!	getResult(in mode :  = PDO::FETCH_ASSOC)
 		$this->execute();
-		return $this->stmt->fetch(PDO::FETCH_ASSOC);
-!!!136106.php!!!	countSet()
+		return $this->stmt->fetch($mode);
+!!!151466.php!!!	count()
 		$this->execute();
 		return $this->stmt->fetchColumn();
-!!!136234.php!!!	lastInsertId()
+!!!151594.php!!!	getLastInsertId()
 		return $this->dbh->lastInsertId();

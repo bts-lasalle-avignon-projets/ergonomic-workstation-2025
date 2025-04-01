@@ -28,14 +28,11 @@ abstract class Controller
 		return $this->{$this->action}();
 	}
 
-	protected function returnView($viewmodel, $fullview)
+	protected function display($datas = null)
 	{
+		// la vue ajoutée dans la page principale (main.php)
 		$view = 'views/' . get_class($this) . '/' . $this->action . '.php';
 
-		if ($fullview) {
-			require('views/main.php');
-		} else {
-			require($view);
-		}
+		require('views/main.php');
 	}
 }

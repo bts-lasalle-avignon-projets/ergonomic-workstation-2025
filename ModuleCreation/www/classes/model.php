@@ -60,25 +60,25 @@ abstract class Model
 		$this->stmt->execute();
 	}
 
-	public function resultSet()
+	public function getResults($mode = PDO::FETCH_ASSOC)
 	{
 		$this->execute();
-		return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $this->stmt->fetchAll($mode);
 	}
 
-	public function single()
+	public function getResult($mode = PDO::FETCH_ASSOC)
 	{
 		$this->execute();
-		return $this->stmt->fetch(PDO::FETCH_ASSOC);
+		return $this->stmt->fetch($mode);
 	}
 
-	public function countSet()
+	public function count()
 	{
 		$this->execute();
 		return $this->stmt->fetchColumn();
 	}
 
-	public function lastInsertId()
+	public function getLastInsertId()
 	{
 		return $this->dbh->lastInsertId();
 	}
