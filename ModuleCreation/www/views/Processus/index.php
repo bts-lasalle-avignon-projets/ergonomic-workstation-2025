@@ -1,6 +1,6 @@
 <div class="col-12">
 	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Ajouter processus</a>
-	<?php foreach ($viewmodel as $item) : ?>
+	<?php foreach ($datas as $item) : ?>
 		<div class="card mb-4">
 			<h3 class="card-header"><?php echo $item['nomProcessus']; ?></h3>
 			<div class="card-body">
@@ -12,8 +12,11 @@
 				<?php else : ?>
 					<p>Aucune image disponible.</p>
 				<?php endif; ?>
-				<a class="card-link text-success" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Editer processus</a>
-				<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer processus</a>
+				<hr />
+				<small class="card-subtitle">
+					<a class="card-link text-success" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Éditer</a>
+					<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer</a>
+				</small>
 			</div>
 		</div>
 	<?php endforeach; ?>

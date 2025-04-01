@@ -2,9 +2,17 @@
 
 class Accueil extends Controller
 {
+	private $viewmodel;
+
+	public function __construct($action, $request)
+	{
+		parent::__construct($action, $request);
+		$this->viewmodel = new AccueilModel();
+	}
+
 	protected function index()
 	{
-		$viewmodel = new AccueilModel();
-		$this->returnView($viewmodel->index(), true);
+		$this->viewmodel->index();
+		$this->display();
 	}
 }

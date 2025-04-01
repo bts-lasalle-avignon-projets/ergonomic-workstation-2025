@@ -13,18 +13,23 @@ class Processus extends Controller
 
 	protected function index()
 	{
-		$this->returnView($this->viewmodel->index(), true);
+		// Récupère la liste des processus
+		$listeProcessus = $this->viewmodel->index();
+		// Affiche la liste des processus
+		$this->display($listeProcessus);
 	}
 
 	protected function add()
 	{
 		if (NO_LOGIN) {
-			$this->returnView($this->viewmodel->add(), true);
+			$this->viewmodel->add();
+			$this->display();
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				$this->returnView($this->viewmodel->add(), true);
+				$this->viewmodel->add();
+				$this->display();
 			}
 		}
 	}
@@ -37,12 +42,14 @@ class Processus extends Controller
 			header('Location: ' . URL_PATH . 'processus');
 		}
 		if (NO_LOGIN) {
-			$this->returnView($this->viewmodel->edit(), true);
+			$processus = $this->viewmodel->edit();
+			$this->display($processus);
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				$this->returnView($this->viewmodel->edit(), true);
+				$processus = $this->viewmodel->edit();
+				$this->display($processus);
 			}
 		}
 	}
@@ -55,12 +62,14 @@ class Processus extends Controller
 			header('Location: ' . URL_PATH . 'processus');
 		}
 		if (NO_LOGIN) {
-			$this->returnView($this->viewmodel->delete(), true);
+			$idProcessus = $this->viewmodel->delete();
+			$this->display($idProcessus);
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				$this->returnView($this->viewmodel->delete(), true);
+				$idProcessus = $this->viewmodel->delete();
+				$this->display($idProcessus);
 			}
 		}
 	}
