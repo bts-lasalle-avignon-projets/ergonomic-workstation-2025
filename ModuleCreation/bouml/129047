@@ -1,0 +1,137 @@
+format 224
+"www" // www
+  revision 6
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "."
+  deploymentview 129047 "www"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 130327 "config"
+      stereotype "source"
+      php_src "<?php
+
+// Pour le debug
+define(\"DEBUG\", false);
+
+// Pour les tests
+define(\"NO_LOGIN\", true);
+
+// Pour la base de données
+define(\"DB_DRIVER\", true); // true pour MySQL, false sans base de données
+define(\"DB_HOST\", \"127.0.0.1\");
+define(\"DB_USER\", \"ergoWork\");
+define(\"DB_PASS\", \"password\");
+define(\"DB_NAME\", \"ergonomic_workstation\");
+
+// URL
+define(\"ROOT_PATH\", \"/ergonomic-workstation/\");
+define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/ergonomic-workstation/\");
+//define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
+
+// Divers
+define(\"TITRE_SITE\", \"Ergonomic Workstation\");
+"
+      associated_elems
+      end
+    end
+
+    artifact 130455 "index"
+      stereotype "source"
+      php_src "<?php
+// Démarre la session PHP
+session_start();
+
+require('config.php');
+
+require('classes/message.php');
+require('classes/messages.php');
+require('classes/router.php');
+require('classes/controller.php');
+require('classes/model.php');
+
+require('controllers/accueil.php');
+require('controllers/operateurs.php');
+require('controllers/processus.php');
+
+require('models/accueil.php');
+require('models/operateur.php');
+require('models/processus.php');
+
+// Forme de l'URL, après réécriture : http://root/controleur/action/id
+$router = new Router($_GET);
+$controller = $router->createController();
+
+if ($controller) {
+	$controller->executeAction();
+}
+"
+      associated_elems
+      end
+    end
+  end
+
+  package_ref 129175 // classes
+
+  package_ref 129303 // controllers
+
+  package_ref 129431 // frontend
+
+  package_ref 129559 // models
+
+  package_ref 129687 // views
+
+  classview 128919 "vue-classes"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 128151 "iteration-1"
+      classdiagramsettings show_members_full_definition no show_members_visibility yes member_max_width 0 show_relation_visibility yes end
+      size A0
+    end
+  end
+end

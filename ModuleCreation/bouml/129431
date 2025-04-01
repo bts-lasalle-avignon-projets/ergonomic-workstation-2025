@@ -1,0 +1,39 @@
+format 224
+"frontend" // www::frontend
+  revision 3
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "./frontend/"
+  deploymentview 129431 "frontend"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+  end
+end

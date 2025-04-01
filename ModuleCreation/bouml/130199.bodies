@@ -1,0 +1,16 @@
+class Operateurs
+!!!151850.php!!!	__construct(in action : , in request : )
+		parent::__construct($action, $request);
+		$this->viewmodel = new OperateurModel();
+!!!136490.php!!!	register()
+		$this->viewmodel->register();
+		$this->display();
+!!!136618.php!!!	login()
+		$this->viewmodel->login();
+		$this->display();
+!!!136746.php!!!	logout()
+		unset($_SESSION['is_logged_in']);
+		unset($_SESSION['user_data']);
+		session_destroy();
+		// Redirect
+		header('Location: ' . URL_PATH);

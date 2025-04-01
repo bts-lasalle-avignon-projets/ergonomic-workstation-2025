@@ -1,18 +1,27 @@
-<!--INDEX-->
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Gestion des Processus</title>
-        <link rel="stylesheet" href="#">
-        
-        </script>
-    </head>
-    <body>
+<?php
+// Démarre la session PHP
+session_start();
 
-        <h1>Créer un Processus</h1>
-        <?php require_once('./frontend/formulaireProcessus.php'); ?>
-        <?php require_once('./frontend/afficherProcessus.php'); ?>    
+require('config.php');
 
-    </body>
-</html>
+require('classes/message.php');
+require('classes/messages.php');
+require('classes/router.php');
+require('classes/controller.php');
+require('classes/model.php');
+
+require('controllers/accueil.php');
+require('controllers/operateurs.php');
+require('controllers/processus.php');
+
+require('models/accueil.php');
+require('models/operateur.php');
+require('models/processus.php');
+
+// Forme de l'URL, après réécriture : http://root/controleur/action/id
+$router = new Router($_GET);
+$controller = $router->createController();
+
+if ($controller) {
+	$controller->executeAction();
+}
