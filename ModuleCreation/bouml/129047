@@ -1,6 +1,6 @@
 format 224
 "www" // www
-  revision 5
+  revision 6
   modified_by 42 "tv"
   // class settings
   
@@ -53,9 +53,9 @@ define(\"DB_PASS\", \"password\");
 define(\"DB_NAME\", \"ergonomic_workstation\");
 
 // URL
-define(\"ROOT_PATH\", \"/\");
-//define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/ergonomic-workstation/\");
-define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
+define(\"ROOT_PATH\", \"/ergonomic-workstation/\");
+define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/ergonomic-workstation/\");
+//define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
 
 // Divers
 define(\"TITRE_SITE\", \"Ergonomic Workstation\");

@@ -1,6 +1,6 @@
 format 224
 "classes" // www::classes
-  revision 5
+  revision 6
   modified_by 42 "tv"
   // class settings
   
@@ -184,20 +184,21 @@ ${members}}
 	
       end
 
-      operation 144554 "returnView"
+      operation 151082 "display"
 	protected explicit_return_type ""
-	nparams 2
-	  param in name "viewmodel" explicit_type ""
-	  param in name "fullview" explicit_type ""
+	nparams 1
+	  param in name "datas" explicit_type ""
+	    defaultvalue "null"
 	
 	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
 {
   ${body}}
 "
 	
 	
       end
+
     end
 
     class 129559 "Message"
@@ -376,7 +377,37 @@ ${members}}
 	
       end
 
-      operation 135850 "resultSet"
+      operation 151210 "getResults"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "mode" explicit_type ""
+	    defaultvalue "PDO::FETCH_ASSOC"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 151338 "getResult"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "mode" explicit_type ""
+	    defaultvalue "PDO::FETCH_ASSOC"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 151466 "count"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -389,7 +420,7 @@ ${members}}
 	
       end
 
-      operation 135978 "single"
+      operation 151594 "getLastInsertId"
 	public explicit_return_type ""
 	nparams 0
 	
@@ -402,31 +433,6 @@ ${members}}
 	
       end
 
-      operation 136106 "countSet"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
-
-      operation 136234 "lastInsertId"
-	public explicit_return_type ""
-	nparams 0
-	
-	
-	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
-{
-  ${body}}
-"
-	
-	
-      end
     end
 
     class 129943 "Router"

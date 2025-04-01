@@ -4,11 +4,8 @@ class Controller
 		$this->request = $request;
 !!!144426.php!!!	executeAction()
 		return $this->{$this->action}();
-!!!144554.php!!!	returnView(in viewmodel : , in fullview : )
+!!!151082.php!!!	display(in datas :  = null)
+		// la vue ajoutée dans la page principale (main.php)
 		$view = 'views/' . get_class($this) . '/' . $this->action . '.php';
 
-		if ($fullview) {
-			require('views/main.php');
-		} else {
-			require($view);
-		}
+		require('views/main.php');
