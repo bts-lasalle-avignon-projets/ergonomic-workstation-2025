@@ -19,7 +19,6 @@ class EtapeModel extends Model {
                 return null;
             }
 
-            // Affichage des données de débogage uniquement après l'initialisation des variables
             if (DEBUG) {
                 ini_set('display_errors', 1);
                 error_reporting(E_ALL);
@@ -31,45 +30,19 @@ class EtapeModel extends Model {
             }
 
             try {
-                // Vérification de l'existence du bac
-                $this->query("SELECT idBac, contenance FROM Bac WHERE contenance = :contenance");
-                $this->bind(':contenance', $contenance);
-                $bacExist = $this->getResult(); // Récupère les données du bac existant
 
-                if ($bacExist) {
-                    // Si le bac existe déjà, on crée un objet Bac
-                    $bac = new Bac($bacExist['idBac'], $bacExist['contenance']);
-                } else {
-                    // Si le bac n'existe pas, créer un nouveau bac
-                    if (empty($numeroBac)) {
-                        Messages::setMsg("Le numéro de bac doit être fourni si le bac n'existe pas.", "error");
-                        return null;
-                    }
+                $bac = $this->ajouterBac($contenance, $numeroBac);
 
-                    // Création du bac avec un numéro
-                    $this->query("INSERT INTO Bac (contenance, numeroBac) VALUES (:contenance, :numeroBac)");
-                    $this->bind(':contenance', $contenance);
-                    $this->bind(':numeroBac', $numeroBac);
-                    $this->execute();
-
-                    // Récupérer l'ID du bac nouvellement inséré
-                    if ($this->stmt->rowCount() == 0) {
-                        Messages::setMsg("L'insertion du bac a échoué.", "error");
-                        return null;
-                    }
-
-                    $idBac = $this->getLastInsertId();
-                    // Créer l'objet Bac avec l'ID et la contenance
-                    $bac = new Bac($idBac, $contenance);
+                if ($bac === null) {
+                    return null;
                 }
 
                 $idImage = null;
 
 				if (!empty($_FILES['image']['name'])) {
-					$idImage = $this->ajouterImage(); // Ajoute l'image et récupère son ID
+					$idImage = $this->ajouterImage();
 				}
 
-                // Création de l'étape en associant l'ID du bac et du processus
                 $this->query("INSERT INTO Etapes (idProcessus, idBac, nomEtape, descriptionEtape, idImage) 
                               VALUES (:idProcessus, :idBac, :nomEtape, :descriptionEtape, :idImage)");
                 $this->bind(':idProcessus', $idProcessus);
@@ -78,17 +51,12 @@ class EtapeModel extends Model {
                 $this->bind(':descriptionEtape', $descriptionEtape);
                 $this->bind(':idImage', $idImage, PDO::PARAM_INT);
 
-                // Exécute l'insertion
                 $this->execute();
 
-                // Vérifie si une ligne a été insérée
                 if ($this->stmt->rowCount() == 0) {
                     Messages::setMsg("L'insertion de l'étape a échoué.", "error");
                     return null;
                 }
-
-                Messages::setMsg("Étape et bac créés avec succès.", "success");
-
             } catch (PDOException $e) {
                 Messages::setMsg("Erreur SQL : " . $e->getMessage(), "error");
             }
@@ -123,5 +91,33 @@ class EtapeModel extends Model {
 
 		return $image['idImage'] ?? null;
 	}
+
+    private function ajouterBac($contenance, $numeroBac)
+    {
+        $this->query("SELECT idBac, contenance FROM Bac WHERE contenance = :contenance");
+        $this->bind(':contenance', $contenance);
+        $bacExist = $this->getResult(); 
+        if ($bacExist) {
+            $bac = new Bac($bacExist['idBac'], $bacExist['contenance']);
+        } else {
+            if (empty($numeroBac)) {
+                Messages::setMsg("Le numéro de bac doit être fourni si le bac n'existe pas.", "error");
+                return null;
+            }
+
+            $this->query("INSERT INTO Bac (contenance, numeroBac) VALUES (:contenance, :numeroBac)");
+            $this->bind(':contenance', $contenance);
+            $this->bind(':numeroBac', $numeroBac);
+            $this->execute();
+            if ($this->stmt->rowCount() == 0) {
+                Messages::setMsg("L'insertion du bac a échoué.", "error");
+                return null;
+            }
+
+            $idBac = $this->getLastInsertId();
+            $bac = new Bac($idBac, $contenance);
+        }
+        return $bac;
+    }
 }
 ?>
