@@ -7,6 +7,7 @@
 
 class connexionBDD
 {
+
 public:
     static QSqlDatabase getDatabase();
 

@@ -87,10 +87,10 @@ void fenetreDeDemarrage::chargerImageSelectionnee()
     QVariant selectedData = processusComboBox->currentData();
     if (selectedData.isValid()) {
         int processusId = selectedData.toInt();
-        chargerImagePourProcessus(processusId);  // Charger l'image après la sélection
+        chargerImagePourProcessus(processusId);
     } else {
         qDebug() << "Aucun processus sélectionné.";
-        imageLabel->clear();  // Clear the image label if no process is selected
+        imageLabel->clear();
     }
 }
 
@@ -111,14 +111,14 @@ void fenetreDeDemarrage::chargerImagePourProcessus(int processusId)
                 imageLabel->setPixmap(pixmap.scaled(300, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
             } else {
                 qDebug() << "Erreur : Impossible de charger l'image.";
-                imageLabel->clear();  // Clear the image label if image cannot be loaded
+                imageLabel->clear();
             }
         } else {
             qDebug() << "Aucune image trouvée pour ce processus.";
-            imageLabel->clear();  // Clear the image label if no image is found
+            imageLabel->clear();
         }
     } else {
         qDebug() << "Erreur SQL :" << query.lastError().text();
-        imageLabel->clear();  // Clear the image label if there's an SQL error
+        imageLabel->clear();
     }
 }
