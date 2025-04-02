@@ -25,12 +25,11 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
-private slots:
-    void demarrerProcessus();
-
 private:
+    void demarrerProcessus();
     void chargerProcessus();
     void chargerImagePourProcessus(int processusId);
+    void chargerImageSelectionnee();
 
     QComboBox *processusComboBox;
     QPushButton *startButton;

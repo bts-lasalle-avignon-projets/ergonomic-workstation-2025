@@ -17,11 +17,4 @@ HEADERS += \
     main.h
 
 FORMS += \
-    fenetreDeDemarrage.ui
-
-TRANSLATIONS += \
-    bacASableQt_fr_FR.ts
-
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+    fenetreDeDemarrage.ui \

@@ -28,6 +28,8 @@ fenetreDeDemarrage::fenetreDeDemarrage(fenetreDesEtapes *fenetreEtapes, QWidget 
     layout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
     connect(startButton, &QPushButton::clicked, this, &fenetreDeDemarrage::demarrerProcessus);
+    connect(processusComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &fenetreDeDemarrage::chargerImageSelectionnee);
 
     db = connexionBDD::getDatabase();
     chargerProcessus();
@@ -85,31 +87,34 @@ void fenetreDeDemarrage::demarrerProcessus()
 void fenetreDeDemarrage::chargerImagePourProcessus(int processusId)
 {
     QSqlQuery query;
-    query.prepare("SELECT contenuBlob FROM Image WHERE idProcessus = :processus_id LIMIT 1");
-    query.bindValue(":processus_id", processusId);
+    query.prepare("SELECT contenuBlob FROM Image "
+                  "JOIN Processus ON Processus.idImage = Image.idImage "
+                  "WHERE Processus.idProcessus = :idProcessus");
+    query.bindValue(":idProcessus", 1);
 
     if (query.exec() && query.next()) {
         QByteArray imageData = query.value(0).toByteArray();
 
-        if (imageData.isEmpty()) {
-            qDebug() << "Aucune image trouvée dans la base de données pour le processus avec ID :" << processusId;
-            imageLabel->clear();
-            statusLabel->setText("Aucune image trouvée pour ce processus.");
-            return;
-        }
-
-        QPixmap pixmap;
-        if (pixmap.loadFromData(imageData)) {
-            imageLabel->setPixmap(pixmap.scaled(300, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        if (!imageData.isEmpty()) {
+            QPixmap pixmap;
+            if (pixmap.loadFromData(imageData)) {
+                imageLabel->setPixmap(pixmap.scaled(300, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            } else {
+                qDebug() << "Erreur : Impossible de charger l'image.";
+            }
         } else {
-            qDebug() << "Erreur lors du chargement de l'image.";
-            imageLabel->clear();
-            statusLabel->setText("Erreur lors du chargement de l'image.");
+            qDebug() << "Aucune image trouvée pour ce processus.";
         }
     } else {
-        qDebug() << "Erreur lors de la récupération de l'image pour le processus avec ID :" << processusId
-                 << "Erreur SQL :" << query.lastError().text();
-        imageLabel->clear();
-        statusLabel->setText("Erreur lors de la récupération de l'image.");
+        qDebug() << "Erreur SQL :" << query.lastError().text();
+    }
+}
+
+void fenetreDeDemarrage::chargerImageSelectionnee()
+{
+    QVariant selectedData = processusComboBox->currentData();
+    if (selectedData.isValid()) {
+        int processusId = selectedData.toInt();
+        chargerImagePourProcessus(processusId);
     }
 }

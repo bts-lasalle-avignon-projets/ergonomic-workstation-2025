@@ -18,10 +18,8 @@ public:
     explicit fenetreDesEtapes(QWidget *parent = nullptr);
     void chargerEtape(int processusId);
 
-private slots:
-    void etapeSuivante();
-
 private:
+    void etapeSuivante();
     QVBoxLayout *layout;
     QPushButton *boutonEtapeSuivante;
     QLabel *statusLabel;

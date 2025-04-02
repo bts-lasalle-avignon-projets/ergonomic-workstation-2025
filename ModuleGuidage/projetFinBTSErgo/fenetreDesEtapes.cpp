@@ -6,7 +6,7 @@
 fenetreDesEtapes::fenetreDesEtapes(QWidget *parent)
     : QWidget(parent), etapeActuelIndex(0), idProcessusActuel(-1)
 {
-    setWindowTitle("Fenêtre de changement d'étapes - fenetreDesEtapes");
+    setWindowTitle("Fenêtre de changement d'étapes");
     showFullScreen();
 
     layout = new QVBoxLayout(this);
