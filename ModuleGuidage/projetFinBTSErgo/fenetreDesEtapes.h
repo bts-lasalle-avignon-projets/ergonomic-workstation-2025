@@ -2,32 +2,37 @@
 #define FENETREDESETAPES_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QLabel>
 #include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QVector>
+#include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QSqlError>
-#include <QStringList>
-#include <QDebug>
 
 class fenetreDesEtapes : public QWidget
 {
-    Q_OBJECT  // Cette macro est nécessaire pour l'utilisation des signaux et des slots dans Qt
+    Q_OBJECT
 
 public:
     explicit fenetreDesEtapes(QWidget *parent = nullptr);
     void chargerEtape(int processusId);
+    void chargerImagePourEtape(int idEtape);
+
+private slots:
+    void etapeSuivante();
 
 private:
-    void etapeSuivante();
     QVBoxLayout *layout;
-    QPushButton *boutonEtapeSuivante;
     QLabel *statusLabel;
+    QLabel *imageLabel;
+    QPushButton *boutonEtapeSuivante;
 
-    QStringList listeDesEtapes;
-    QSqlDatabase db;
+    QVector<QString> listeDesEtapes;
+    QVector<int> listeIdEtapes;
     int etapeActuelIndex;
     int idProcessusActuel;
+
+    QSqlDatabase db;
 };
 
 #endif // FENETREDESETAPES_H
