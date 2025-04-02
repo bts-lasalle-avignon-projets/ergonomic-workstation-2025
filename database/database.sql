@@ -8,13 +8,21 @@ CREATE TABLE IF NOT EXISTS Processus (
     idImage INT
 );
 
+CREATE TABLE IF NOT EXISTS Bac (
+    idBac INT AUTO_INCREMENT PRIMARY KEY,
+    contenance VARCHAR(255) NOT NULL,
+    numeroBac INT
+);
+
 CREATE TABLE IF NOT EXISTS Etapes (
     idEtapes INT AUTO_INCREMENT PRIMARY KEY,
     idProcessus INT NOT NULL,
-    idBac INT,
+    idBac INT NOT NULL,
+    nomEtape VARCHAR(255) NOT NULL,
     descriptionEtape TEXT NOT NULL,
     idImage INT,
-    FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
+    FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE,
+    FOREIGN KEY (idBac) REFERENCES Bac(idBac) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Image (
