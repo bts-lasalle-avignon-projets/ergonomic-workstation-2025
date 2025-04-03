@@ -5,7 +5,7 @@
 
 <div class="card col col-lg-5 mx-3 mx-lg-auto p-0">
     <div class="card-header">
-        <h3 class="card-title">Ajouter une étape</h3>
+        <h3 class="card-title">Ajouter étape numéro : <?php echo htmlspecialchars($datas['numeroEtape']['numeroEtape']); ?></h3>
     </div>
     <form class="p-3" action="<?php $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">

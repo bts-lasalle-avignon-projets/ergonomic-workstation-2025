@@ -19,7 +19,9 @@ class Etape extends Controller {
         error_reporting(E_ALL);
         $this->viewmodel->add();
         $nomProcessus = $this->viewmodel->getTitre();
-        $this->display(['nomProcessus' => $nomProcessus]);
+        $numeroEtape = $this->viewmodel->getNumeroEtape();
+        var_dump($numeroEtape);
+        $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
       } else {
         if (!isset($_SESSION['is_logged_in'])) {
           header('Location: ' . URL_PATH . 'processus');

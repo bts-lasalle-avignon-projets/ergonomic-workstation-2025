@@ -1,11 +1,11 @@
 <?php
 
 // le nom à ajouter dans l'URL
-define("URL_NAME", "ergonomic-workstation");
-//define("URL_NAME", "");
+//define("URL_NAME", "ergonomic-workstation");
+define("URL_NAME", "");
 
 // Pour le debug
-define("DEBUG", true);
+define("DEBUG", false);
 
 // Pour les tests
 define("NO_LOGIN", true);

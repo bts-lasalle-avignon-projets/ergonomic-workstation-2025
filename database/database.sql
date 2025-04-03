@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS Etape (
     idProcessus INT NOT NULL,
     idBac INT NOT NULL,
     nomEtape VARCHAR(255) NOT NULL,
+    numeroEtape INT,
     descriptionEtape TEXT NOT NULL,
     idImage INT,
     CONSTRAINT FK_EtapeProcessus FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE,

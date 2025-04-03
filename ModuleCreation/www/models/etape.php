@@ -42,13 +42,16 @@ class EtapeModel extends Model
                     $idImage = $this->ajouterImage();
                 }
 
-                $this->query("INSERT INTO Etape (idProcessus, idBac, nomEtape, descriptionEtape, idImage) 
-                              VALUES (:idProcessus, :idBac, :nomEtape, :descriptionEtape, :idImage)");
+                $numeroEtape = $this->incrementerNumeroEtape($idProcessus);
+
+                $this->query("INSERT INTO Etape (idProcessus, idBac, nomEtape, descriptionEtape, idImage, numeroEtape) 
+                              VALUES (:idProcessus, :idBac, :nomEtape, :descriptionEtape, :idImage, :numeroEtape)");
                 $this->bind(':idProcessus', $idProcessus);
                 $this->bind(':idBac', $bac->getIdBac());
                 $this->bind(':nomEtape', $nomEtape);
                 $this->bind(':descriptionEtape', $descriptionEtape);
                 $this->bind(':idImage', $idImage, PDO::PARAM_INT);
+                $this->bind(':numeroEtape', $numeroEtape);
 
                 $this->execute();
 
@@ -103,7 +106,7 @@ class EtapeModel extends Model
             $bac = new Bac($bacExist['numeroBac'], $bacExist['contenance']);
         } else {
             if (empty($numeroBac)) {
-                Messages::setMsg("Le numéro de bac doit être fourni si le bac n'existe pas !", "error");
+                Messages::setMsg("Le numéro de bac doit être fourni !", "error");
                 return null;
             }
 
@@ -111,8 +114,15 @@ class EtapeModel extends Model
             $this->bind(':numeroBac', $numeroBac);
             $this->bind(':idProcessus', $idProcessus);
             $this->bind(':contenance', $contenance);
-
+            if(DEBUG)
+            {
+                echo "numeroBac : " . $numeroBac . "<br>";
+                echo "idProcessus : " . $idProcessus . "<br>";
+                echo "contenance : " . $contenance . "<br>";
+            }
             $this->execute();
+            $errorInfo = $this->stmt->errorInfo();
+
             if ($this->stmt->rowCount() == 0) {
                 Messages::setMsg("L'insertion du bac a échoué !", "error");
                 return null;
@@ -134,4 +144,45 @@ class EtapeModel extends Model
 
         return $nomProcessus;
     }
+
+
+  public function incrementerNumeroEtape($idProcessus)
+   {
+       $this->query("SELECT COUNT(*) AS total FROM Etape WHERE idProcessus = :idProcessus");
+       $this->bind(':idProcessus', $idProcessus);
+       $this->execute();
+
+
+       $result = $this->getResult();
+
+        if (!$result || !isset($result['total'])) {
+            return 1;
+        }
+
+
+       $numeroProcessus = $result['total'] + 1;
+
+
+       return $numeroProcessus;
+   }
+
+public function getNumeroEtape()
+{
+    $idProcessus = (int) $_GET['id'];
+    $this->query("SELECT numeroEtape FROM Etape WHERE idProcessus = :idProcessus ORDER BY numeroEtape DESC LIMIT 1");
+    $this->bind(':idProcessus', $idProcessus);
+    $this->execute();
+    $result = $this->getResult();
+
+    // Vérifie si le résultat est valide (pas un booléen false ou vide)
+    if ($result === false || empty($result)) {
+        // Si aucun résultat, renvoyer un tableau avec 'numeroEtape' égal à 1
+        return ['numeroEtape' => 1];
+    }
+
+    // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
+    return ['numeroEtape' => $result['numeroEtape'] + 1];
+}
+
+
 }
