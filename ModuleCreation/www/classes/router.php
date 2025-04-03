@@ -21,7 +21,9 @@ class Router
 	public function __construct($request)
 	{
 		if (DEBUG) {
-			print_r($request);
+			$debug = print_r($request, true);
+			$message = 'class Router<br />' . 'request : ' . $debug;
+			Message::afficher($message, 'debug');
 		}
 
 		$this->request = $request;
@@ -39,8 +41,8 @@ class Router
 		}
 
 		if (DEBUG) {
-			Message::afficher('controleur : ' . $this->controller, 'debug');
-			Message::afficher('action : ' . $this->action, 'debug');
+			$message = 'class Router<br />' . 'controleur : ' . $this->controller . '<br /> ' . 'action : ' . $this->action;
+			Message::afficher($message, 'debug');
 		}
 	}
 

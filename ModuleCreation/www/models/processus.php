@@ -87,4 +87,6 @@ class ProcessusModel extends Model
 	public function edit() {}
 
 	public function delete() {}
+
+	public function view() {}
 }

@@ -1,8 +1,10 @@
 <?php
-class EtapeModel extends Model {
-    public function add() {
+class EtapeModel extends Model
+{
+    public function add()
+    {
         if (!isset($_GET['id']) || empty($_GET['id'])) {
-            Messages::setMsg("ID du processus manquant.", "error");
+            Messages::setMsg("ID du processus manquant !", "error");
             return null;
         }
 
@@ -20,8 +22,6 @@ class EtapeModel extends Model {
             }
 
             if (DEBUG) {
-                ini_set('display_errors', 1);
-                error_reporting(E_ALL);
                 echo "ID du processus : " . $idProcessus . "<br>";
                 echo "Nom de l'étape : " . $nomEtape . "<br>";
                 echo "Description de l'étape : " . $descriptionEtape . "<br>";
@@ -30,8 +30,7 @@ class EtapeModel extends Model {
             }
 
             try {
-
-                $bac = $this->ajouterBac($contenance, $numeroBac);
+                $bac = $this->ajouterBac($numeroBac, $idProcessus, $contenance);
 
                 if ($bac === null) {
                     return null;
@@ -39,11 +38,11 @@ class EtapeModel extends Model {
 
                 $idImage = null;
 
-				if (!empty($_FILES['image']['name'])) {
-					$idImage = $this->ajouterImage();
-				}
+                if (!empty($_FILES['image']['name'])) {
+                    $idImage = $this->ajouterImage();
+                }
 
-                $this->query("INSERT INTO Etapes (idProcessus, idBac, nomEtape, descriptionEtape, idImage) 
+                $this->query("INSERT INTO Etape (idProcessus, idBac, nomEtape, descriptionEtape, idImage) 
                               VALUES (:idProcessus, :idBac, :nomEtape, :descriptionEtape, :idImage)");
                 $this->bind(':idProcessus', $idProcessus);
                 $this->bind(':idBac', $bac->getIdBac());
@@ -54,7 +53,7 @@ class EtapeModel extends Model {
                 $this->execute();
 
                 if ($this->stmt->rowCount() == 0) {
-                    Messages::setMsg("L'insertion de l'étape a échoué.", "error");
+                    Messages::setMsg("L'insertion de l'étape a échoué !", "error");
                     return null;
                 }
             } catch (PDOException $e) {
@@ -65,57 +64,61 @@ class EtapeModel extends Model {
     }
 
     private function ajouterImage()
-	{
-		$nomFichier = $_FILES['image']['name'];
-		$typeMIME = $_FILES['image']['type'];
-		$tailleImage = $_FILES['image']['size'];
-		$contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
-
-		$typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
-		if (!in_array($typeMIME, $typesAutorises)) {
-			Message::afficher("Format d'image non autorisé !", "erreur");
-			return null;
-		}
-
-		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
-					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
-		$this->bind(':nomFichier', $nomFichier);
-		$this->bind(':typeMIME', $typeMIME);
-		$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
-		$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
-		$this->execute();
-
-		$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
-		$this->bind(':nomFichier', $nomFichier);
-		$image = $this->getResult();
-
-		return $image['idImage'] ?? null;
-	}
-
-    private function ajouterBac($contenance, $numeroBac)
     {
-        $this->query("SELECT idBac, contenance FROM Bac WHERE contenance = :contenance");
+        $nomFichier = $_FILES['image']['name'];
+        $typeMIME = $_FILES['image']['type'];
+        $tailleImage = $_FILES['image']['size'];
+        $contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+
+        $typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($typeMIME, $typesAutorises)) {
+            Message::afficher("Format d'image non autorisé !", "erreur");
+            return null;
+        }
+
+        $this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage)
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+        $this->bind(':nomFichier', $nomFichier);
+        $this->bind(':typeMIME', $typeMIME);
+        $this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+        $this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+        $this->execute();
+
+        $this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
+        $this->bind(':nomFichier', $nomFichier);
+        $image = $this->getResult();
+
+        return $image['idImage'] ?? null;
+    }
+
+    private function ajouterBac($numeroBac, $idProcessus, $contenance)
+    {
+        // est-ce que ce bac existe déjà pour ce processus avec cette contenance ?
+        $this->query("SELECT numeroBac, idProcessus, contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus AND contenance = :contenance");
+        $this->bind(':numeroBac', $numeroBac);
+        $this->bind(':idProcessus', $idProcessus);
         $this->bind(':contenance', $contenance);
-        $bacExist = $this->getResult(); 
+        $bacExist = $this->getResult();
         if ($bacExist) {
-            $bac = new Bac($bacExist['idBac'], $bacExist['contenance']);
+            $bac = new Bac($bacExist['numeroBac'], $bacExist['contenance']);
         } else {
             if (empty($numeroBac)) {
-                Messages::setMsg("Le numéro de bac doit être fourni si le bac n'existe pas.", "error");
+                Messages::setMsg("Le numéro de bac doit être fourni si le bac n'existe pas !", "error");
                 return null;
             }
 
-            $this->query("INSERT INTO Bac (contenance, numeroBac) VALUES (:contenance, :numeroBac)");
-            $this->bind(':contenance', $contenance);
+            $this->query("INSERT INTO Bac (numeroBac, idProcessus, contenance) VALUES (:numeroBac, :idProcessus, :contenance)");
             $this->bind(':numeroBac', $numeroBac);
+            $this->bind(':idProcessus', $idProcessus);
+            $this->bind(':contenance', $contenance);
+
             $this->execute();
             if ($this->stmt->rowCount() == 0) {
-                Messages::setMsg("L'insertion du bac a échoué.", "error");
+                Messages::setMsg("L'insertion du bac a échoué !", "error");
                 return null;
             }
 
-            $idBac = $this->getLastInsertId();
-            $bac = new Bac($idBac, $contenance);
+            $bac = new Bac($numeroBac, $contenance);
         }
         return $bac;
     }
@@ -132,4 +135,3 @@ class EtapeModel extends Model {
         return $nomProcessus;
     }
 }
-?>
