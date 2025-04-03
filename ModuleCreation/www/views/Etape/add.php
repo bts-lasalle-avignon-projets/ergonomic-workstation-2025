@@ -1,6 +1,11 @@
+<div class="col col-lg-8 mt-5 mx-3 mx-lg-auto text-center">
+    <h1>Processus Selectioné : <?php echo htmlspecialchars($datas['nomProcessus']['nomProcessus']); ?></h1>
+</div>
+
+
 <div class="card col col-lg-5 mx-3 mx-lg-auto p-0">
 	<div class="card-header">
-		<h3 class="card-title">Ajouter processus</h3>
+		<h3 class="card-title">Ajouter Etapes</h3>
 	</div>
     <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">

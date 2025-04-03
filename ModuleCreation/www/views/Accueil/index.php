@@ -5,4 +5,4 @@
 	<div class="mt-3 text-center">
 		Gestion des processus d'assemblage
 	</div>
-</div>
+</div>	

@@ -119,5 +119,17 @@ class EtapeModel extends Model {
         }
         return $bac;
     }
+
+    public function getTitre()
+    {
+
+        $idProcessus = (int) $_GET['id'];
+        $this->query("SELECT nomProcessus FROM Processus WHERE idProcessus = :idProcessus");
+        $this->bind(':idProcessus', $idProcessus);
+        $this->execute();
+        $nomProcessus = $this->getResult();
+
+        return $nomProcessus;
+    }
 }
 ?>
