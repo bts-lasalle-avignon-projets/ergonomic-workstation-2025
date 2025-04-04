@@ -20,7 +20,6 @@ class Etape extends Controller {
         $this->viewmodel->add();
         $nomProcessus = $this->viewmodel->getTitre();
         $numeroEtape = $this->viewmodel->getNumeroEtape();
-        var_dump($numeroEtape);
         $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
       } else {
         if (!isset($_SESSION['is_logged_in'])) {
