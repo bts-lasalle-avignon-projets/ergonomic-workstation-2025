@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Processus (
     nomProcessus VARCHAR(255) NOT NULL,
     descriptionProcessus TEXT,
     dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    idImage INT
+    idImage INT FOREIGN KEY
 );
 
 CREATE TABLE IF NOT EXISTS Bac (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Etape (
     nomEtape VARCHAR(255) NOT NULL,
     numeroEtape INT,
     descriptionEtape TEXT NOT NULL,
-    idImage INT,
+    idImage INT FOREIGN KEY,
     CONSTRAINT FK_EtapeProcessus FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE,
     CONSTRAINT FK_EtapeBac FOREIGN KEY (idBac,idProcessus) REFERENCES Bac(numeroBac,idProcessus) ON DELETE CASCADE
 );
