@@ -14,7 +14,9 @@
 				<?php endif; ?>
 				<hr />
 				<small class="card-subtitle">
-					<a class="card-link text-success" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Éditer</a>
+					<a class="card-link text-success" href="<?php echo ROOT_PATH; ?>etape/add/<?php echo $item['idProcessus']; ?>">Éditer</a>
+					<a class="card-link text-warning" href="<?php echo ROOT_PATH; ?>processus/view/<?php echo $item['idProcessus']; ?>">Voir</a>
+					<a class="card-link text-primary" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Modifier</a>
 					<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer</a>
 				</small>
 			</div>

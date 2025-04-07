@@ -121,8 +121,8 @@ CREATE TABLE IF NOT EXISTS Processus (
     idImage INT
 );
 
-CREATE TABLE IF NOT EXISTS Etapes (
-    idEtapes INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Etape (
+    idEtape INT AUTO_INCREMENT PRIMARY KEY,
     idProcessus INT NOT NULL,
     idBac INT,
     descriptionEtape TEXT NOT NULL,

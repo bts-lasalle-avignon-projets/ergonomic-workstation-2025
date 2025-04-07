@@ -73,4 +73,24 @@ class Processus extends Controller
 			}
 		}
 	}
+
+	protected function view()
+	{
+		if (!empty($this->request['id'])) {
+			$this->id = $this->request['id'];
+		} else {
+			header('Location: ' . URL_PATH . 'processus');
+		}
+		if (NO_LOGIN) {
+			$idProcessus = $this->viewmodel->view();
+			$this->display($idProcessus);
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				$idProcessus = $this->viewmodel->view();
+				$this->display($idProcessus);
+			}
+		}
+	}
 }

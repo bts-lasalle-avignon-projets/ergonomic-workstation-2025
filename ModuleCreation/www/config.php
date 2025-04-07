@@ -1,5 +1,9 @@
 <?php
 
+// le nom à ajouter dans l'URL
+//define("URL_NAME", "ergonomic-workstation");
+define("URL_NAME", "");
+
 // Pour le debug
 define("DEBUG", false);
 
@@ -14,9 +18,18 @@ define("DB_PASS", "password");
 define("DB_NAME", "ergonomic_workstation");
 
 // URL
-define("ROOT_PATH", "/ergonomic-workstation/");
-define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/ergonomic-workstation/");
-//define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/");
+if (!empty(URL_NAME)) {
+    define("ROOT_PATH", "/" . URL_NAME . "/");
+    define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/" . URL_NAME . "/");
+} else {
+    define("ROOT_PATH", "/");
+    define("URL_PATH", "http://" . $_SERVER['HTTP_HOST'] . "/");
+}
 
 // Divers
 define("TITRE_SITE", "Ergonomic Workstation");
+
+if (DEBUG) {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+}
