@@ -93,4 +93,26 @@ class Processus extends Controller
 			}
 		}
 	}
+
+	public function export()
+	{
+		if (NO_LOGIN) {
+			$json = $this->viewmodel->export();
+
+			if (defined('DEBUG') && DEBUG === true) {
+				$this->display(['json' => $json]);
+			} else {
+				header('Content-Type: application/json');
+				header('Content-Disposition: attachment; filename="processus_export.json"');
+				header('Content-Length: ' . strlen($json));
+				echo $json;
+				exit;
+			}
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+				exit;
+			}
+		}
+	}
 }
