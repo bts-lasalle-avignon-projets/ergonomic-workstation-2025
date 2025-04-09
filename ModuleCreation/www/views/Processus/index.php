@@ -18,6 +18,7 @@
 					<a class="card-link text-warning" href="<?php echo ROOT_PATH; ?>processus/view/<?php echo $item['idProcessus']; ?>">Voir</a>
 					<a class="card-link text-primary" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Modifier</a>
 					<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer</a>
+					<a class="card-link text-info" href="<?php echo ROOT_PATH; ?>partage/export/<?php echo $item['idProcessus']; ?>">Export</a>
 				</small>
 			</div>
 		</div>
