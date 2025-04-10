@@ -16,13 +16,10 @@ require('controllers/accueil.php');
 require('controllers/operateurs.php');
 require('controllers/processus.php');
 require('controllers/etape.php');
-require('controllers/partage.php');
-
 require('models/accueil.php');
 require('models/operateur.php');
 require('models/processus.php');
 require('models/etape.php');
-require('models/partage.php');
 
 // Forme de l'URL, après réécriture : http://root/controleur/action/id
 $router = new Router($_GET);
