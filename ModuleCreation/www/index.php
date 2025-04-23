@@ -11,11 +11,11 @@ require('classes/controller.php');
 require('classes/model.php');
 require('classes/bac.php');
 
+
 require('controllers/accueil.php');
 require('controllers/operateurs.php');
 require('controllers/processus.php');
 require('controllers/etape.php');
-
 require('models/accueil.php');
 require('models/operateur.php');
 require('models/processus.php');
