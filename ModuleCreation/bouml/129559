@@ -1,0 +1,259 @@
+format 224
+"models" // www::models
+  revision 4
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "./models/"
+  deploymentview 129559 "models"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 131735 "accueil"
+      stereotype "source"
+      php_src "<?php
+${definition}
+
+"
+      associated_elems
+	class_ref 130455 // AccueilModel
+      end
+    end
+
+    artifact 131863 "operateur"
+      stereotype "source"
+      php_src "<?php
+${definition}
+
+"
+      associated_elems
+	class_ref 130583 // OperateurModel
+      end
+    end
+
+    artifact 131991 "processus"
+      stereotype "source"
+      php_src "<?php
+${definition}
+
+"
+      associated_elems
+	class_ref 130711 // ProcessusModel
+      end
+    end
+  end
+
+  classview 128791 "models"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 130455 "AccueilModel"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 136471 // <generalisation>
+	relation 136471 ---|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 136471 // <generalisation>
+	  b parent class_ref 129815 // Model
+      end
+
+      operation 136874 "index"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 130583 "OperateurModel"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 136599 // <generalisation>
+	relation 136599 ---|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 136599 // <generalisation>
+	  b parent class_ref 129815 // Model
+      end
+
+      operation 137002 "register"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 137130 "login"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+
+    class 130711 "ProcessusModel"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 136727 // <generalisation>
+	relation 136727 ---|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 136727 // <generalisation>
+	  b parent class_ref 129815 // Model
+      end
+
+      operation 137514 "ajouterImage"
+	private explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 137258 "index"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 137386 "add"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 137642 "edit"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 137770 "delete"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+    end
+  end
+end

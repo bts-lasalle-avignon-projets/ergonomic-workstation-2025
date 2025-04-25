@@ -1,0 +1,42 @@
+class Router
+!!!131735.php!!!	__construct(in request : )
+		if (DEBUG) {
+			print_r($request);
+		}
+
+		$this->request = $request;
+
+		if (!empty($this->request['controleur'])) {
+			$this->controller = $this->request['controleur'];
+		} else {
+			$this->controller = 'accueil';
+		}
+
+		if (!empty($this->request['action'])) {
+			$this->action = $this->request['action'];
+		} else {
+			$this->action = 'index';
+		}
+
+		if (DEBUG) {
+			Message::afficher('controleur : ' . $this->controller, 'debug');
+			Message::afficher('action : ' . $this->action, 'debug');
+		}
+!!!131863.php!!!	createController()
+		if (class_exists($this->controller)) {
+			$parents = class_parents($this->controller);
+			if (in_array("Controller", $parents)) {
+				if (method_exists($this->controller, $this->action)) {
+					return new $this->controller($this->action, $this->request);
+				} else {
+					Message::afficher('Action ' . $this->action . ' introuvable !', 'erreur');
+					return;
+				}
+			} else {
+				Message::afficher('Classe mère Controller introuvable !', 'erreur');
+				return;
+			}
+		} else {
+			Message::afficher('Classe contrôleur ' . $this->controller . ' introuvable !', 'erreur');
+			return;
+		}

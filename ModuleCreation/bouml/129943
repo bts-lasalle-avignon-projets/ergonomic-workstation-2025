@@ -1,0 +1,57 @@
+format 224
+"Processus" // www::views::Processus
+  revision 3
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "./views/Processus/"
+  deploymentview 129943 "Processus"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 132375 "edit"
+      stereotype "source"
+      associated_elems
+      end
+    end
+
+    artifact 132503 "index"
+      stereotype "source"
+      php_src "<div class=\"col-12\">
+	<a class=\"btn btn-primary btn-share mt-0\" href=\"<?php echo ROOT_PATH; ?>processus/add\">Ajouter processus</a>
+	<?php foreach ($datas as $item) : ?>
+		<div class=\"card mb-4\">
+			<h3 class=\"card-header\"><?php echo $item['nomProcessus']; ?></h3>
+			<div class=\"card-body\">
+				<small class=\"card-subtitle\"><?php echo $item['dateCreation']; ?>"
+      associated_elems
+      end
+    end
+  end
+end

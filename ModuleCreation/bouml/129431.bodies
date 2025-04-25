@@ -1,0 +1,11 @@
+class Controller
+!!!144298.php!!!	__construct(in action : , in request : )
+		$this->action = $action;
+		$this->request = $request;
+!!!144426.php!!!	executeAction()
+		return $this->{$this->action}();
+!!!151082.php!!!	display(in datas :  = null)
+		// la vue ajoutée dans la page principale (main.php)
+		$view = 'views/' . get_class($this) . '/' . $this->action . '.php';
+
+		require('views/main.php');

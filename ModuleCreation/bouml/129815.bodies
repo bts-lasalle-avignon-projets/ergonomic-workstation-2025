@@ -1,0 +1,43 @@
+class Model
+!!!135338.php!!!	__construct()
+		if (DB_DRIVER) {
+			if (!in_array("PDO", get_loaded_extensions()))
+				die("L’extension PDO n’est pas présente !<br><br>");
+			if (!in_array("pdo_mysql", get_loaded_extensions()))
+				die("L’extension pdo_mysql n’est pas présente !<br><br>");
+			$this->dbh = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS) or die("Echec de la création de l’instance PDO !");
+		}
+!!!135466.php!!!	query(in query : )
+		if ($this->dbh) {
+			$this->stmt = $this->dbh->prepare($query);
+		}
+!!!135594.php!!!	bind(in param : , in value : , in type :  = null)
+		if (is_null($type)) {
+			switch (true) {
+				case is_int($value):
+					$type = PDO::PARAM_INT;
+					break;
+				case is_bool($value):
+					$type = PDO::PARAM_BOOL;
+					break;
+				case is_null($value):
+					$type = PDO::PARAM_NULL;
+					break;
+				default:
+					$type = PDO::PARAM_STR;
+			}
+		}
+		$this->stmt->bindValue($param, $value, $type);
+!!!135722.php!!!	execute()
+		$this->stmt->execute();
+!!!151210.php!!!	getResults(in mode :  = PDO::FETCH_ASSOC)
+		$this->execute();
+		return $this->stmt->fetchAll($mode);
+!!!151338.php!!!	getResult(in mode :  = PDO::FETCH_ASSOC)
+		$this->execute();
+		return $this->stmt->fetch($mode);
+!!!151466.php!!!	count()
+		$this->execute();
+		return $this->stmt->fetchColumn();
+!!!151594.php!!!	getLastInsertId()
+		return $this->dbh->lastInsertId();
