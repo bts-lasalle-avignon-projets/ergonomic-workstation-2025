@@ -24,17 +24,11 @@ FenetreEtapes::FenetreEtapes(QWidget* parent) :
     imageLabel = new QLabel(this);
     layout->addWidget(imageLabel);
 
-    connect(boutonEtapeSuivante,
-            &QPushButton::clicked,
-            this,
-            &FenetreEtapes::chargerEtapeSuivante);
-    connect(boutonFermerFenetre,
-            &QPushButton::clicked,
-            this,
-            &FenetreEtapes::fermerFenetre);
+    connect(boutonEtapeSuivante, &QPushButton::clicked, this, &FenetreEtapes::chargerEtapeSuivante);
+    connect(boutonFermerFenetre, &QPushButton::clicked, this, &FenetreEtapes::fermerFenetre);
+
 #ifdef RASPBERRY_PI
-    setWindowFlags(Qt::FramelessWindowHint |
-                   Qt::Dialog); // Ajouter Qt::WindowStaysOnTopHint*/
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     showFullScreen();
 #else
     setWindowFlags(Qt::Dialog);
@@ -44,13 +38,7 @@ FenetreEtapes::FenetreEtapes(QWidget* parent) :
     setWindowModality(Qt::WindowModal);
 }
 
-/**
- * @brief S'exécute à chaque fois que la fenêtre est affichée
- *
- * @fn FenetreEtapes::showEvent
- *
- */
-void FenetreEtapes::showEvent(QShowEvent* event)
+void FenetreEtapes::showEvent(QShowEvent*)
 {
     qDebug() << Q_FUNC_INFO << this;
 }
@@ -60,24 +48,26 @@ void FenetreEtapes::chargerEtape(int idProcessus)
     qDebug() << Q_FUNC_INFO << "idProcessus" << idProcessus;
 
     listeDesEtapes.clear();
-    listeIdEtapes.clear(); // Stocker les ID des étapes
     idProcessusActuel = idProcessus;
 
     db = BaseDeDonnees::getDatabase();
 
     QSqlQuery query;
-    query.prepare("SELECT idEtapes, descriptionEtape FROM Etapes WHERE "
-                  "idProcessus = :processus_id ORDER BY idEtapes ASC");
+    query.prepare("SELECT idEtape, numeroEtape, nomEtape, descriptionEtape "
+                  "FROM Etape WHERE idProcessus = :processus_id "
+                  "ORDER BY numeroEtape ASC");
     query.bindValue(":processus_id", idProcessusActuel);
 
     if(query.exec())
     {
         while(query.next())
         {
-            int     idEtape     = query.value(0).toInt();
-            QString description = query.value(1).toString();
-            listeDesEtapes.append(description);
-            listeIdEtapes.append(idEtape); // Stocker les ID des étapes
+            InfosEtape etape;
+            etape.idEtape = query.value(0).toInt();
+            etape.numeroEtape = query.value(1).toInt();
+            etape.nomEtape = query.value(2).toString();
+            etape.descriptionEtape = query.value(3).toString();
+            listeDesEtapes.append(etape);
         }
 
         if(listeDesEtapes.isEmpty())
@@ -87,11 +77,9 @@ void FenetreEtapes::chargerEtape(int idProcessus)
         else
         {
             etapeActuelIndex = 0;
-            statusLabel->setText("Étape actuelle:\n" +
-                                 listeDesEtapes[etapeActuelIndex]);
+            afficherInfosEtapeActuelle();
             boutonEtapeSuivante->setEnabled(true);
-            chargerImagePourEtape(
-              listeIdEtapes[etapeActuelIndex]); // Charger l'image immédiatement
+            chargerImagePourEtape(listeDesEtapes[etapeActuelIndex].idEtape);
         }
     }
     else
@@ -101,12 +89,46 @@ void FenetreEtapes::chargerEtape(int idProcessus)
     }
 }
 
+void FenetreEtapes::afficherInfosEtapeActuelle()
+{
+    if(etapeActuelIndex >= 0 && etapeActuelIndex < listeDesEtapes.size())
+    {
+        InfosEtape etape = listeDesEtapes[etapeActuelIndex];
+
+        QString infoText;
+        infoText += "Étape n°" + QString::number(etape.numeroEtape) + " : " + etape.nomEtape + "\n";
+        infoText += "Description : " + etape.descriptionEtape + "\n";
+
+        // Charger les bacs associés à cette étape
+        QSqlQuery query;
+        query.prepare("SELECT numeroBac, contenance FROM Bac WHERE idEtape = :idEtape");
+        query.bindValue(":idEtape", etape.idEtape);
+
+        if(query.exec())
+        {
+            while(query.next())
+            {
+                QString numBac = query.value(0).toString();
+                QString contenance = query.value(1).toString();
+                infoText += "Bac n°" + numBac + " - Contenance : " + contenance + "\n";
+            }
+        }
+        else
+        {
+            infoText += "Erreur lors du chargement des bacs.\n";
+            qDebug() << "Erreur SQL (bacs) :" << query.lastError().text();
+        }
+
+        statusLabel->setText(infoText);
+    }
+}
+
 void FenetreEtapes::chargerImagePourEtape(int idEtape)
 {
     QSqlQuery query;
     query.prepare("SELECT contenuBlob FROM Image "
-                  "JOIN Etapes ON Etapes.idImage = Image.idImage "
-                  "WHERE Etapes.idEtapes = :idEtape");
+                  "JOIN Etape ON Etape.idImage = Image.idImage "
+                  "WHERE Etape.idEtape = :idEtape");
     query.bindValue(":idEtape", idEtape);
 
     if(query.exec() && query.next())
@@ -153,10 +175,8 @@ void FenetreEtapes::chargerEtapeSuivante()
     if(etapeActuelIndex < listeDesEtapes.size() - 1)
     {
         etapeActuelIndex++;
-        statusLabel->setText("Étape actuelle:\n" +
-                             listeDesEtapes[etapeActuelIndex]);
-        chargerImagePourEtape(
-          listeIdEtapes[etapeActuelIndex]); // Mettre à jour l'image
+        afficherInfosEtapeActuelle();
+        chargerImagePourEtape(listeDesEtapes[etapeActuelIndex].idEtape);
     }
     else
     {

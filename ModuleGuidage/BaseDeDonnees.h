@@ -13,7 +13,7 @@
  * @def HOSTNAME
  * @brief Définit l'adresse du serveur SGBD
  */
-#define HOSTNAME "127.0.0.1"
+#define HOSTNAME "192.168.55.16"
 
 /**
  * @def DATABASENAME
@@ -25,7 +25,7 @@
  * @def USERNAME
  * @brief Définit le nom d'utilisateur par défaut
  */
-#define USERNAME "ergoWork"
+#define USERNAME "adminErgoWork"
 
 /**
  * @def PASSWORD
