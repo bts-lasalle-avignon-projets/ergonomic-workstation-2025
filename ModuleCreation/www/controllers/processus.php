@@ -111,8 +111,20 @@ class Processus extends Controller
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
+				header('Content-Type: application/json');
+				header('Content-Disposition: attachment; filename="processus_export.json"');
+				header('Content-Length: ' . strlen($json));
+				echo $json;
 				exit;
 			}
+		}
+	}
+
+	public function import()
+	{
+		if (NO_LOGIN) {
+			$this->viewmodel->import();
+			$this->display();
 		}
 	}
 }
