@@ -5,7 +5,7 @@ class EtapeModel extends Model
     {
         if (!isset($_GET['id']) || empty($_GET['id'])) {
             Messages::setMsg("ID du processus manquant !", "error");
-            return null;
+            return false;
         }
 
         $idProcessus = (int) $_GET['id'];
@@ -18,7 +18,7 @@ class EtapeModel extends Model
 
             if (empty($nomEtape) || empty($descriptionEtape) || empty($contenance)) {
                 Messages::setMsg("Tous les champs doivent être remplis.", "error");
-                return null;
+                return false;
             }
 
             if (DEBUG) {
@@ -33,7 +33,7 @@ class EtapeModel extends Model
                 $bac = $this->ajouterBac($numeroBac, $idProcessus, $contenance);
 
                 if ($bac === null) {
-                    return null;
+                    return false;
                 }
 
                 $idImage = null;
@@ -52,18 +52,19 @@ class EtapeModel extends Model
                 $this->bind(':descriptionEtape', $descriptionEtape);
                 $this->bind(':idImage', $idImage, PDO::PARAM_INT);
                 $this->bind(':numeroEtape', $numeroEtape);
-
                 $this->execute();
 
                 if ($this->stmt->rowCount() == 0) {
                     Messages::setMsg("L'insertion de l'étape a échoué !", "error");
-                    return null;
+                    return false;
                 }
             } catch (PDOException $e) {
                 Messages::setMsg("Erreur SQL : " . $e->getMessage(), "error");
+                return false;
             }
         }
-        return null;
+
+        return true;
     }
 
     private function ajouterImage()
@@ -114,8 +115,7 @@ class EtapeModel extends Model
             $this->bind(':numeroBac', $numeroBac);
             $this->bind(':idProcessus', $idProcessus);
             $this->bind(':contenance', $contenance);
-            if(DEBUG)
-            {
+            if (DEBUG) {
                 echo "numeroBac : " . $numeroBac . "<br>";
                 echo "idProcessus : " . $idProcessus . "<br>";
                 echo "contenance : " . $contenance . "<br>";
@@ -130,7 +130,7 @@ class EtapeModel extends Model
 
             $bac = new Bac($numeroBac, $contenance);
         }
-        return $bac;
+        return $bac ?? null;
     }
 
     public function getTitre()
@@ -146,43 +146,39 @@ class EtapeModel extends Model
     }
 
 
-  public function incrementerNumeroEtape($idProcessus)
-   {
-       $this->query("SELECT COUNT(*) AS total FROM Etape WHERE idProcessus = :idProcessus");
-       $this->bind(':idProcessus', $idProcessus);
-       $this->execute();
+    public function incrementerNumeroEtape($idProcessus)
+    {
+        $this->query("SELECT COUNT(*) AS total FROM Etape WHERE idProcessus = :idProcessus");
+        $this->bind(':idProcessus', $idProcessus);
+        $this->execute();
 
 
-       $result = $this->getResult();
+        $result = $this->getResult();
 
         if (!$result || !isset($result['total'])) {
             return 1;
         }
 
+        $numeroProcessus = $result['total'] + 1;
 
-       $numeroProcessus = $result['total'] + 1;
-
-
-       return $numeroProcessus;
-   }
-
-public function getNumeroEtape()
-{
-    $idProcessus = (int) $_GET['id'];
-    $this->query("SELECT numeroEtape FROM Etape WHERE idProcessus = :idProcessus ORDER BY numeroEtape DESC LIMIT 1");
-    $this->bind(':idProcessus', $idProcessus);
-    $this->execute();
-    $result = $this->getResult();
-
-    // Vérifie si le résultat est valide (pas un booléen false ou vide)
-    if ($result === false || empty($result)) {
-        // Si aucun résultat, renvoyer un tableau avec 'numeroEtape' égal à 1
-        return ['numeroEtape' => 1];
+        return $numeroProcessus;
     }
 
-    // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
-    return ['numeroEtape' => $result['numeroEtape'] + 1];
-}
+    public function getNumeroEtape()
+    {
+        $idProcessus = (int) $_GET['id'];
+        $this->query("SELECT numeroEtape FROM Etape WHERE idProcessus = :idProcessus ORDER BY numeroEtape DESC LIMIT 1");
+        $this->bind(':idProcessus', $idProcessus);
+        $this->execute();
+        $result = $this->getResult();
 
+        // Vérifie si le résultat est valide (pas un booléen false ou vide)
+        if ($result === false || empty($result)) {
+            // Si aucun résultat, renvoyer un tableau avec 'numeroEtape' égal à 1
+            return ['numeroEtape' => 1];
+        }
 
+        // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
+        return ['numeroEtape' => $result['numeroEtape'] + 1];
+    }
 }

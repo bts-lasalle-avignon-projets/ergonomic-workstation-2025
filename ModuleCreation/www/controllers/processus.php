@@ -98,7 +98,6 @@ class Processus extends Controller
 	{
 		if (NO_LOGIN) {
 			$json = $this->viewmodel->export();
-
 			if (defined('DEBUG') && DEBUG === true) {
 				$this->display(['json' => $json]);
 			} else {
@@ -111,6 +110,8 @@ class Processus extends Controller
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				$json = $this->viewmodel->export();
 				header('Content-Type: application/json');
 				header('Content-Disposition: attachment; filename="processus_export.json"');
 				header('Content-Length: ' . strlen($json));
@@ -125,6 +126,13 @@ class Processus extends Controller
 		if (NO_LOGIN) {
 			$this->viewmodel->import();
 			$this->display();
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				$this->viewmodel->import();
+				$this->display();
+			}
 		}
 	}
 }
