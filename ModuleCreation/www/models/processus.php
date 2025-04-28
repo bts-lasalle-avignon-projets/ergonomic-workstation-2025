@@ -5,7 +5,7 @@ class ProcessusModel extends Model
 	public function index()
 	{
 		$this->query("
-			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage
+			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage, p.descriptionProcessus
 			FROM Processus p
 			ORDER BY p.dateCreation
 		");
@@ -30,6 +30,7 @@ class ProcessusModel extends Model
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 			$nomProcessus = trim($_POST['nomProcessus']);
+			$descriptionProcessus = trim($_POST['descriptionProcessus']);
 
 			if (empty($nomProcessus)) {
 				Message::afficher("Le nom est requis !", "erreur");
@@ -43,9 +44,9 @@ class ProcessusModel extends Model
 					$idImage = $this->ajouterImage(); // Ajoute l'image et récupère son ID
 				}
 
-				// Insérer le processus avec idImage (NULL si pas d'image)
-				$this->query("INSERT INTO Processus (nomProcessus, idImage) VALUES (:nomProcessus, :idImage)");
+				$this->query("INSERT INTO Processus (nomProcessus, descriptionProcessus, idImage) VALUES (:nomProcessus, :descriptionProcessus, :idImage)");
 				$this->bind(':nomProcessus', $nomProcessus);
+				$this->bind(':descriptionProcessus', $descriptionProcessus);
 				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
 				$this->execute();
 
@@ -190,10 +191,10 @@ class ProcessusModel extends Model
 					}
 
 					$numeroBac = $etape['bac']['numeroBac'] ?? null;
-					$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
-								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
+					$this->query("INSERT INTO Etape (nomEtape, descriptionProcessusEtape, idProcessus, idImage, idBac, numeroEtape) 
+								VALUES (:nomEtape, :descriptionProcessusEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
 					$this->bind(':nomEtape', $etape['nomEtape']);
-					$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
+					$this->bind(':descriptionProcessusEtape', $etape['descriptionProcessusEtape'] ?? '');
 					$this->bind(':idProcessus', $idProcessus);
 					$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
 					$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);

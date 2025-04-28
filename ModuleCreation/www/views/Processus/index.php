@@ -1,11 +1,16 @@
 <div class="col-12">
-	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Créer</a>
+	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Ajouter Processus</a>
 	<a class="btn btn-info btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/import">Importer</a>
 	<?php foreach ($datas as $item) : ?>
 		<div class="card mb-4">
 			<h3 class="card-header"><?php echo $item['nomProcessus']; ?></h3>
 			<div class="card-body">
-				<small class="card-subtitle"><?php echo $item['dateCreation']; ?></small>
+				<div>
+					<small class="card-subtitle"><?php echo $item['dateCreation']; ?></small>
+				</div>
+				<div>
+					<small class="card-subtitle"><?php echo $item['descriptionProcessus']; ?></small>
+				</div>
 				<hr />
 				<!-- Affichage de l'image si elle existe -->
 				<?php if (!empty($item['image']['contenuBlob'])) : ?>
