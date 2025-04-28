@@ -160,9 +160,10 @@ class ProcessusModel extends Model
 					$idImage = $this->insererImageDepuisJson($data['image']);
 				}
 
-				$this->query("INSERT INTO Processus (nomProcessus, idImage) VALUES (:nomProcessus, :idImage)");
+				$this->query("INSERT INTO Processus (nomProcessus, idImage, descriptionProcessus) VALUES (:nomProcessus, :idImage, :descriptionProcessus)");
 				$this->bind(':nomProcessus', $data['nomProcessus']);
 				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+				$this->bind(':descriptionProcessus', $data['descriptionProcessus']);
 				$this->execute();
 
 				$idProcessus = $this->getLastInsertId();
