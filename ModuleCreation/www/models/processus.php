@@ -140,6 +140,83 @@ class ProcessusModel extends Model
 		return json_encode($processusExport, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}
 
+	public function import()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fichier']) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK) {
+			$jsonFile = $_FILES['fichier']['tmp_name'];
+			$jsonContent = file_get_contents($jsonFile);
+
+			$data = json_decode($jsonContent, true);
+
+			if (!$data || !isset($data['nomProcessus'])) {
+				Message::afficher("Le fichier n'est pas valide.", "erreur");
+				return;
+			}
+
+		
+				$idImage = null;
+				if (isset($data['image'])) {
+					$idImage = $this->insererImageDepuisJson($data['image']);
+				}
+
+				$this->query("INSERT INTO Processus (nomProcessus, idImage) VALUES (:nomProcessus, :idImage)");
+				$this->bind(':nomProcessus', $data['nomProcessus']);
+				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+				$this->execute();
+
+				$idProcessus = $this->getLastInsertId();
+
+				$bacsMap = [];
+				if (isset($data['bacs']) && is_array($data['bacs'])) {
+					foreach ($data['bacs'] as $bac) {
+						try {
+							$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
+							$this->bind(':numeroBac', $bac['numeroBac']);
+							$this->bind(':contenance', $bac['contenance']);
+							$this->bind(':idProcessus', $idProcessus);
+							$this->execute();
+						} catch (PDOException $e) {
+							echo "Erreur lors de l'insertion du bac : " . $e->getMessage();  // Afficher le message complet
+						}
+
+						$idBac = $this->getLastInsertId();
+            			$bacsMap[$bac['numeroBac']] = $idBac;
+					}
+				}
+				foreach ($data['etapes'] as $etape) {
+					$idImageEtape = null;
+					if (isset($etape['image'])) {
+						$idImageEtape = $this->insererImageDepuisJson($etape['image']);
+					}
+
+					$numeroBac = $etape['bac']['numeroBac'] ?? null;
+					$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
+								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
+					$this->bind(':nomEtape', $etape['nomEtape']);
+					$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
+					$this->bind(':idProcessus', $idProcessus);
+					$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
+					$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);
+					$this->bind(':numeroEtape', $etape['numeroEtape']);
+					$this->execute();
+				}
+		}
+	}
+
+	private function insererImageDepuisJson($image)
+	{
+		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+
+		$this->bind(':nomFichier', $image['nomFichier']);
+		$this->bind(':typeMIME', $image['typeMIME']);
+		$this->bind(':contenuBlob', base64_decode($image['contenu']), PDO::PARAM_LOB);
+		$this->bind(':tailleImage', $image['tailleImage'], PDO::PARAM_INT);
+		$this->execute();
+
+		return $this->getLastInsertId();
+	}
+
 	private function fetchAllByQuery($sql, $params = [])
 	{
 		$this->query($sql);
