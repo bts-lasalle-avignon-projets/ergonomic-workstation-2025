@@ -191,10 +191,10 @@ class ProcessusModel extends Model
 					}
 
 					$numeroBac = $etape['bac']['numeroBac'] ?? null;
-					$this->query("INSERT INTO Etape (nomEtape, descriptionProcessusEtape, idProcessus, idImage, idBac, numeroEtape) 
-								VALUES (:nomEtape, :descriptionProcessusEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
+					$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
+								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
 					$this->bind(':nomEtape', $etape['nomEtape']);
-					$this->bind(':descriptionProcessusEtape', $etape['descriptionProcessusEtape'] ?? '');
+					$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
 					$this->bind(':idProcessus', $idProcessus);
 					$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
 					$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);
