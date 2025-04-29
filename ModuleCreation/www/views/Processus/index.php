@@ -1,5 +1,5 @@
 <div class="col-12">
-	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Ajouter Processus</a>
+	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Créer</a>
 	<a class="btn btn-info btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/import">Importer</a>
 	<?php foreach ($datas as $item) : ?>
 		<div class="card mb-4">
