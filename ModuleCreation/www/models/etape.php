@@ -97,7 +97,15 @@ class EtapeModel extends Model
 
     private function ajouterBac($numeroBac, $idProcessus, $contenance)
     {
-        // est-ce que ce bac existe déjà pour ce processus avec cette contenance ?
+        $verif = $this->verifierBac($numeroBac, $idProcessus, $contenance);
+        if ($verif === 'conflit_contenance') {
+            Messages::setMsg("Ce numéro de bac est déjà utilisé avec une autre contenance dans ce processus.", "error");
+            return null;
+        } elseif ($verif === 'conflit_numero') {
+            Messages::setMsg("Cette contenance est déjà associée à un autre numéro de bac dans ce processus.", "error");
+            return null;
+        }
+
         $this->query("SELECT numeroBac, idProcessus, contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus AND contenance = :contenance");
         $this->bind(':numeroBac', $numeroBac);
         $this->bind(':idProcessus', $idProcessus);
@@ -106,11 +114,6 @@ class EtapeModel extends Model
         if ($bacExist) {
             $bac = new Bac($bacExist['numeroBac'], $bacExist['contenance']);
         } else {
-            if (empty($numeroBac)) {
-                Messages::setMsg("Le numéro de bac doit être fourni !", "error");
-                return null;
-            }
-
             $this->query("INSERT INTO Bac (numeroBac, idProcessus, contenance) VALUES (:numeroBac, :idProcessus, :contenance)");
             $this->bind(':numeroBac', $numeroBac);
             $this->bind(':idProcessus', $idProcessus);
@@ -181,4 +184,28 @@ class EtapeModel extends Model
         // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
         return ['numeroEtape' => $result['numeroEtape'] + 1];
     }
+
+    private function verifierBac($numeroBac, $idProcessus, $contenance)
+    {
+        $this->query("SELECT contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
+        $this->bind(':numeroBac', $numeroBac);
+        $this->bind(':idProcessus', $idProcessus);
+        $resultNum = $this->getResult();
+
+        if ($resultNum && $resultNum['contenance'] != $contenance) {
+            return 'conflit_contenance';
+        }
+
+        $this->query("SELECT numeroBac FROM Bac WHERE contenance = :contenance AND idProcessus = :idProcessus");
+        $this->bind(':contenance', $contenance);
+        $this->bind(':idProcessus', $idProcessus);
+        $resultCont = $this->getResult();
+
+        if ($resultCont && $resultCont['numeroBac'] != $numeroBac) {
+            return 'conflit_numero';
+        }
+
+        return true;
+    }
+
 }
