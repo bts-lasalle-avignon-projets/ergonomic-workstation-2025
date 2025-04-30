@@ -50,9 +50,9 @@ class ProcessusModel extends Model
 				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
 				$this->execute();
 
-				Message::afficher("Processus ajouté avec succès !", "success");
+				Messages::setMsg("Processus ajouté avec succès !", "success");
 			} catch (PDOException $e) {
-				Message::afficher("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
+				Messages::setMsg("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
 			}
 		}
 	}
