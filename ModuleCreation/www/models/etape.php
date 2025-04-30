@@ -98,14 +98,9 @@ class EtapeModel extends Model
     private function ajouterBac($numeroBac, $idProcessus, $contenance)
     {
         $verif = $this->verifierBac($numeroBac, $idProcessus, $contenance);
-        if ($verif === 'conflit_contenance') {
-            Messages::setMsg("Ce numéro de bac est déjà utilisé avec une autre contenance dans ce processus.", "error");
-            return null;
-        } elseif ($verif === 'conflit_numero') {
-            Messages::setMsg("Cette contenance est déjà associée à un autre numéro de bac dans ce processus.", "error");
+        if (!$verif) {
             return null;
         }
-
         $this->query("SELECT numeroBac, idProcessus, contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus AND contenance = :contenance");
         $this->bind(':numeroBac', $numeroBac);
         $this->bind(':idProcessus', $idProcessus);
@@ -184,28 +179,38 @@ class EtapeModel extends Model
         // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
         return ['numeroEtape' => $result['numeroEtape'] + 1];
     }
+private function verifierBac($numeroBac, $idProcessus, $contenance)
+{
+    // Vérifie si le numéro de bac existe déjà avec une autre contenance
+    $this->query("SELECT contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
+    $this->bind(':numeroBac', $numeroBac);
+    $this->bind(':idProcessus', $idProcessus);
+    $resultNum = $this->getResult();
 
-    private function verifierBac($numeroBac, $idProcessus, $contenance)
-    {
-        $this->query("SELECT contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
-        $this->bind(':numeroBac', $numeroBac);
-        $this->bind(':idProcessus', $idProcessus);
-        $resultNum = $this->getResult();
-
-        if ($resultNum && $resultNum['contenance'] != $contenance) {
-            return 'conflit_contenance';
-        }
-
-        $this->query("SELECT numeroBac FROM Bac WHERE contenance = :contenance AND idProcessus = :idProcessus");
-        $this->bind(':contenance', $contenance);
-        $this->bind(':idProcessus', $idProcessus);
-        $resultCont = $this->getResult();
-
-        if ($resultCont && $resultCont['numeroBac'] != $numeroBac) {
-            return 'conflit_numero';
-        }
-
-        return true;
+    if ($resultNum && $resultNum['contenance'] != $contenance) {
+        Messages::setMsg(
+            "Le bac n°{$numeroBac} existe déjà dans ce processus avec une contenance différente : {$resultNum['contenance']}.",
+            "error"
+        );
+        return false;
     }
+
+    // Vérifie si la contenance est déjà associée à un autre numéro de bac
+    $this->query("SELECT numeroBac FROM Bac WHERE contenance = :contenance AND idProcessus = :idProcessus");
+    $this->bind(':contenance', $contenance);
+    $this->bind(':idProcessus', $idProcessus);
+    $resultCont = $this->getResult();
+
+    if ($resultCont && $resultCont['numeroBac'] != $numeroBac) {
+        Messages::setMsg(
+            "La contenance de : {$contenance} est déjà utilisée par un autre bac n°{$resultCont['numeroBac']} dans ce processus.",
+            "error"
+        );
+        return false;
+    }
+
+    return true;
+}
+
 
 }
