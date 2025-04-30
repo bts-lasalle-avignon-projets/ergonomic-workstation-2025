@@ -24,7 +24,12 @@ class Etape extends Controller
         $numeroEtape = $this->viewmodel->getNumeroEtape();
         $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
       } else {
-        header('Location: ' . URL_PATH . 'processus');
+        $idProcessus = $this->getID();
+        if($idProcessus) {
+          header('Location: ' . URL_PATH . 'etape' . '/' . 'add' . '/' . $idProcessus);
+        } else {
+          header('Location: ' . URL_PATH . 'processus');
+        }
       }
     } else {
       if (!isset($_SESSION['is_logged_in'])) {
@@ -34,5 +39,14 @@ class Etape extends Controller
         $this->display();
       }
     }
+  }
+
+  private function getID()
+  {
+    if (!isset($_GET['id']) || empty($_GET['id'])) {
+      Messages::setMsg("ID du processus manquant !", "error");
+      return false;
+    }
+    return (int) $_GET['id'];
   }
 }
