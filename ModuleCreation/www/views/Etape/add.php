@@ -25,7 +25,7 @@
 
         <div class="form-group">
             <label for="numeroBac">Numéro du bac</label>
-            <input type="text" name="numeroBac" class="form-control" id="numeroBac">
+            <input type="text" name="numeroBac" class="form-control" id="numeroBac" required>
         </div>
         <div class="form-group">
             <label for='image'>Image :</label>
