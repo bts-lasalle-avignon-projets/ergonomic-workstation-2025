@@ -10,7 +10,7 @@
 			</div>			
 			<div class="form-group">
 				<label for="descriptionProcessus">Description</label>
-				<textarea class="form-control" name="desciptionProcessus" id="descriptionProcessus" rows="4" required>Description Processus</textarea>
+				<textarea class="form-control" name="descriptionProcessus" id="descriptionProcessus" rows="4" required></textarea>
 			</div>
 			<div class="form-group">
 				<label for="image">Image :</label>
