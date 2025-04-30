@@ -4,15 +4,16 @@
   - [Présentation](#présentation)
   - [Recette](#recette)
   - [Utilisation](#utilisation)
+    - [Module de Création](#module-de-création-1)
   - [Changelog](#changelog)
   - [TODO](#todo)
     - [Module de Création](#module-de-création)
     - [Module de Guidage](#module-de-guidage)
   - [Diagrammes de cas d'utilisation](#diagrammes-de-cas-dutilisation)
-    - [Module de Création](#module-de-création-1)
+    - [Module de Création](#module-de-création-2)
     - [Module de Guidage](#module-de-guidage-1)
   - [Diagrammes de séquence](#diagrammes-de-séquence)
-    - [Module de Création](#module-de-création-2)
+    - [Module de Création](#module-de-création-3)
     - [Module de Guidage](#module-de-guidage-2)
   - [Équipe de développement](#équipe-de-développement)
 
@@ -32,10 +33,11 @@ Le projet est structuré en **deux modules principaux** :
 | **Module**         | **Étape**                                       | **À faire** | **En cours** | **Terminé** |
 | ------------------ | ----------------------------------------------- | :-----------: | :------------: | :-----------: |
 | **Création (IR1)** |                                                 |             |              |             |
-|                    | Créer un processus                              |             | X            |             |
-|                    | Produire des séquences d'opération              | X           |              |             |
-|                    | Partager un processus                           | X           |              |             |
+|                    | Créer un processus                              |             |              | X           |
+|                    | Produire des séquences d'opération              |             |              | X           |
+|                    | Partager un processus                           |             |              | X           |
 |                    | Visualiser les statistiques                     | X           |              |             |
+|                    | Se connecter en tant que superviseur            | X           |              |             |
 | **Guidage (IR2)**  |                                                 |             |              |             |
 |                    | Affichage des étapes                            |             | X            |             |
 |                    | Validation des étapes par l'opérateur           | X           |              |             |
@@ -43,7 +45,32 @@ Le projet est structuré en **deux modules principaux** :
 |                    | Connexion au backend pour récupérer les données | X           |              |             |
 |                    | Interaction avec la base de données             | X           |              |             |
 
-## Utilisation
+## Utilisation  
+### Module de Création  
+
+1. **Connexion**  
+   Accédez au site web hébergé sur le Raspberry Pi via votre navigateur.
+
+2. **Accès au module**  
+   Dans le menu, cliquez sur **Processus** pour accéder au module de création.  
+   ![Capture d'écran du menu Processus](images/menuProcessus.png)
+
+3. **Première utilisation**  
+   Lors de la toute première connexion, seules deux options sont disponibles :  
+   - **Créer** un nouveau processus  
+   - **Importer** un processus existant  
+   ![Capture d'écran des options Créer / Importer](images/premiereConnexions.png)
+
+4. **Si des processus existent déjà**  
+   Des options supplémentaires apparaîtront :  
+   - **Ajouter des étapes** à un processus existant  
+   - **Exporter** un processus  
+   ![Capture d'écran des options supplémentaires](images/ajouterEtape.png)
+
+5. **Fonctionnalités à venir (non disponibles pour l’instant)**  
+   - **Modifier** un processus  
+   - **Voir** les détails d’un processus  
+   - **Supprimer** un processus  
 
 ## Changelog
 
@@ -51,10 +78,11 @@ Le projet est structuré en **deux modules principaux** :
 
 ### Module de Création
 
-  - [ ] Mettre en place le serveur Apache et la configuration PHP
-  - [ ] Implémenter la création d’un processus
-  - [ ] Ajouter la gestion des étapes
-  - [ ] Gérer l’upload des images
+  - [X] Mettre en place le serveur Apache et la configuration PHP
+  - [X] Implémenter la création d’un processus
+  - [X] Ajouter la gestion des étapes
+  - [X] Gérer l’upload des images
+  - [X] Partager un processus
   - [ ] Afficher les processus créés
   - [ ] Permettre la suppression et modification d’un processus
 
