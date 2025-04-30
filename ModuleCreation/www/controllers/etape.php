@@ -35,8 +35,18 @@ class Etape extends Controller
       if (!isset($_SESSION['is_logged_in'])) {
         header('Location: ' . URL_PATH . 'processus');
       } else {
-        $this->viewmodel->add();
-        $this->display();
+        if ($this->viewmodel->add() != null) {
+          $nomProcessus = $this->viewmodel->getTitre();
+          $numeroEtape = $this->viewmodel->getNumeroEtape();
+          $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
+        } else {
+          $idProcessus = $this->getID();
+          if($idProcessus) {
+          header('Location: ' . URL_PATH . 'etape' . '/' . 'add' . '/' . $idProcessus);
+          } else {
+            header('Location: ' . URL_PATH . 'processus');
+          }
+        }
       }
     }
   }
