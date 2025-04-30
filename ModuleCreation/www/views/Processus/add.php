@@ -7,11 +7,16 @@
 			<div class="form-group">
 				<label for="nomProcessus">Nom</label>
 				<input type="text" name="nomProcessus" class="form-control" id="nomProcessus" required />
+			</div>			
+			<div class="form-group">
+				<label for="descriptionProcessus">Description</label>
+				<textarea class="form-control" name="desciptionProcessus" id="descriptionProcessus" rows="4" required>Description Processus</textarea>
 			</div>
 			<div class="form-group">
-				<label for='image'>Image :</label>
-				<input type='file' name='image' accept='image/*'>
+				<label for="image">Image :</label>
+				<input type="file" name="image" accept="image/*">
 			</div>
+
 			<input class="btn btn-primary" name="submit" type="submit" value="Envoyer" />
 			<a class="btn btn-danger" href="<?php echo ROOT_PATH; ?>processus">Annuler</a>
 		</form>
