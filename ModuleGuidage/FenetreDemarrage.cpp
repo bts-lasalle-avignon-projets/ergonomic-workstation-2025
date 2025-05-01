@@ -40,6 +40,7 @@ FenetreDemarrage::FenetreDemarrage(QWidget* parent) :
 
     imageProcessus->setMinimumSize(LARGEUR_IMAGE, HAUTEUR_IMAGE);
     imageProcessus->setAlignment(Qt::AlignCenter);
+    labelDescriptionProcessus->setAlignment(Qt::AlignCenter);
     labelEtatRequete->setAlignment(Qt::AlignCenter);
 
     connect(boutonDemarrerProcessus,
@@ -65,7 +66,8 @@ void FenetreDemarrage::chargerListeProcessus()
     qDebug() << Q_FUNC_INFO;
 
     db = BaseDeDonnees::getDatabase();
-    QSqlQuery query("SELECT idProcessus, nomProcessus FROM Processus");
+    QSqlQuery query(
+      "SELECT idProcessus, nomProcessus, descriptionProcessus FROM Processus");
 
     if(query.exec())
     {
@@ -98,6 +100,26 @@ void FenetreDemarrage::afficherProcessus()
     {
         int idProcessus = processusSelectionne.toInt();
         qDebug() << Q_FUNC_INFO << "idProcessus" << idProcessus;
+        QSqlQuery query(
+          "SELECT idProcessus, nomProcessus, descriptionProcessus FROM "
+          "Processus WHERE idProcessus=" +
+          QString::number(idProcessus));
+
+        if(query.exec() && query.next())
+        {
+            QString descriptionProcessus =
+              query.value(TableProcessus::TP_DESCRIPTION_PROCESSUS).toString();
+            labelDescriptionProcessus->setText(descriptionProcessus);
+        }
+        else
+        {
+            qDebug()
+              << Q_FUNC_INFO
+              << "Erreur lors de la récupération de la description du processus"
+              << query.lastError().text();
+            labelEtatRequete->setText("Erreur lors de la récupération de la "
+                                      "description du processus !");
+        }
         chargerImagePourProcessus(idProcessus);
         labelEtatRequete->setText("");
         boutonDemarrerProcessus->setEnabled(true);
@@ -123,7 +145,6 @@ void FenetreDemarrage::chargerImagePourProcessus(int idPprocessus)
     if(query.exec() && query.next())
     {
         QByteArray contenuImage = query.value(TI_CONTENU_IMAGE).toByteArray();
-
         if(!contenuImage.isEmpty())
         {
             QPixmap pixmap;
@@ -138,7 +159,7 @@ void FenetreDemarrage::chargerImagePourProcessus(int idPprocessus)
             else
             {
                 qDebug() << Q_FUNC_INFO
-                         << "Erreur : impossible de charger l'image !";
+                         << "Erreur lors du chargement de l'image !";
                 imageProcessus->clear();
             }
         }
@@ -151,7 +172,8 @@ void FenetreDemarrage::chargerImagePourProcessus(int idPprocessus)
     }
     else
     {
-        qDebug() << Q_FUNC_INFO << "Erreur SQL" << query.lastError().text();
+        if(!query.lastError().text().isEmpty())
+            qDebug() << Q_FUNC_INFO << "Erreur SQL" << query.lastError().text();
         imageProcessus->clear();
     }
 }
@@ -175,6 +197,7 @@ void FenetreDemarrage::demarrerProcessus()
     if(fenetreEtapes == nullptr)
     {
         fenetreEtapes = new FenetreEtapes(this);
+        fenetreEtapes->chargerEtape(idProcessusActuel);
     }
     else
     {

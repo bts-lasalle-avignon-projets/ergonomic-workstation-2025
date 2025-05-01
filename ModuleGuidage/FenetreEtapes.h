@@ -1,28 +1,14 @@
 #ifndef FENETREETAPES_H
 #define FENETREETAPES_H
 
-#include "ui_FenetreEtapes.h"
 #include <QtWidgets>
 #include <QSqlDatabase>
-#include <QPair>
-#include <QVector>
+#include "Etape.h"
 
-/**
- * @brief Structure contenant les informations complètes d'une étape
- */
-struct InfosEtape
-{
-    int idEtape;
-    int numeroEtape;
-    QString nomEtape;
-    QString descriptionEtape;
-    QVector<QPair<int, QString>> bacs; // (numéro, contenance)
-};
+#define LARGEUR_IMAGE_ETAPE 1080
+#define HAUTEUR_IMAGE_ETAPE 800
 
-namespace Ui
-{
-class FenetreEtapes;
-}
+#define MARGE_LAYOUT 25
 
 class FenetreEtapes : public QWidget
 {
@@ -41,17 +27,20 @@ class FenetreEtapes : public QWidget
     void fermerFenetre();
 
   private:
-    void afficherInfosEtapeActuelle();
+    void initialiserFenetre();
+    void afficherEtapeActuelle();
 
-    QVBoxLayout* layout;
-    QLabel*      statusLabel;
-    QLabel*      imageLabel;
+    QLabel*      labelNumeroEtape;
+    QLabel*      labelNomEtape;
+    QLabel*      labelDescriptionEtape;
+    QLabel*      labelEtatRequete;
+    QLabel*      imageEtape;
     QPushButton* boutonEtapeSuivante;
     QPushButton* boutonFermerFenetre;
 
-    QVector<InfosEtape> listeDesEtapes;
-    int etapeActuelIndex;
-    int idProcessusActuel;
+    QVector<Etape> listeDesEtapes;
+    int            etapeActuelIndex;
+    int            idProcessusActuel;
 
     QSqlDatabase db;
 };

@@ -73,10 +73,11 @@ class FenetreDemarrage : public QMainWindow, public Ui::FenetreDemarrage
      */
     enum TableProcessus
     {
-        TP_ID_PROCESSUS  = 0,
-        TP_NOM_PROCESSUS = 1,
-        TP_DATE_CREATION = 2,
-        TP_ID_IMAGES     = 3,
+        TP_ID_PROCESSUS          = 0,
+        TP_NOM_PROCESSUS         = 1,
+        TP_DESCRIPTION_PROCESSUS = 2,
+        TP_DATE_CREATION         = 3,
+        TP_ID_IMAGE              = 4,
         NbColonnesTableProcessus
     };
 };

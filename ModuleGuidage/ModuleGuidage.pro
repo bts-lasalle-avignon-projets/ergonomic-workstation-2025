@@ -12,6 +12,7 @@ SOURCES += \
 
 HEADERS += \
     BaseDeDonnees.h \
+    Etape.h \
     FenetreDemarrage.h \
     FenetreEtapes.h
 
