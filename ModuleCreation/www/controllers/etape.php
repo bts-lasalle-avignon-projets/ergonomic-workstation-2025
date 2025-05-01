@@ -11,52 +11,43 @@ class Etape extends Controller
   public function __construct($action, $request)
   {
     parent::__construct($action, $request);
-    $this->viewmodel = new  EtapeModel();
+    $this->viewmodel = new EtapeModel();
   }
 
   public function add()
   {
     if (NO_LOGIN) {
-      ini_set('display_errors', 1);
-      error_reporting(E_ALL);
-      if ($this->viewmodel->add() != null) {
-        $nomProcessus = $this->viewmodel->getTitre();
-        $numeroEtape = $this->viewmodel->getNumeroEtape();
-        $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
-      } else {
-        $idProcessus = $this->getID();
-        if($idProcessus) {
-          header('Location: ' . URL_PATH . 'etape' . '/' . 'add' . '/' . $idProcessus);
+      $idProcessus = $this->getID();
+      if ($idProcessus > 0) {
+        if ($this->viewmodel->add($idProcessus)) {
+          $nomProcessus = $this->viewmodel->getTitre($idProcessus);
+          $numeroEtape = $this->viewmodel->getNumeroEtape($idProcessus);
+          $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
         } else {
-          header('Location: ' . URL_PATH . 'processus');
+          if ($this->viewmodel->estProcessusExistant($idProcessus)) {
+            header('Location: ' . URL_PATH . 'etape' . '/' . 'add' . '/' . $idProcessus);
+          } else {
+            header('Location: ' . URL_PATH . 'processus');
+          }
         }
+      } else {
+        header('Location: ' . URL_PATH . 'processus');
       }
     } else {
       if (!isset($_SESSION['is_logged_in'])) {
         header('Location: ' . URL_PATH . 'processus');
       } else {
-        if ($this->viewmodel->add() != null) {
-          $nomProcessus = $this->viewmodel->getTitre();
-          $numeroEtape = $this->viewmodel->getNumeroEtape();
-          $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
-        } else {
-          $idProcessus = $this->getID();
-          if($idProcessus) {
-          header('Location: ' . URL_PATH . 'etape' . '/' . 'add' . '/' . $idProcessus);
-          } else {
-            header('Location: ' . URL_PATH . 'processus');
-          }
-        }
+        // @todo
       }
     }
   }
 
   private function getID()
   {
-    if (!isset($_GET['id']) || empty($_GET['id'])) {
+    if (!isset($this->request['id']) || empty($this->request['id'])) {
       Messages::setMsg("ID du processus manquant !", "error");
-      return false;
+      return -1;
     }
-    return (int) $_GET['id'];
+    return (int) $this->request['id'];
   }
 }

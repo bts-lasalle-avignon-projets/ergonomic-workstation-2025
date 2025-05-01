@@ -1,15 +1,12 @@
 <?php
 class EtapeModel extends Model
 {
-    public function add()
+    public function add($idProcessus)
     {
-        if (!isset($_GET['id']) || empty($_GET['id'])) {
-            Messages::setMsg("ID du processus manquant !", "error");
+        if (!$this->estProcessusExistant($idProcessus)) {
+            Messages::setMsg("Le processus n'existe pas !", "error");
             return false;
         }
-
-        $idProcessus = (int) $_GET['id'];
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nomEtape = $_POST['nomEtape'] ?? null;
             $descriptionEtape = $_POST['descriptionEtape'] ?? null;
@@ -22,22 +19,21 @@ class EtapeModel extends Model
             }
 
             if (DEBUG) {
-                echo "ID du processus : " . $idProcessus . "<br>";
-                echo "Nom de l'étape : " . $nomEtape . "<br>";
-                echo "Description de l'étape : " . $descriptionEtape . "<br>";
-                echo "Contenance : " . $contenance . "<br>";
-                echo "Numéro de bac : " . $numeroBac . "<br>";
+                $message = "ID du processus : " . $idProcessus . "<br />";
+                $message .= "Nom de l'étape : " . $nomEtape . "<br />";
+                $message .= "Description de l'étape : " . $descriptionEtape . "<br />";
+                $message .= "Contenance : " . $contenance . "<br />";
+                $message .= "Numéro de bac : " . $numeroBac . "<br />";
+                Message::afficher($message, 'debug');
             }
 
             try {
                 $bac = $this->ajouterBac($numeroBac, $idProcessus, $contenance);
-
                 if ($bac === null) {
                     return false;
                 }
 
                 $idImage = null;
-
                 if (!empty($_FILES['image']['name'])) {
                     $idImage = $this->ajouterImage();
                 }
@@ -97,10 +93,11 @@ class EtapeModel extends Model
 
     private function ajouterBac($numeroBac, $idProcessus, $contenance)
     {
-        $verif = $this->verifierBac($numeroBac, $idProcessus, $contenance);
-        if (!$verif) {
+        $verification = $this->verifierBac($numeroBac, $idProcessus, $contenance);
+        if (!$verification) {
             return null;
         }
+
         $this->query("SELECT numeroBac, idProcessus, contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus AND contenance = :contenance");
         $this->bind(':numeroBac', $numeroBac);
         $this->bind(':idProcessus', $idProcessus);
@@ -114,12 +111,13 @@ class EtapeModel extends Model
             $this->bind(':idProcessus', $idProcessus);
             $this->bind(':contenance', $contenance);
             if (DEBUG) {
-                echo "numeroBac : " . $numeroBac . "<br>";
-                echo "idProcessus : " . $idProcessus . "<br>";
-                echo "contenance : " . $contenance . "<br>";
+                $message = "numeroBac : " . $numeroBac . "<br />";
+                $message .= "idProcessus : " . $idProcessus . "<br />";
+                $message .= "contenance : " . $contenance . "<br />";
+                Message::afficher($message, 'debug');
             }
             $this->execute();
-            $errorInfo = $this->stmt->errorInfo();
+            $messageErreur = $this->stmt->errorInfo();
 
             if ($this->stmt->rowCount() == 0) {
                 Messages::setMsg("L'insertion du bac a échoué !", "error");
@@ -131,10 +129,21 @@ class EtapeModel extends Model
         return $bac ?? null;
     }
 
-    public function getTitre()
+    public function estProcessusExistant($idProcessus)
     {
+        $this->query("SELECT nomProcessus FROM Processus WHERE idProcessus = :idProcessus");
+        $this->bind(':idProcessus', $idProcessus);
+        $this->execute();
+        $nomProcessus = $this->getResult();
+        if (!$nomProcessus) {
+            return false;
+        }
 
-        $idProcessus = (int) $_GET['id'];
+        return true;
+    }
+
+    public function getTitre($idProcessus)
+    {
         $this->query("SELECT nomProcessus FROM Processus WHERE idProcessus = :idProcessus");
         $this->bind(':idProcessus', $idProcessus);
         $this->execute();
@@ -143,13 +152,11 @@ class EtapeModel extends Model
         return $nomProcessus;
     }
 
-
     public function incrementerNumeroEtape($idProcessus)
     {
         $this->query("SELECT COUNT(*) AS total FROM Etape WHERE idProcessus = :idProcessus");
         $this->bind(':idProcessus', $idProcessus);
         $this->execute();
-
 
         $result = $this->getResult();
 
@@ -162,9 +169,8 @@ class EtapeModel extends Model
         return $numeroProcessus;
     }
 
-    public function getNumeroEtape()
+    public function getNumeroEtape($idProcessus)
     {
-        $idProcessus = (int) $_GET['id'];
         $this->query("SELECT numeroEtape FROM Etape WHERE idProcessus = :idProcessus ORDER BY numeroEtape DESC LIMIT 1");
         $this->bind(':idProcessus', $idProcessus);
         $this->execute();
@@ -179,38 +185,37 @@ class EtapeModel extends Model
         // Si un résultat existe, renvoyer le tableau avec 'numeroEtape' incrémenté
         return ['numeroEtape' => $result['numeroEtape'] + 1];
     }
-private function verifierBac($numeroBac, $idProcessus, $contenance)
-{
-    // Vérifie si le numéro de bac existe déjà avec une autre contenance
-    $this->query("SELECT contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
-    $this->bind(':numeroBac', $numeroBac);
-    $this->bind(':idProcessus', $idProcessus);
-    $resultNum = $this->getResult();
 
-    if ($resultNum && $resultNum['contenance'] != $contenance) {
-        Messages::setMsg(
-            "Le bac n°{$numeroBac} existe déjà dans ce processus avec une contenance différente : {$resultNum['contenance']}.",
-            "error"
-        );
-        return false;
+    private function verifierBac($numeroBac, $idProcessus, $contenance)
+    {
+        // Vérifie si le numéro de bac existe déjà avec une autre contenance
+        $this->query("SELECT contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
+        $this->bind(':numeroBac', $numeroBac);
+        $this->bind(':idProcessus', $idProcessus);
+        $resultatContenance = $this->getResult();
+
+        if ($resultatContenance && $resultatContenance['contenance'] != $contenance) {
+            Messages::setMsg(
+                "Le bac n°{$numeroBac} existe déjà dans ce processus avec une contenance différente : {$resultatContenance['contenance']}.",
+                "error"
+            );
+            return false;
+        }
+
+        // Vérifie si la contenance est déjà associée à un autre numéro de bac
+        $this->query("SELECT numeroBac FROM Bac WHERE contenance = :contenance AND idProcessus = :idProcessus");
+        $this->bind(':contenance', $contenance);
+        $this->bind(':idProcessus', $idProcessus);
+        $resultatNumeroBac = $this->getResult();
+
+        if ($resultatNumeroBac && $resultatNumeroBac['numeroBac'] != $numeroBac) {
+            Messages::setMsg(
+                "La contenance de : {$contenance} est déjà utilisée par un autre bac n°{$resultatNumeroBac['numeroBac']} dans ce processus.",
+                "error"
+            );
+            return false;
+        }
+
+        return true;
     }
-
-    // Vérifie si la contenance est déjà associée à un autre numéro de bac
-    $this->query("SELECT numeroBac FROM Bac WHERE contenance = :contenance AND idProcessus = :idProcessus");
-    $this->bind(':contenance', $contenance);
-    $this->bind(':idProcessus', $idProcessus);
-    $resultCont = $this->getResult();
-
-    if ($resultCont && $resultCont['numeroBac'] != $numeroBac) {
-        Messages::setMsg(
-            "La contenance de : {$contenance} est déjà utilisée par un autre bac n°{$resultCont['numeroBac']} dans ce processus.",
-            "error"
-        );
-        return false;
-    }
-
-    return true;
-}
-
-
 }
