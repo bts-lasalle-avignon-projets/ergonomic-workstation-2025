@@ -13,6 +13,9 @@ class ProcessusModel extends Model
 		$processus = $this->getResults();
 
 		foreach ($processus as &$p) {
+			$timestamp = strtotime($p['dateCreation']);
+			$dateFormatee = date("d/m/Y à G:i", $timestamp);
+			$p['dateCreation'] = $dateFormatee;
 			if (!empty($p['idImage'])) {  // Vérifier si une image est associée
 				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
 				$this->bind(':idImage', $p['idImage']);
