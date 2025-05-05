@@ -217,6 +217,26 @@ class ProcessusModel extends Model
 		}
 	}
 
+	public function statistique($idProcessus) 
+	{
+		$this->query("SELECT 
+						p.nomProcessus, 
+						p.idProcessus, 
+						s.nombreExecutions, 
+						s.nombreReussites, 
+						s.nombreEchecs, 
+						(s.nombreReussites / s.nombreExecutions) * 100 AS tauxReussite, 
+						(s.nombreEchecs / s.nombreExecutions) * 100 AS tauxEchec, 
+						s.dureeProcessus 
+					FROM StatistiqueProcessus s
+					JOIN Processus p ON s.idProcessus = p.idProcessus
+					WHERE s.idProcessus = :idProcessus");
+
+		$this->bind(':idProcessus', $idProcessus);
+		$processusData = $this->getResults();
+		return $processusData;
+	}
+
 	private function insererImageDepuisJson($image)
 	{
 		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
