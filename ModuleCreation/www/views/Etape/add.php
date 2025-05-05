@@ -1,9 +1,7 @@
-<div class="col col-lg-8 mt-5 mx-3 mx-lg-auto text-center">
+<div class="col col-lg-8 mt-3 mx-3 mx-lg-auto text-center">
     <h1>Processus : <?php echo htmlspecialchars($datas['nomProcessus']['nomProcessus']); ?></h1>
 </div>
-
-
-<div class="card col col-lg-5 mx-3 mx-lg-auto p-0">
+<div class="card col col-lg-5 mx-3 mb-3 mx-lg-auto p-0">
     <div class="card-header">
         <h3 class="card-title">Ajouter étape n° <?php echo htmlspecialchars($datas['numeroEtape']['numeroEtape']); ?></h3>
     </div>
@@ -25,7 +23,7 @@
 
         <div class="form-group">
             <label for="numeroBac">Numéro du bac</label>
-            <input type="text" name="numeroBac" class="form-control" id="numeroBac">
+            <input type="text" name="numeroBac" class="form-control" id="numeroBac" required>
         </div>
         <div class="form-group">
             <label for='image'>Image :</label>

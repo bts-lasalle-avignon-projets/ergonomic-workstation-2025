@@ -13,6 +13,9 @@ class ProcessusModel extends Model
 		$processus = $this->getResults();
 
 		foreach ($processus as &$p) {
+			$timestamp = strtotime($p['dateCreation']);
+			$dateFormatee = date("d/m/Y à G:i", $timestamp);
+			$p['dateCreation'] = $dateFormatee;
 			if (!empty($p['idImage'])) {  // Vérifier si une image est associée
 				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
 				$this->bind(':idImage', $p['idImage']);
@@ -50,9 +53,9 @@ class ProcessusModel extends Model
 				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
 				$this->execute();
 
-				Message::afficher("Processus ajouté avec succès !", "success");
+				Messages::setMsg("Processus ajouté avec succès !", "success");
 			} catch (PDOException $e) {
-				Message::afficher("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
+				Messages::setMsg("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
 			}
 		}
 	}
@@ -85,16 +88,25 @@ class ProcessusModel extends Model
 		return $image['idImage'] ?? null;
 	}
 
-	public function edit() {}
-
-	public function delete() {}
-
-	public function view() {}
-
-	public function export()
+	public function edit($idProcessus)
 	{
-		$idProcessus = (int) $_GET['id'];
+		$params = [":idProcessus" => $idProcessus];
+		$processus = $this->fetchAllByQuery("SELECT * FROM Processus WHERE idProcessus = :idProcessus", $params);
+		return $processus[0] ?? null;
+	}
 
+	public function delete($idProcessus)
+	{
+		return $idProcessus;
+	}
+
+	public function view($idProcessus)
+	{
+		return null;
+	}
+
+	public function export($idProcessus)
+	{
 		$params = [":idProcessus" => $idProcessus];
 		$processus = $this->fetchAllByQuery("SELECT * FROM Processus WHERE idProcessus = :idProcessus", $params);
 		$etapes = $this->fetchAllByQuery("SELECT * FROM Etape WHERE idProcessus = :idProcessus", $params);
@@ -154,54 +166,54 @@ class ProcessusModel extends Model
 				return;
 			}
 
-		
-				$idImage = null;
-				if (isset($data['image'])) {
-					$idImage = $this->insererImageDepuisJson($data['image']);
-				}
 
-				$this->query("INSERT INTO Processus (nomProcessus, idImage, descriptionProcessus) VALUES (:nomProcessus, :idImage, :descriptionProcessus)");
-				$this->bind(':nomProcessus', $data['nomProcessus']);
-				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
-				$this->bind(':descriptionProcessus', $data['descriptionProcessus']);
-				$this->execute();
+			$idImage = null;
+			if (isset($data['image'])) {
+				$idImage = $this->insererImageDepuisJson($data['image']);
+			}
 
-				$idProcessus = $this->getLastInsertId();
+			$this->query("INSERT INTO Processus (nomProcessus, idImage, descriptionProcessus) VALUES (:nomProcessus, :idImage, :descriptionProcessus)");
+			$this->bind(':nomProcessus', $data['nomProcessus']);
+			$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+			$this->bind(':descriptionProcessus', $data['descriptionProcessus']);
+			$this->execute();
 
-				$bacsMap = [];
-				if (isset($data['bacs']) && is_array($data['bacs'])) {
-					foreach ($data['bacs'] as $bac) {
-						try {
-							$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
-							$this->bind(':numeroBac', $bac['numeroBac']);
-							$this->bind(':contenance', $bac['contenance']);
-							$this->bind(':idProcessus', $idProcessus);
-							$this->execute();
-						} catch (PDOException $e) {
-							echo "Erreur lors de l'insertion du bac : " . $e->getMessage();  // Afficher le message complet
-						}
+			$idProcessus = $this->getLastInsertId();
 
-						$idBac = $this->getLastInsertId();
-            			$bacsMap[$bac['numeroBac']] = $idBac;
-					}
-				}
-				foreach ($data['etapes'] as $etape) {
-					$idImageEtape = null;
-					if (isset($etape['image'])) {
-						$idImageEtape = $this->insererImageDepuisJson($etape['image']);
+			$bacsMap = [];
+			if (isset($data['bacs']) && is_array($data['bacs'])) {
+				foreach ($data['bacs'] as $bac) {
+					try {
+						$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
+						$this->bind(':numeroBac', $bac['numeroBac']);
+						$this->bind(':contenance', $bac['contenance']);
+						$this->bind(':idProcessus', $idProcessus);
+						$this->execute();
+					} catch (PDOException $e) {
+						echo "Erreur lors de l'insertion du bac : " . $e->getMessage();  // Afficher le message complet
 					}
 
-					$numeroBac = $etape['bac']['numeroBac'] ?? null;
-					$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
+					$idBac = $this->getLastInsertId();
+					$bacsMap[$bac['numeroBac']] = $idBac;
+				}
+			}
+			foreach ($data['etapes'] as $etape) {
+				$idImageEtape = null;
+				if (isset($etape['image'])) {
+					$idImageEtape = $this->insererImageDepuisJson($etape['image']);
+				}
+
+				$numeroBac = $etape['bac']['numeroBac'] ?? null;
+				$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
 								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
-					$this->bind(':nomEtape', $etape['nomEtape']);
-					$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
-					$this->bind(':idProcessus', $idProcessus);
-					$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
-					$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);
-					$this->bind(':numeroEtape', $etape['numeroEtape']);
-					$this->execute();
-				}
+				$this->bind(':nomEtape', $etape['nomEtape']);
+				$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
+				$this->bind(':idProcessus', $idProcessus);
+				$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
+				$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);
+				$this->bind(':numeroEtape', $etape['numeroEtape']);
+				$this->execute();
+			}
 		}
 	}
 
