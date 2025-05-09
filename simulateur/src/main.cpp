@@ -7,7 +7,10 @@
 #include <Arduino.h>
 #include <afficheur.h>
 
+// Ergonomic-Workstation
 #define NUMERO_PUPITRE 1
+#define NB_BACS         8
+#define PRECISION_PRISE 80 // en %
 //#define BLUETOOTH      // Bluetooth sinon Serial
 
 #ifdef BLUETOOTH
@@ -25,10 +28,6 @@
 #define ADRESSE_I2C_OLED 0x3c //!< Adresse I2C de l'OLED
 #define BROCHE_I2C_SDA   21   //!< Broche SDA
 #define BROCHE_I2C_SCL   22   //!< Broche SCL
-
-// Ergonomic-Workstation
-#define NB_BACS         8
-#define PRECISION_PRISE 80 // en %
 
 // Bluetooth
 #ifdef BLUETOOTH
@@ -116,13 +115,13 @@ void envoyerTrameReponse(char type)
     sprintf((char*)trameEnvoi, "%s%c%%", entete.c_str(), type);
 #ifdef BLUETOOTH
     ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char*)trameEnvoi));
-#else
-    Serial.write((uint8_t*)trameEnvoi, strlen((char*)trameEnvoi));
-#endif
-#ifdef DEBUG
+    #ifdef DEBUG
     String trame = String(trameEnvoi);
     Serial.print("> ");
     Serial.println(trame);
+#endif
+#else
+    Serial.write((uint8_t*)trameEnvoi, strlen((char*)trameEnvoi));
 #endif
 }
 
