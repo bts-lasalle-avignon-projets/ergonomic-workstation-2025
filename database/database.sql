@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Etape;
 DROP TABLE IF EXISTS Bac;
 DROP TABLE IF EXISTS Processus;
 DROP TABLE IF EXISTS Image;
+DROP TABLE IF EXISTS Assemblage;
 
 CREATE TABLE IF NOT EXISTS Image (
     idImage INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Etape (
     CONSTRAINT FK_EtapeImage FOREIGN KEY (idImage) REFERENCES Image(idImage) ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS StatistiqueProcessus (
+CREATE TABLE IF NOT EXISTS Assemblage (
     idStatistique INT AUTO_INCREMENT PRIMARY KEY,
     idProcessus INT NOT NULL,
     nombreExecutions INT NOT NULL DEFAULT 0,
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS StatistiqueProcessus (
     nombreEchecs INT NOT NULL DEFAULT 0,
     dureeProcessus TIME DEFAULT NULL,
     dateStatistique TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT FK_StatistiqueProcessus FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
+    CONSTRAINT FK_Assemblage FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
 );
 
 
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS StatistiqueProcessus (
 INSERT INTO Processus (nomProcessus, descriptionProcessus) VALUES
 ('Montage écran', 'Processus de montage d’un écran d’ordinateur'),
 ('Assemblage clavier', 'Processus d’assemblage d’un clavier mécanique');
-INSERT INTO StatistiqueProcessus (idProcessus, nombreExecutions, nombreReussites, nombreEchecs, dureeProcessus)
+INSERT INTO Assemblage (idProcessus, nombreExecutions, nombreReussites, nombreEchecs, dureeProcessus)
 VALUES
 (1, 20, 15, 5, '00:45:00'),
 (2, 10, 8, 2, '00:25:00');
