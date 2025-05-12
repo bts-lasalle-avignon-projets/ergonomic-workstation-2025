@@ -222,15 +222,15 @@ class ProcessusModel extends Model
 		$this->query("SELECT 
 						p.nomProcessus, 
 						p.idProcessus, 
-						s.nombreExecutions, 
-						s.nombreReussites, 
-						s.nombreEchecs, 
-						(s.nombreReussites / s.nombreExecutions) * 100 AS tauxReussite, 
-						(s.nombreEchecs / s.nombreExecutions) * 100 AS tauxEchec, 
-						s.dureeProcessus 
-					FROM StatistiqueProcessus s
-					JOIN Processus p ON s.idProcessus = p.idProcessus
-					WHERE s.idProcessus = :idProcessus");
+						a.nombreExecutions, 
+						a.nombreReussites, 
+						a.nombreEchecs, 
+						(a.nombreReussites / a.nombreExecutions) * 100 AS tauxReussite, 
+						(a.nombreEchecs / a.nombreExecutions) * 100 AS tauxEchec, 
+						a.dureeProcessus 
+					FROM Assemblage a
+					JOIN Processus p ON a.idProcessus = p.idProcessus
+					WHERE a.idProcessus = :idProcessus");
 
 		$this->bind(':idProcessus', $idProcessus);
 		$processusData = $this->getResults();
