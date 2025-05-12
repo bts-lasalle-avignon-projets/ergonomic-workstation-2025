@@ -17,8 +17,7 @@ HEADERS += \
     FenetreEtapes.h
 
 FORMS += \
-    FenetreDemarrage.ui \
-    FenetreEtapes.ui
+    FenetreDemarrage.ui
 
 RESOURCES += \
     ModuleGuidage.qrc
