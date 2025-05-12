@@ -35,3 +35,4 @@ if (DEBUG) {
 }
 
 define('PRECISION_POURCENTAGE', 2);
+define('TEMPS_MINUTE', 60);

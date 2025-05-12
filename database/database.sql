@@ -4,7 +4,9 @@ USE ergonomic_workstation;
 
 DROP TABLE IF EXISTS Etape;
 DROP TABLE IF EXISTS Bac;
+SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS Processus;
+SET foreign_key_checks = 1;
 DROP TABLE IF EXISTS Image;
 DROP TABLE IF EXISTS Assemblage;
 

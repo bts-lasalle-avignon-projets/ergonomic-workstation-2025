@@ -134,12 +134,12 @@ class Processus extends Controller
 	public function statistique() {
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
-			$processusData = $this->viewmodel->statistique($idProcessus);
+			$AssemblageData = $this->viewmodel->statistiqueAssemblage($idProcessus);
 			if(DEBUG)
 			{
-				var_dump($processusData);
+				var_dump($AssemblageData);
 			}
-			$this->display($processusData);
+			$this->display($AssemblageData);
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');

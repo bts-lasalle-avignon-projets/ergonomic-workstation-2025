@@ -217,24 +217,23 @@ class ProcessusModel extends Model
 		}
 	}
 
-	public function statistique($idProcessus) 
+	public function statistiqueAssemblage($idProcessus) 
 	{
 		$this->query("SELECT 
+						a.idAssemblage,
 						p.nomProcessus, 
 						p.idProcessus, 
-						a.nombreExecutions, 
-						a.nombreReussites, 
 						a.nombreEchecs, 
-						(a.nombreReussites / a.nombreExecutions) * 100 AS tauxReussite, 
-						(a.nombreEchecs / a.nombreExecutions) * 100 AS tauxEchec, 
-						a.dureeProcessus 
+						(a.nombreEchecs / NULLIF(TIME_TO_SEC(a.dureeProcessus), 0)) * :TEMPS_MINUTE AS tauxErreurParMinute, 
+						a.dureeProcessus
 					FROM Assemblage a
 					JOIN Processus p ON a.idProcessus = p.idProcessus
 					WHERE a.idProcessus = :idProcessus");
 
 		$this->bind(':idProcessus', $idProcessus);
-		$processusData = $this->getResults();
-		return $processusData;
+		$this->bind(':TEMPS_MINUTE', TEMPS_MINUTE);
+		$AssemblageData = $this->getResults();
+		return $AssemblageData;
 	}
 
 	private function insererImageDepuisJson($image)
