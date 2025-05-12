@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="card-header">
-        <h3 class="card-title">Statistique du Processus : <?php echo htmlspecialchars($datas[0]['nomProcessus']); ?></h3>
+        <h3 class="card-title">Statistique du processus : <?php echo htmlspecialchars($datas[0]['nomProcessus']); ?></h3>
     </div>
     <div class="card mb-4">
         <div>
