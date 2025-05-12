@@ -47,10 +47,8 @@ CREATE TABLE IF NOT EXISTS Etape (
 );
 
 CREATE TABLE IF NOT EXISTS Assemblage (
-    idStatistique INT AUTO_INCREMENT PRIMARY KEY,
+    idAssemblage INT AUTO_INCREMENT PRIMARY KEY,
     idProcessus INT NOT NULL,
-    nombreExecutions INT NOT NULL DEFAULT 0,
-    nombreReussites INT NOT NULL DEFAULT 0,
     nombreEchecs INT NOT NULL DEFAULT 0,
     dureeProcessus TIME DEFAULT NULL,
     dateStatistique TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -58,11 +56,16 @@ CREATE TABLE IF NOT EXISTS Assemblage (
 );
 
 
--- Simulation des données pour les statistiques 
+-- Simuler deux processus si non déjà existants
 INSERT INTO Processus (nomProcessus, descriptionProcessus) VALUES
 ('Montage écran', 'Processus de montage d’un écran d’ordinateur'),
 ('Assemblage clavier', 'Processus d’assemblage d’un clavier mécanique');
-INSERT INTO Assemblage (idProcessus, nombreExecutions, nombreReussites, nombreEchecs, dureeProcessus)
-VALUES
-(1, 20, 15, 5, '00:45:00'),
-(2, 10, 8, 2, '00:25:00');
+
+-- Insérer des exécutions d’assemblage avec des erreurs (nombreEchecs)
+INSERT INTO Assemblage (idProcessus, nombreEchecs, dureeProcessus, dateStatistique) VALUES
+(1, 2, '00:40:00', '2025-05-01 08:00:00'),
+(1, 0, '00:35:00', '2025-05-01 10:00:00'),
+(1, 1, '00:45:00', '2025-05-02 09:00:00'),
+(2, 3, '00:30:00', '2025-05-01 11:00:00'),
+(2, 1, '00:28:00', '2025-05-02 08:30:00'),
+(2, 0, '00:25:00', '2025-05-03 14:00:00');
