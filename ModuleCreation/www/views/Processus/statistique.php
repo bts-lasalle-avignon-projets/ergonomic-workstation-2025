@@ -7,8 +7,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID du Assemblage</th>
-                        <th>ID du Processus</th>
+                        <th>ID de l'assemblage</th>
                         <th>Taux d'erreur (%)</th>
                         <th>Durée</th>
                     </tr>
@@ -17,7 +16,6 @@
                     <?php foreach ($datas as $AssemblageData) : ?>
                         <tr>
                             <td><?php echo htmlspecialchars($AssemblageData['idAssemblage']); ?></td>
-                            <td><?php echo htmlspecialchars($AssemblageData['idProcessus']); ?></td>
                             <td><?php echo number_format($AssemblageData['tauxErreurParMinute'], PRECISION_POURCENTAGE); ?></td>
                             <td><?php echo htmlspecialchars($AssemblageData['dureeProcessus']); ?></td>
                         </tr>

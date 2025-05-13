@@ -222,7 +222,6 @@ class ProcessusModel extends Model
 		$this->query("SELECT 
 						a.idAssemblage,
 						p.nomProcessus, 
-						p.idProcessus, 
 						a.nombreEchecs, 
 						(a.nombreEchecs / NULLIF(TIME_TO_SEC(a.dureeProcessus), 0)) * :TEMPS_MINUTE AS tauxErreurParMinute, 
 						a.dureeProcessus
