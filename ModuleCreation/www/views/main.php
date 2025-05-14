@@ -67,3 +67,20 @@
 </body>
 
 </html>
+
+
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const message = document.getElementById("message");
+		if (message) {
+			setTimeout(() => {
+				message.style.transition = "opacity 0.5s ease";
+				message.style.opacity = 0;
+				setTimeout(() => {
+					message.remove();
+				}, 500); // délai pour que l'animation finisse avant suppression
+			}, 3000); // 3 secondes visibles
+		}
+	});
+</script>
