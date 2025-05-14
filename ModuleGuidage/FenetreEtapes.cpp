@@ -2,17 +2,22 @@
 #include "BaseDeDonnees.h"
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QGroupBox>
+#include <QVBoxLayout>
 #include <QDebug>
 
-FenetreEtapes::FenetreEtapes(QWidget* parent) :
-    QWidget(parent), etapeActuelIndex(0), idProcessusActuel(-1)
+FenetreEtapes::FenetreEtapes(QWidget* parent)
+    : QWidget(parent),
+      etapeActuelIndex(0),
+      idProcessusActuel(-1)
 {
-    qDebug() << Q_FUNC_INFO << this;
     setObjectName("FenetreEtape");
-
     initialiserFenetre();
 
-    connect(boutonEtapeSuivante, &QPushButton::clicked, this, &FenetreEtapes::chargerEtapeSuivante);
+    connect(boutonEtapeSuivante,
+            &QPushButton::clicked,
+            this,
+            &FenetreEtapes::chargerEtapeSuivante);
 
     showFullScreen();
 #ifdef RASPBERRY_PI
@@ -30,55 +35,56 @@ void FenetreEtapes::showEvent(QShowEvent*)
 
 void FenetreEtapes::initialiserFenetre()
 {
-    QVBoxLayout* layoutPrincipal = new QVBoxLayout(this);
+    auto* layoutPrincipal = new QVBoxLayout(this);
 
-    QHBoxLayout* layoutHaut = new QHBoxLayout;
+    // En-tête : numéro + nom
+    auto* layoutHaut = new QHBoxLayout;
     labelNumeroEtape = new QLabel("Étape n°", this);
-    labelNomEtape = new QLabel("Nom étape", this);
+    labelNomEtape    = new QLabel("Nom étape", this);
     layoutHaut->addWidget(labelNumeroEtape);
     layoutHaut->addStretch();
     layoutHaut->addWidget(labelNomEtape);
 
+    // Image
     imageEtape = new QLabel(this);
-    imageEtape->setFixedSize(1080, 500);
+    imageEtape->setFixedSize(LARGEUR_UI, HAUTEUR_IMAGE_ETAPE);
     imageEtape->setAlignment(Qt::AlignCenter);
 
-    boutonEtapeSuivante = new QPushButton("Étape suivante", this);
+    // Bacs en ligne
+    layoutBacs = new QHBoxLayout;
 
-    QHBoxLayout* layoutDescription = new QHBoxLayout;
+    // Bouton étape suivante
+    boutonEtapeSuivante = new QPushButton("Étape suivante", this);
+    boutonEtapeSuivante->setEnabled(false);
+
+    // Description
+    auto* layoutDescription = new QHBoxLayout;
     labelDescriptionEtape = new QLabel("Description étape", this);
     labelDescriptionEtape->setWordWrap(true);
     layoutDescription->addWidget(labelDescriptionEtape);
 
-    QHBoxLayout* layoutEtat = new QHBoxLayout;
+    // État
+    auto* layoutEtat = new QHBoxLayout;
     labelEtatRequete = new QLabel("État requête", this);
-    QLabel* labelEtatImage = new QLabel("État image", this);
     layoutEtat->addWidget(labelEtatRequete);
     layoutEtat->addStretch();
-    layoutEtat->addWidget(labelEtatImage);
 
-    labelBacNumero = new QLabel(this);
-    labelBacContenance = new QLabel(this);
-    QHBoxLayout* layoutBacInfos = new QHBoxLayout;
-    layoutBacInfos->addWidget(labelBacNumero);
-    layoutBacInfos->addStretch();
-    layoutBacInfos->addWidget(labelBacContenance);
-
+    // Assemblage du principal
     layoutPrincipal->addLayout(layoutHaut);
     layoutPrincipal->addWidget(imageEtape, 0, Qt::AlignCenter);
+    layoutPrincipal->addLayout(layoutBacs);  // ← Bacs juste sous l'image
     layoutPrincipal->addWidget(boutonEtapeSuivante, 0, Qt::AlignHCenter);
     layoutPrincipal->addLayout(layoutDescription);
-    layoutPrincipal->addLayout(layoutBacInfos);
     layoutPrincipal->addLayout(layoutEtat);
+
+    setLayout(layoutPrincipal);
 }
 
 void FenetreEtapes::chargerEtape(int idProcessus)
 {
-    qDebug() << Q_FUNC_INFO << "idProcessus" << idProcessus;
-
-    if(idProcessus <= 0)
-    {
-        qWarning() << Q_FUNC_INFO << "ID de processus invalide :" << idProcessus;
+    qDebug() << Q_FUNC_INFO << "idProcessus =" << idProcessus;
+    if (idProcessus <= 0) {
+        qWarning() << "ID invalide";
         return;
     }
 
@@ -86,140 +92,185 @@ void FenetreEtapes::chargerEtape(int idProcessus)
     idProcessusActuel = idProcessus;
 
     db = BaseDeDonnees::getDatabase();
+    if (!db.isOpen() && !db.open()) {
+        qCritical() << "Impossible d'ouvrir la BDD :" << db.lastError().text();
+        labelEtatRequete->setText("Erreur BDD : " + db.lastError().text());
+        return;
+    }
 
-    QSqlQuery query;
-    query.prepare("SELECT * FROM Etape WHERE idProcessus = :processus_id ORDER BY numeroEtape ASC");
-    query.bindValue(":processus_id", idProcessusActuel);
+    QSqlQuery query(db);
+    query.prepare(R"(
+        SELECT idEtape, numeroEtape, nomEtape, descriptionEtape
+        FROM Etape
+        WHERE idProcessus = :pid
+        ORDER BY numeroEtape ASC
+    )");
+    query.bindValue(":pid", idProcessusActuel);
 
-    if(query.exec())
-    {
-        while(query.next())
-        {
-            Etape etape;
-            etape.idEtape = query.value(TableEtape::TE_ID_ETAPE).toInt();
-            etape.numeroEtape = query.value(TableEtape::TE_NUMERO_ETAPE).toInt();
-            etape.nomEtape = query.value(TableEtape::TE_NOM_ETAPE).toString();
-            etape.descriptionEtape = query.value(TableEtape::TE_DESCRIPTION_ETAPE).toString();
-            etape.numeroBac = query.value(TableEtape::TE_ID_BAC).toInt();
-            listeDesEtapes.append(etape);
+    if (query.exec()) {
+        while (query.next()) {
+            Etape e;
+            e.idEtape          = query.value("idEtape").toInt();
+            e.numeroEtape      = query.value("numeroEtape").toInt();
+            e.nomEtape         = query.value("nomEtape").toString();
+            e.descriptionEtape = query.value("descriptionEtape").toString();
+            listeDesEtapes.append(e);
         }
-
-        if(listeDesEtapes.isEmpty())
-        {
+        qDebug() << "Étapes chargées :" << listeDesEtapes.size();
+        if (listeDesEtapes.isEmpty()) {
             labelEtatRequete->setText("Aucune étape trouvée !");
-        }
-        else
-        {
+        } else {
             etapeActuelIndex = 0;
             afficherEtapeActuelle();
             boutonEtapeSuivante->setEnabled(true);
         }
+    } else {
+        qCritical() << "Erreur SQL chargerEtape:" << query.lastError().text();
+        labelEtatRequete->setText("Erreur SQL : " + query.lastError().text());
     }
-    else
-    {
-        QString erreur = query.lastError().text();
-        labelEtatRequete->setText("Erreur SQL : " + erreur);
-        qDebug() << Q_FUNC_INFO << "Erreur SQL" << erreur;
+}
+
+void FenetreEtapes::afficherBacs(const QVector<QPair<int, QString>>& bacs, int bacDeLEtape)
+{
+    int count = bacs.size();
+    if (count == 0) {
+        auto* lbl = new QLabel("— aucun bac —", this);
+        layoutBacs->addWidget(lbl);
+        return;
+    }
+
+    int largeur = LARGEUR_UI / count;
+    for (const auto& pair : bacs) {
+        int num = pair.first;
+        QString cont = pair.second;
+        auto* gb = new QGroupBox(QString("Bac n°%1").arg(num), this);
+        gb->setFixedWidth(largeur);
+
+        auto* vb = new QVBoxLayout(gb);
+        auto* labelCont = new QLabel("Contenance : " + cont, gb);
+        labelCont->setStyleSheet("font-size: 9pt; color: black;");
+        vb->addWidget(labelCont);
+
+        // Surlignage
+        if (num == bacDeLEtape) {
+            gb->setStyleSheet("QGroupBox { background-color: #c4fcd4; border: 2px solid green; }");
+        } else {
+            gb->setStyleSheet("QGroupBox { background-color: #fcd4d4; border: 1px solid darkred; }");
+        }
+
+        layoutBacs->addWidget(gb);
+        groupesBacs.append(gb);
     }
 }
 
 void FenetreEtapes::afficherEtapeActuelle()
 {
-    if(etapeActuelIndex >= 0 && etapeActuelIndex < listeDesEtapes.size())
-    {
-        Etape etape = listeDesEtapes[etapeActuelIndex];
+    if (etapeActuelIndex < 0 || etapeActuelIndex >= listeDesEtapes.size())
+        return;
 
-        labelNumeroEtape->setText("Étape n°" + QString::number(etape.numeroEtape));
-        labelNomEtape->setText(etape.nomEtape);
-        labelDescriptionEtape->setText(etape.descriptionEtape);
-        labelEtatRequete->setText("");
-        imageEtape->clear();
+    const auto& e = listeDesEtapes[etapeActuelIndex];
+    afficherTexteEtape(e);
+    chargerImagePourEtape(e.idEtape);
 
-        QSqlQuery query;
-        query.prepare("SELECT numeroBac, contenance FROM Bac WHERE numeroBac = :numeroBac AND idProcessus = :idProcessus");
-        query.bindValue(":numeroBac", etape.numeroBac);
-        query.bindValue(":idProcessus", idProcessusActuel);
+    nettoyerLayoutBacs();
 
-        if(query.exec())
-        {
-            if(query.next())
-            {
-                etape.contenance = query.value(TableBac::TB_CONTENANCE).toString();
-                qDebug() << Q_FUNC_INFO << "numeroBac" << etape.numeroBac << "contenance" << etape.contenance;
+    int bacDeLEtape = recupererBacDeLEtape(e.idEtape);
+    QVector<QPair<int, QString>> bacs = recupererBacsProcessus(idProcessusActuel);
+    afficherBacs(bacs, bacDeLEtape);
+}
 
-                labelBacNumero->setText("Bac n°" + QString::number(etape.numeroBac));
-                labelBacContenance->setText("Contenance : " + etape.contenance);
-            }
-            else
-            {
-                labelBacNumero->clear();
-                labelBacContenance->clear();
-            }
-        }
-        else
-        {
-            QString erreur = query.lastError().text();
-            labelEtatRequete->setText("Erreur SQL : " + erreur);
-            qDebug() << Q_FUNC_INFO << "Erreur SQL" << erreur;
-        }
-
-        chargerImagePourEtape(etape.idEtape);
+void FenetreEtapes::nettoyerLayoutBacs()
+{
+    QLayoutItem* it;
+    while ((it = layoutBacs->takeAt(0)) != nullptr) {
+        if (auto* w = it->widget()) w->deleteLater();
+        delete it;
     }
+    groupesBacs.clear();
+}
+
+int FenetreEtapes::recupererBacDeLEtape(int idEtape)
+{
+    QSqlQuery q(db);
+    q.prepare("SELECT idBac FROM Etape WHERE idEtape = :eid");
+    q.bindValue(":eid", idEtape);
+    if (q.exec() && q.next())
+        return q.value(0).toInt();
+
+    qWarning() << "Erreur récupération bac de l'étape:" << q.lastError().text();
+    return -1;
+}
+
+QVector<QPair<int, QString>> FenetreEtapes::recupererBacsProcessus(int idProcessus)
+{
+    QVector<QPair<int, QString>> data;
+    QSqlQuery q(db);
+    q.prepare(R"(
+        SELECT numeroBac, contenance
+        FROM Bac
+        WHERE idProcessus = :pid
+        ORDER BY numeroBac ASC
+    )");
+    q.bindValue(":pid", idProcessus);
+
+    if (q.exec()) {
+        while (q.next()) {
+            data.append({ q.value("numeroBac").toInt(), q.value("contenance").toString() });
+        }
+    } else {
+        qWarning() << "Erreur SQL Bac:" << q.lastError().text();
+        labelEtatRequete->setText("Erreur SQL Bac");
+    }
+
+    return data;
+}
+
+void FenetreEtapes::afficherTexteEtape(const Etape& e)
+{
+    labelNumeroEtape->setText("Étape n°" + QString::number(e.numeroEtape));
+    labelNomEtape->setText(e.nomEtape);
+    labelDescriptionEtape->setText(e.descriptionEtape);
+    labelEtatRequete->clear();
+    imageEtape->clear();
 }
 
 void FenetreEtapes::chargerImagePourEtape(int idEtape)
 {
-    QSqlQuery query;
-    query.prepare("SELECT contenuBlob FROM Image JOIN Etape ON Etape.idImage = Image.idImage WHERE Etape.idEtape = :idEtape");
-    query.bindValue(":idEtape", idEtape);
+    QSqlQuery q(db);
+    q.prepare(R"(
+        SELECT I.contenuBlob
+        FROM Image I
+        JOIN Etape E ON E.idImage = I.idImage
+        WHERE E.idEtape = :eid
+    )");
+    q.bindValue(":eid", idEtape);
 
-    if(query.exec() && query.next())
-    {
-        QByteArray imageData = query.value(0).toByteArray();
-
-        if(!imageData.isEmpty())
-        {
-            QPixmap pixmap;
-            if(pixmap.loadFromData(imageData))
-            {
-                imageEtape->setPixmap(pixmap.scaled(LARGEUR_IMAGE_ETAPE, HAUTEUR_IMAGE_ETAPE, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-            }
-            else
-            {
-                qDebug() << Q_FUNC_INFO << "Erreur lors du chargement de l'image !";
-                imageEtape->clear();
+    if (q.exec() && q.next()) {
+        auto blob = q.value(0).toByteArray();
+        if (!blob.isEmpty()) {
+            QPixmap pm;
+            if (pm.loadFromData(blob)) {
+                imageEtape->setPixmap(
+                    pm.scaled(LARGEUR_UI, HAUTEUR_IMAGE_ETAPE,
+                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
+                return;
             }
         }
-        else
-        {
-            qDebug() << Q_FUNC_INFO << "Aucune image trouvée pour cette étape !";
-            imageEtape->clear();
-        }
     }
-    else
-    {
-        QString erreur = query.lastError().text();
-        labelEtatRequete->setText("Erreur SQL : " + erreur);
-        qDebug() << Q_FUNC_INFO << "Erreur SQL" << erreur;
-        imageEtape->clear();
-    }
+    // pas d'image ou échec
+    imageEtape->clear();
 }
 
 void FenetreEtapes::chargerEtapeSuivante()
 {
-    if(listeDesEtapes.isEmpty())
-    {
+    if (listeDesEtapes.isEmpty()) {
         labelEtatRequete->setText("Aucune étape disponible !");
         return;
     }
-
-    if(etapeActuelIndex < listeDesEtapes.size() - 1)
-    {
-        etapeActuelIndex++;
+    if (etapeActuelIndex + 1 < listeDesEtapes.size()) {
+        ++etapeActuelIndex;
         afficherEtapeActuelle();
-    }
-    else
-    {
+    } else {
         labelEtatRequete->setText("Processus terminé !");
         boutonEtapeSuivante->setEnabled(false);
     }

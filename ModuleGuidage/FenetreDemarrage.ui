@@ -33,12 +33,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>-1</x>
       <y>3</y>
-      <width>2271</width>
+      <width>2291</width>
       <height>161</height>
      </rect>
     </property>
@@ -96,26 +96,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>-1</x>
-      <y>168</y>
-      <width>2291</width>
-      <height>471</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayoutImage">
-     <item>
-      <widget class="QLabel" name="imageProcessus">
-       <property name="text">
-        <string>[Image]</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>-1</x>
@@ -126,19 +107,51 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayoutDescription">
      <item>
+      <spacer name="spacer1_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>450</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QLabel" name="labelDescriptionProcessus">
        <property name="text">
         <string>[DesciptionProcessus]</string>
        </property>
       </widget>
      </item>
+     <item>
+      <spacer name="spacer2_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>750</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>720</y>
+      <y>730</y>
       <width>2291</width>
       <height>101</height>
      </rect>
@@ -154,7 +167,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>250</width>
+         <width>450</width>
          <height>20</height>
         </size>
        </property>
@@ -186,7 +199,58 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>300</width>
+         <width>750</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>169</y>
+      <width>2291</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="spacer1_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>450</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="imageProcessus">
+       <property name="text">
+        <string>[Image]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer2_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>750</width>
          <height>20</height>
         </size>
        </property>
