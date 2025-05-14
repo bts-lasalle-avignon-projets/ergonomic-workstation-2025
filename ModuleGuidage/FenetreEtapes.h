@@ -6,7 +6,7 @@
 #include "Etape.h"
 
 #define LARGEUR_IMAGE_ETAPE 1080
-#define HAUTEUR_IMAGE_ETAPE 800
+#define HAUTEUR_IMAGE_ETAPE 500
 
 #define MARGE_LAYOUT 25
 
@@ -24,7 +24,6 @@ class FenetreEtapes : public QWidget
 
   private slots:
     void chargerEtapeSuivante();
-    void fermerFenetre();
 
   private:
     void initialiserFenetre();
@@ -35,8 +34,9 @@ class FenetreEtapes : public QWidget
     QLabel*      labelDescriptionEtape;
     QLabel*      labelEtatRequete;
     QLabel*      imageEtape;
+    QLabel* labelBacNumero;
+    QLabel* labelBacContenance;
     QPushButton* boutonEtapeSuivante;
-    QPushButton* boutonFermerFenetre;
 
     QVector<Etape> listeDesEtapes;
     int            etapeActuelIndex;
