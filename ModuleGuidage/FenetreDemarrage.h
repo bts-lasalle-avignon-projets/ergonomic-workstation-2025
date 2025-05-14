@@ -32,8 +32,7 @@
 #define TI_CONTENU_IMAGE 0
 
 #define LARGEUR_IMAGE 1080
-#define HAUTEUR_IMAGE 800
-
+#define HAUTEUR_IMAGE 500
 namespace Ui
 {
 class FenetreDemarrage;

@@ -31,12 +31,8 @@ FenetreDemarrage::FenetreDemarrage(QWidget* parent) :
     setupUi(this);
 
     setWindowTitle(QString(APPLICATION) + QString(" v") + QString(VERSION));
-
-#ifdef RASPBERRY_PI
     showFullScreen();
-#else
-    showMaximized();
-#endif
+
 
     imageProcessus->setMinimumSize(LARGEUR_IMAGE, HAUTEUR_IMAGE);
     imageProcessus->setAlignment(Qt::AlignCenter);
