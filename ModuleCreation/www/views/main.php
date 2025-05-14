@@ -79,8 +79,7 @@
 				message.style.opacity = 0;
 				setTimeout(() => {
 					message.remove();
-				}, 500); // délai pour que l'animation finisse avant suppression
-			}, 3000); // 3 secondes visibles
-		}
+				}, TEMPS_ANIMATION_OPACITE);
+			}, TEMPS_AFFICHAGE_MESSAGE);
 	});
 </script>
