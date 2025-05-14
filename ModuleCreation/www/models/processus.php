@@ -174,7 +174,31 @@ class ProcessusModel extends Model
 
 	public function delete($idProcessus)
 	{
-		return $idProcessus;
+		try {
+			// Récupérer toutes les idImage associées (étapes et processus)
+			$this->query("SELECT idImage FROM Etape WHERE idProcessus = :idProcessus AND idImage IS NOT NULL
+						UNION
+						SELECT idImage FROM Processus WHERE idProcessus = :idProcessus AND idImage IS NOT NULL");
+			$this->bind(':idProcessus', $idProcessus);
+			$imagesAssociees = $this->getResults(); // suppose que getResults retourne un tableau de lignes
+
+			// Supprimer le processus (cascade : supprime aussi étapes, bacs, assemblages)
+			$this->query("DELETE FROM Processus WHERE idProcessus = :idProcessus");
+			$this->bind(':idProcessus', $idProcessus);
+			$this->execute();
+
+			// Supprimer manuellement les images récupérées
+			foreach ($imagesAssociees as $img) {
+				$this->query("DELETE FROM Image WHERE idImage = :idImage");
+				$this->bind(':idImage', $img['idImage']);
+				$this->execute();
+			}
+
+			Messages::setMsg("Processus supprimé avec succès.", "success");
+
+		} catch (PDOException $e) {
+			Messages::setMsg("Erreur lors de la suppression : " . $e->getMessage(), "erreur");
+		}
 	}
 
 	public function view($idProcessus)

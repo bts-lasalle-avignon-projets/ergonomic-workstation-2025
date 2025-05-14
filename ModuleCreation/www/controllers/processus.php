@@ -56,20 +56,31 @@ class Processus extends Controller
 	{
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
+
 			if ($idProcessus > 0) {
-				$id = $this->viewmodel->delete($idProcessus);
-				$this->display($id);
+				if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) && $_POST['submit'] === 'Oui') {
+					$this->viewmodel->delete($idProcessus);
+					Messages::setMsg("Processus supprimé avec succès.", "success");
+					header('Location: ' . URL_PATH . 'processus');
+					exit;
+				} else {
+					// Affiche le bouton "Oui" si aucune validation POST
+					$this->display($idProcessus);
+				}
 			} else {
 				header('Location: ' . URL_PATH . 'processus');
+				exit;
 			}
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
+				exit;
 			} else {
-				// @todo
+				// @todo : à compléter si tu veux ajouter une vérification d'accès
 			}
 		}
 	}
+
 
 	protected function view()
 	{
