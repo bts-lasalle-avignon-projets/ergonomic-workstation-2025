@@ -217,6 +217,24 @@ class ProcessusModel extends Model
 		}
 	}
 
+	public function statistiqueAssemblage($idProcessus) 
+	{
+		$this->query("SELECT 
+						a.idAssemblage,
+						p.nomProcessus, 
+						a.nombreEchecs, 
+						(a.nombreEchecs / NULLIF(TIME_TO_SEC(a.dureeProcessus), 0)) * :TEMPS_MINUTE AS tauxErreurParMinute, 
+						a.dureeProcessus
+					FROM Assemblage a
+					JOIN Processus p ON a.idProcessus = p.idProcessus
+					WHERE a.idProcessus = :idProcessus");
+
+		$this->bind(':idProcessus', $idProcessus);
+		$this->bind(':TEMPS_MINUTE', TEMPS_MINUTE);
+		$AssemblageData = $this->getResults();
+		return $AssemblageData;
+	}
+
 	private function insererImageDepuisJson($image)
 	{
 		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 

@@ -33,3 +33,6 @@ if (DEBUG) {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 }
+
+define('PRECISION_POURCENTAGE', 2);
+define('TEMPS_MINUTE', 60);

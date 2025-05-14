@@ -131,6 +131,25 @@ class Processus extends Controller
 		}
 	}
 
+	public function statistique() {
+		if (NO_LOGIN) {
+			$idProcessus = $this->getID();
+			$AssemblageData = $this->viewmodel->statistiqueAssemblage($idProcessus);
+			if(DEBUG)
+			{
+				var_dump($AssemblageData);
+			}
+			$this->display($AssemblageData);
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				// @todo
+			}
+		}
+	
+	}
+
 	private function getID()
 	{
 		if (!isset($this->request['id']) || empty($this->request['id'])) {

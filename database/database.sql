@@ -4,8 +4,11 @@ USE ergonomic_workstation;
 
 DROP TABLE IF EXISTS Etape;
 DROP TABLE IF EXISTS Bac;
+SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS Processus;
+SET foreign_key_checks = 1;
 DROP TABLE IF EXISTS Image;
+DROP TABLE IF EXISTS Assemblage;
 
 CREATE TABLE IF NOT EXISTS Image (
     idImage INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -44,3 +47,27 @@ CREATE TABLE IF NOT EXISTS Etape (
     CONSTRAINT FK_EtapeBac FOREIGN KEY (idBac,idProcessus) REFERENCES Bac(numeroBac,idProcessus) ON DELETE CASCADE,
     CONSTRAINT FK_EtapeImage FOREIGN KEY (idImage) REFERENCES Image(idImage) ON DELETE SET NULL
 );
+
+CREATE TABLE IF NOT EXISTS Assemblage (
+    idAssemblage INT AUTO_INCREMENT PRIMARY KEY,
+    idProcessus INT NOT NULL,
+    nombreEchecs INT NOT NULL DEFAULT 0,
+    dureeProcessus TIME DEFAULT NULL,
+    dateStatistique TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_Assemblage FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
+);
+
+
+-- Simuler deux processus si non déjà existants
+INSERT INTO Processus (nomProcessus, descriptionProcessus) VALUES
+('Montage écran', 'Processus de montage d’un écran d’ordinateur'),
+('Assemblage clavier', 'Processus d’assemblage d’un clavier mécanique');
+
+-- Insérer des exécutions d’assemblage avec des erreurs (nombreEchecs)
+INSERT INTO Assemblage (idProcessus, nombreEchecs, dureeProcessus, dateStatistique) VALUES
+(1, 2, '00:40:00', '2025-05-01 08:00:00'),
+(1, 0, '00:35:00', '2025-05-01 10:00:00'),
+(1, 1, '00:45:00', '2025-05-02 09:00:00'),
+(2, 3, '00:30:00', '2025-05-01 11:00:00'),
+(2, 1, '00:28:00', '2025-05-02 08:30:00'),
+(2, 0, '00:25:00', '2025-05-03 14:00:00');
