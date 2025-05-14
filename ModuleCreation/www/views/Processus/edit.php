@@ -3,12 +3,19 @@
 		<h3 class="card-title">Éditer un processus</h3>
 	</div>
 	<div class="card-body">
-		<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+		<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="nomProcessus">Titre</label>
-				<input type="text" name="nomProcessus" class="form-control" id="nomProcessus" value="<?php echo $datas['nomProcessus']; ?>" />
+				<label for="nomProcessus">Nom</label>
+				<input type="text" name="nomProcessus" class="form-control" id="nomProcessus" required />
+			</div>			
+			<div class="form-group">
+				<label for="descriptionProcessus">Description</label>
+				<textarea class="form-control" name="descriptionProcessus" id="descriptionProcessus" rows="4" required></textarea>
 			</div>
-			<input type="hidden" name="id" value="<?php echo $datas['idProcessus']; ?>" />
+			<div class="form-group">
+				<label for="image">Image :</label>
+				<input type="file" name="image" accept="image/*">
+			</div>
 			<input class="btn btn-primary" name="submit" type="submit" value="Envoyer" />
 			<a class="btn btn-danger" href="<?php echo ROOT_PATH; ?>processus">Annuler</a>
 		</form>
