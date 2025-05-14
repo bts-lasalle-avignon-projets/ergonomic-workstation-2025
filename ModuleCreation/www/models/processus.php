@@ -88,12 +88,89 @@ class ProcessusModel extends Model
 		return $image['idImage'] ?? null;
 	}
 
+
 	public function edit($idProcessus)
 	{
-		$params = [":idProcessus" => $idProcessus];
-		$processus = $this->fetchAllByQuery("SELECT * FROM Processus WHERE idProcessus = :idProcessus", $params);
-		return $processus[0] ?? null;
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+			$nomProcessus = trim($_POST['nomProcessus']);
+			$descriptionProcessus = trim($_POST['descriptionProcessus']);
+
+			try {
+				$this->query("SELECT idImage FROM Processus WHERE idProcessus = :idProcessus");
+				$this->bind(':idProcessus', $idProcessus);
+				$result = $this->getResult();
+				$idImageActuel = $result['idImage'] ?? null;
+
+				if (!empty($_FILES['image']['name'])) {
+					$idImage = $this->updateImage($idImageActuel);
+				} else {
+					$idImage = $idImageActuel;
+				}
+
+				$this->query("UPDATE Processus 
+							SET nomProcessus = :nomProcessus, 
+								descriptionProcessus = :descriptionProcessus, 
+								idImage = :idImage 
+							WHERE idProcessus = :idProcessus");
+				$this->bind(':nomProcessus', $nomProcessus);
+				$this->bind(':descriptionProcessus', $descriptionProcessus);
+				$this->bind(':idImage', $idImage);
+				$this->bind(':idProcessus', $idProcessus);
+				$this->execute();
+
+				Messages::setMsg("Processus modifié avec succès !", "success");
+			} catch (PDOException $e) {
+				Messages::setMsg("Erreur lors de la modification : " . $e->getMessage(), "erreur");
+			}
+		}
 	}
+
+
+
+	public function updateImage($idImage)
+	{
+		$nomFichier = $_FILES['image']['name'];
+		$typeMIME = $_FILES['image']['type'];
+		$tailleImage = $_FILES['image']['size'];
+		$contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+
+		$typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+		if (!in_array($typeMIME, $typesAutorises)) {
+			Message::afficher("Format d'image non autorisé !", "erreur");
+			return null;
+		}
+
+		if($idImage == NULL)
+		{
+			$idImage = $this->ajouterImage();
+			return $idImage;
+		}
+		else {
+
+			$this->query("UPDATE Image
+			JOIN Processus ON Processus.idImage = Image.idImage
+			SET Image.nomFichier = :nomFichier,
+				Image.typeMIME = :typeMIME,
+				Image.tailleImage = :tailleImage,
+				Image.contenuBlob = :contenuBlob
+			WHERE Processus.idImage = :idImage");
+
+			$this->bind(':nomFichier', $nomFichier);
+			$this->bind(':typeMIME', $typeMIME);
+			$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+			$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+			$this->bind(':idImage', $idImage);
+			$idImage = $this->execute();
+			
+			$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
+			$this->bind(':nomFichier', $nomFichier);
+			$image = $this->getResult();
+
+			return $image['idImage'] ?? null;
+	
+		}
+	}
+
 
 	public function delete($idProcessus)
 	{

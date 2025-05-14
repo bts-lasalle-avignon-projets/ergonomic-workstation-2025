@@ -5,7 +5,7 @@
 define("URL_NAME", "");
 
 // Pour le debug
-define("DEBUG", false);
+define("DEBUG", true);
 
 // Pour les tests
 define("NO_LOGIN", true);
