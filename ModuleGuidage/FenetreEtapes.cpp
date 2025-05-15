@@ -53,9 +53,11 @@ void FenetreEtapes::initialiserFenetre()
     // Bacs en ligne
     layoutBacs = new QHBoxLayout;
 
-    // Bouton étape suivante
+    // Boutons
     boutonEtapeSuivante = new QPushButton("Étape suivante", this);
     boutonEtapeSuivante->setEnabled(false);
+    boutonQuitter = new QPushButton("Quitter le processus", this);
+    connect(boutonQuitter, &QPushButton::clicked, this, &FenetreEtapes::quitterProcessus);
 
     // Description
     auto* layoutDescription = new QHBoxLayout;
@@ -69,16 +71,23 @@ void FenetreEtapes::initialiserFenetre()
     layoutEtat->addWidget(labelEtatRequete);
     layoutEtat->addStretch();
 
-    // Assemblage du principal
+    // Layout bouton "Quitter" à droite
+    auto* layoutQuitter = new QHBoxLayout;
+    layoutQuitter->addStretch();
+    layoutQuitter->addWidget(boutonQuitter);
+
+    // Assemblage
     layoutPrincipal->addLayout(layoutHaut);
     layoutPrincipal->addWidget(imageEtape, 0, Qt::AlignCenter);
-    layoutPrincipal->addLayout(layoutBacs);  // ← Bacs juste sous l'image
+    layoutPrincipal->addLayout(layoutBacs);
     layoutPrincipal->addWidget(boutonEtapeSuivante, 0, Qt::AlignHCenter);
     layoutPrincipal->addLayout(layoutDescription);
     layoutPrincipal->addLayout(layoutEtat);
+    layoutPrincipal->addLayout(layoutQuitter);
 
     setLayout(layoutPrincipal);
 }
+
 
 void FenetreEtapes::chargerEtape(int idProcessus)
 {
@@ -274,4 +283,10 @@ void FenetreEtapes::chargerEtapeSuivante()
         labelEtatRequete->setText("Processus terminé !");
         boutonEtapeSuivante->setEnabled(false);
     }
+}
+
+void FenetreEtapes::quitterProcessus()
+{
+    close();
+    emit fermerEtapes();
 }

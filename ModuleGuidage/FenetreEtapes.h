@@ -20,6 +20,9 @@ class FenetreEtapes : public QWidget
 {
     Q_OBJECT
 
+signals:
+    void fermerEtapes();
+
 public:
     explicit FenetreEtapes(QWidget* parent = nullptr);
     void chargerEtape(int idProcessus);
@@ -28,12 +31,13 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 private slots:
-    void chargerEtapeSuivante();
+
 
 private:
     void initialiserFenetre();
     void afficherEtapeActuelle();
     void chargerImagePourEtape(int idEtape);
+    void chargerEtapeSuivante();
 
     // Méthodes ajoutées pour organiser le code
     void nettoyerLayoutBacs();
@@ -41,6 +45,7 @@ private:
     QVector<QPair<int, QString>> recupererBacsProcessus(int idProcessus);
     void afficherBacs(const QVector<QPair<int, QString>>& bacs, int bacDeLEtape);
     void afficherTexteEtape(const Etape& e);
+    void quitterProcessus();
 
     // données
     QVector<Etape> listeDesEtapes;
@@ -55,6 +60,7 @@ private:
     QLabel* labelEtatRequete;
     QLabel* imageEtape;
     QPushButton* boutonEtapeSuivante;
+    QPushButton* boutonQuitter;
 
     QHBoxLayout* layoutBacs;
     QVector<QGroupBox*> groupesBacs;     // pour nettoyer

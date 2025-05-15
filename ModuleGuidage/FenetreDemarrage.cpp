@@ -178,28 +178,37 @@ void FenetreDemarrage::demarrerProcessus()
 {
     QVariant processusSelectionne = comboBoxListeProcessus->currentData();
     qDebug() << Q_FUNC_INFO << "processusSelectionne" << processusSelectionne;
-    if(!processusSelectionne.isValid())
-    {
+
+    if (!processusSelectionne.isValid()) {
         labelEtatRequete->setText("Veuillez sélectionner un processus !");
         return;
-    }
-    else
-    {
+    } else {
         labelEtatRequete->setText("");
     }
 
     idProcessusActuel = processusSelectionne.toInt();
 
-    if(fenetreEtapes == nullptr)
-    {
+    // Création ou réutilisation de la fenêtre d'étapes
+    if (fenetreEtapes == nullptr) {
         fenetreEtapes = new FenetreEtapes(this);
-        fenetreEtapes->chargerEtape(idProcessusActuel);
+        fenetreEtapes->setAttribute(Qt::WA_DeleteOnClose);
+
+        connect(fenetreEtapes, &FenetreEtapes::fermerEtapes, this, [this]() {
+            this->showFullScreen();
+            fenetreEtapes = nullptr;  // La fenêtre sera supprimée à la fermeture
+            this->showFullScreen();
+        });
     }
-    else
-    {
-        fenetreEtapes->chargerEtape(idProcessusActuel);
-        fenetreEtapes->show();
-        fenetreEtapes->raise();
-        fenetreEtapes->activateWindow();
-    }
+
+    fenetreEtapes->chargerEtape(idProcessusActuel);
+    fenetreEtapes->showFullScreen(); // showFullScreen ici
+    this->hide();
+}
+
+
+
+void FenetreDemarrage::revenirAccueil()
+{
+    this->show();
+    fenetreEtapes = nullptr;
 }

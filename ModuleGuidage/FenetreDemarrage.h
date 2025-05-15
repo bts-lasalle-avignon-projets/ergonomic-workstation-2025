@@ -58,6 +58,7 @@ class FenetreDemarrage : public QMainWindow, public Ui::FenetreDemarrage
     void afficherProcessus();
     void chargerImagePourProcessus(int idProcessus);
     void demarrerProcessus();
+    void revenirAccueil();
 
     QSqlDatabase db;
     int          etapeActuelIndex;
