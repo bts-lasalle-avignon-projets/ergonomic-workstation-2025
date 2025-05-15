@@ -25,7 +25,7 @@
 					<a class="card-link text-primary" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Modifier</a>
 					<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer</a>
 					<a class="card-link text-info" href="<?php echo ROOT_PATH; ?>processus/export/<?php echo $item['idProcessus']; ?>">Exporter</a>
-					<a class="card-link text-info" href="<?php echo ROOT_PATH; ?>processus/statistique/<?php echo $item['idProcessus']; ?>">Statistique</a>
+					<a class="card-link text-secondary" href="<?php echo ROOT_PATH; ?>processus/statistique/<?php echo $item['idProcessus']; ?>">Statistique</a>
 				</small>
 			</div>
 		</div>

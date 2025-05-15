@@ -42,6 +42,42 @@ class Etape extends Controller
     }
   }
 
+
+  public function edit()
+  {
+      if (NO_LOGIN) {
+          $idEtape = $this->getID();
+          if ($idEtape > 0) {
+              if ($this->viewmodel->edit($idEtape)) {
+                  $etape = $this->viewmodel->getEtapeParID($idEtape);
+                  // Accéder au premier élément du tableau
+                  $etapeData = $etape[0]; // Puisque $etape est un tableau avec un élément à l'index 0 
+                                   
+                  if (isset($etapeData['idProcessus']) && isset($etapeData['numeroEtape'])) {
+                      $nomProcessus = $this->viewmodel->getTitre($etapeData['idProcessus']);
+                      $numeroEtape = $etapeData['numeroEtape'];
+                      $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
+                  } else {
+                      echo "Données manquantes pour cette étape.";
+                  }
+              } else {
+                  header('Location: ' . URL_PATH . 'etape' . '/' . 'edit' . '/' . $idEtape);
+              }
+          } else {
+              header('Location: ' . URL_PATH . 'processus');
+          }
+      } else {
+          if (!isset($_SESSION['is_logged_in'])) {
+              header('Location: ' . URL_PATH . 'processus');
+          } else {
+              // @todo
+          }
+      }
+  }
+
+
+
+
   private function getID()
   {
     if (!isset($this->request['id']) || empty($this->request['id'])) {

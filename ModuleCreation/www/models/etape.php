@@ -218,4 +218,72 @@ class EtapeModel extends Model
 
         return true;
     }
+
+
+   public function edit($idEtape)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $nomEtape = $_POST['nomEtape'] ?? null;
+            $descriptionEtape = $_POST['descriptionEtape'] ?? null;
+            $contenance = $_POST['contenance'] ?? null;
+            $numeroBac = $_POST['numeroBac'] ?? null;
+
+            if (empty($nomEtape) || empty($descriptionEtape) || empty($contenance)) {
+                Messages::setMsg("Tous les champs doivent être remplis.", "error");
+                return false;
+            }
+
+            try {
+                $etape = $this->getEtapeParID($idEtape);
+                $etapeData = $etape[0]; // Puisque $etape est un tableau avec un élément à l'index 0
+
+
+                $idProcessus = $etapeData['idProcessus'];
+
+                $bac = $this->ajouterBac($numeroBac, $idProcessus, $contenance);
+                if ($bac === null) {
+                    return false;
+                }
+
+                $this->query("UPDATE Etape 
+                            SET idBac = :idBac, nomEtape = :nomEtape, descriptionEtape = :descriptionEtape 
+                            WHERE idEtape = :idEtape");
+                $this->bind(':idBac', $bac->getIdBac());
+                $this->bind(':nomEtape', $nomEtape);
+                $this->bind(':descriptionEtape', $descriptionEtape);
+                $this->bind(':idEtape', $idEtape);
+                $this->execute();
+
+                if (!empty($_FILES['image']['name'])) {
+                    $idImage = $this->ajouterImage();
+                    if ($idImage !== null) {
+                        $this->query("UPDATE Etape SET idImage = :idImage WHERE idEtape = :idEtape");
+                        $this->bind(':idImage', $idImage, PDO::PARAM_INT);
+                        $this->bind(':idEtape', $idEtape);
+                        $this->execute();
+                    }
+                }
+
+                Messages::setMsg("L'étape a bien été modifiée.", "success");
+                return true;
+
+            } catch (PDOException $e) {
+                Messages::setMsg("Erreur SQL : " . $e->getMessage(), "error");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    public function getEtapeParID($idEtape)
+    {
+        $this->query("SELECT * FROM Etape WHERE idEtape = :idEtape");
+        $this->bind(':idEtape', $idEtape);
+        $result = $this->getResults(); // Retourne un tableau associatif
+    //    var_dump($result); // Déboguer les résultats de la requête
+        return $result;
+    }
+
 }

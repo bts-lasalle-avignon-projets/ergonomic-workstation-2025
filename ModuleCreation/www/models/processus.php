@@ -203,8 +203,29 @@ class ProcessusModel extends Model
 
 	public function view($idProcessus)
 	{
-		return null;
+		$this->query("SELECT e.*, b.contenance AS bac
+						FROM Etape e
+						LEFT JOIN Bac b ON e.idBac = b.numeroBac AND b.idProcessus = :idProcessus
+						WHERE e.idProcessus = :idProcessus 
+						ORDER BY e.numeroEtape ");
+		$this->bind(':idProcessus', $idProcessus);
+		$etape = $this->getResults();
+
+		foreach ($etape as $index => $e) {
+			if (!empty($e['idImage'])) {
+				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
+				$this->bind(':idImage', $e['idImage']);
+				$imageData = $this->getResult();
+				$etape[$index]['image'] = $imageData ? $imageData : null;
+			} else {
+				$etape[$index]['image'] = null;
+			}
+
+		}
+
+		return $etape;
 	}
+
 
 	public function export($idProcessus)
 	{
