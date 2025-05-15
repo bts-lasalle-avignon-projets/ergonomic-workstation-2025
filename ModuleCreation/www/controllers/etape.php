@@ -51,10 +51,8 @@ class Etape extends Controller
               if ($this->viewmodel->edit($idEtape)) {
                   $etape = $this->viewmodel->getEtapeParID($idEtape);
                   // Accéder au premier élément du tableau
-                  $etapeData = $etape[0]; // Puisque $etape est un tableau avec un élément à l'index 0
-                  var_dump($etapeData); // Pour vérifier l'élément récupéré
-                  
-                  // Vérification si les clés existent avant de les utiliser
+                  $etapeData = $etape[0]; // Puisque $etape est un tableau avec un élément à l'index 0 
+                                   
                   if (isset($etapeData['idProcessus']) && isset($etapeData['numeroEtape'])) {
                       $nomProcessus = $this->viewmodel->getTitre($etapeData['idProcessus']);
                       $numeroEtape = $etapeData['numeroEtape'];
