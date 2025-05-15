@@ -21,6 +21,9 @@
 					<p class="mt-3">Aucune image disponible.</p>
 				<?php endif; ?>
 			</div>
+			<small>
+				<a class="card-link text-primary" href="<?php echo ROOT_PATH; ?>etape/edit/<?php echo $etape['idEtape']; ?>">Modifier</a>
+			</small>
 		</div>
 	<?php endforeach; ?>
 </div>
