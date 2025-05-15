@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS Processus;
 SET foreign_key_checks = 1;
 DROP TABLE IF EXISTS Image;
 DROP TABLE IF EXISTS Assemblage;
+DROP TABLE IF EXISTS EtatProcessus;
 
 CREATE TABLE IF NOT EXISTS Image (
     idImage INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -57,6 +58,12 @@ CREATE TABLE IF NOT EXISTS Assemblage (
     CONSTRAINT FK_Assemblage FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
 );
 
+
+CREATE TABLE EtatProcessus (
+    idProcessus INTEGER PRIMARY KEY,
+    idEtapeActuelle INTEGER,
+    dateDerniereModification DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Simuler deux processus si non déjà existants
 INSERT INTO Processus (nomProcessus, descriptionProcessus) VALUES
