@@ -46,11 +46,14 @@ private:
     void afficherBacs(const QVector<QPair<int, QString>>& bacs, int bacDeLEtape);
     void afficherTexteEtape(const Etape& e);
     void quitterProcessus();
+    void sauvegarderEtatProcessus();
 
     // données
     QVector<Etape> listeDesEtapes;
     int etapeActuelIndex;
     int idProcessusActuel;
+    int recupererIndexDerniereEtape(int idProcessus);
+
     QSqlDatabase db;
 
     // UI

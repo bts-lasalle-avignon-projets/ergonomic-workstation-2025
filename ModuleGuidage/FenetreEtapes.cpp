@@ -125,11 +125,13 @@ void FenetreEtapes::chargerEtape(int idProcessus)
             e.descriptionEtape = query.value("descriptionEtape").toString();
             listeDesEtapes.append(e);
         }
+
         qDebug() << "Étapes chargées :" << listeDesEtapes.size();
+
         if (listeDesEtapes.isEmpty()) {
             labelEtatRequete->setText("Aucune étape trouvée !");
         } else {
-            etapeActuelIndex = 0;
+            etapeActuelIndex = recupererIndexDerniereEtape(idProcessusActuel);
             afficherEtapeActuelle();
             boutonEtapeSuivante->setEnabled(true);
         }
@@ -137,6 +139,44 @@ void FenetreEtapes::chargerEtape(int idProcessus)
         qCritical() << "Erreur SQL chargerEtape:" << query.lastError().text();
         labelEtatRequete->setText("Erreur SQL : " + query.lastError().text());
     }
+}
+
+void FenetreEtapes::sauvegarderEtatProcessus()
+{
+    if (listeDesEtapes.isEmpty() || etapeActuelIndex < 0 || etapeActuelIndex >= listeDesEtapes.size())
+        return;
+
+    int idEtapeActuelle = listeDesEtapes[etapeActuelIndex].idEtape;
+
+    QSqlQuery q(db);
+    q.prepare(R"(
+        INSERT INTO EtatProcessus (idProcessus, idEtapeActuelle)
+        VALUES (:pid, :eid)
+        ON DUPLICATE KEY UPDATE
+            idEtapeActuelle = VALUES(idEtapeActuelle),
+            dateDerniereModification = CURRENT_TIMESTAMP
+    )");
+    q.bindValue(":pid", idProcessusActuel);
+    q.bindValue(":eid", idEtapeActuelle);
+
+    if (!q.exec()) {
+        qWarning() << "Échec sauvegarde état processus:" << q.lastError().text();
+    }
+}
+
+int FenetreEtapes::recupererIndexDerniereEtape(int idProcessus)
+{
+    QSqlQuery q(db);
+    q.prepare("SELECT idEtapeActuelle FROM EtatProcessus WHERE idProcessus = :pid");
+    q.bindValue(":pid", idProcessus);
+    if (q.exec() && q.next()) {
+        int idEtapeSauvegardee = q.value(0).toInt();
+        for (int i = 0; i < listeDesEtapes.size(); ++i) {
+            if (listeDesEtapes[i].idEtape == idEtapeSauvegardee)
+                return i;
+        }
+    }
+    return 0;
 }
 
 void FenetreEtapes::afficherBacs(const QVector<QPair<int, QString>>& bacs, int bacDeLEtape)
@@ -276,17 +316,31 @@ void FenetreEtapes::chargerEtapeSuivante()
         labelEtatRequete->setText("Aucune étape disponible !");
         return;
     }
+
     if (etapeActuelIndex + 1 < listeDesEtapes.size()) {
         ++etapeActuelIndex;
         afficherEtapeActuelle();
     } else {
         labelEtatRequete->setText("Processus terminé !");
         boutonEtapeSuivante->setEnabled(false);
+
+        // Réinitialiser l’état du processus à la fin
+        QSqlQuery q(db);
+        q.prepare("DELETE FROM EtatProcessus WHERE idProcessus = :pid");
+        q.bindValue(":pid", idProcessusActuel);
+        if (!q.exec()) {
+            qWarning() << "Erreur suppression état processus:" << q.lastError().text();
+        } else {
+            qDebug() << "État du processus réinitialisé.";
+        }
     }
 }
 
 void FenetreEtapes::quitterProcessus()
 {
+    if (etapeActuelIndex < listeDesEtapes.size() - 1) {
+        sauvegarderEtatProcessus();
+    }
     close();
     emit fermerEtapes();
 }
