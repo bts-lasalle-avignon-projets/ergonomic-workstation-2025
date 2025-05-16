@@ -29,6 +29,7 @@ class ProcessusModel extends Model
 		return $processus;
 	}
 
+	
 	public function add()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
@@ -59,6 +60,7 @@ class ProcessusModel extends Model
 			}
 		}
 	}
+
 
 	private function ajouterImage()
 	{
@@ -124,7 +126,6 @@ class ProcessusModel extends Model
 			}
 		}
 	}
-
 
 
 	public function updateImage($idImage)
@@ -201,6 +202,7 @@ class ProcessusModel extends Model
 		}
 	}
 
+
 	public function view($idProcessus)
 	{
 		$this->query("SELECT e.*, b.contenance AS bac
@@ -227,7 +229,7 @@ class ProcessusModel extends Model
 	}
 
 
-	public function export($idProcessus)
+	public function creerJSON($idProcessus)
 	{
 		$params = [":idProcessus" => $idProcessus];
 		$processus = $this->fetchAllByQuery("SELECT * FROM Processus WHERE idProcessus = :idProcessus", $params);
@@ -275,23 +277,90 @@ class ProcessusModel extends Model
 		return json_encode($processusExport, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}
 
-	public function import()
+
+	public function exportZip($idProcessus)
+	{
+		$processus = json_decode($this->creerJSON($idProcessus), true);
+
+		$tempDir = sys_get_temp_dir() . '/export_' . uniqid();
+		mkdir($tempDir . '/images', 0777, true);
+
+		$imageMapping = [];
+
+		if (isset($processus['image'])) {
+			$img = $processus['image'];
+			$ext = explode('/', $img['typeMIME'])[1];
+			$filename = 'processus.' . $ext;
+			file_put_contents("$tempDir/images/$filename", base64_decode($img['contenu']));
+			$imageMapping[$img['nomFichier']] = 'images/' . $filename;
+			$processus['image'] = $imageMapping[$img['nomFichier']];
+		}
+
+		foreach ($processus['etapes'] as &$etape) {
+			if (isset($etape['image'])) {
+				$img = $etape['image'];
+				$ext = explode('/', $img['typeMIME'])[1];
+				$filename = 'etape_' . $etape['numeroEtape'] . '.' . $ext;
+				file_put_contents("$tempDir/images/$filename", base64_decode($img['contenu']));
+				$imageMapping[$img['nomFichier']] = 'images/' . $filename;
+				$etape['image'] = $imageMapping[$img['nomFichier']];
+			}
+		}
+
+		file_put_contents("$tempDir/data.json", json_encode($processus, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+		$zipPath = "$tempDir.zip";
+		$zip = new ZipArchive();
+		$zip->open($zipPath, ZipArchive::CREATE);
+		$zip->addFile("$tempDir/data.json", "data.json");
+
+		foreach (glob("$tempDir/images/*") as $file) {
+			$zip->addFile($file, 'images/' . basename($file));
+		}
+
+		$zip->close();
+
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename="processus_export.zip"');
+		header('Content-Length: ' . filesize($zipPath));
+		readfile($zipPath);
+
+		array_map('unlink', glob("$tempDir/images/*"));
+		rmdir("$tempDir/images");
+		unlink("$tempDir/data.json");
+		rmdir($tempDir);
+		unlink($zipPath);
+		exit;
+	}
+
+
+	public function importZip()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fichier']) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK) {
-			$jsonFile = $_FILES['fichier']['tmp_name'];
-			$jsonContent = file_get_contents($jsonFile);
+			$tmpZip = $_FILES['fichier']['tmp_name'];
+			$tempDir = sys_get_temp_dir() . '/import_' . uniqid();
+			mkdir($tempDir, 0777, true);
 
-			$data = json_decode($jsonContent, true);
-
-			if (!$data || !isset($data['nomProcessus'])) {
-				Message::afficher("Le fichier n'est pas valide.", "erreur");
+			$zip = new ZipArchive();
+			if ($zip->open($tmpZip) === TRUE) {
+				$zip->extractTo($tempDir);
+				$zip->close();
+			} else {
+				Message::afficher("Impossible de décompresser l'archive.", "erreur");
 				return;
 			}
 
+			$jsonContent = file_get_contents("$tempDir/data.json");
+			$data = json_decode($jsonContent, true);
+
+			if (!$data || !isset($data['nomProcessus'])) {
+				Message::afficher("Le fichier JSON est invalide.", "erreur");
+				return;
+			}
 
 			$idImage = null;
 			if (isset($data['image'])) {
-				$idImage = $this->insererImageDepuisJson($data['image']);
+				$idImage = $this->insererImageDepuisFichier($tempDir . '/' . $data['image']);
 			}
 
 			$this->query("INSERT INTO Processus (nomProcessus, idImage, descriptionProcessus) VALUES (:nomProcessus, :idImage, :descriptionProcessus)");
@@ -299,45 +368,40 @@ class ProcessusModel extends Model
 			$this->bind(':idImage', $idImage, PDO::PARAM_INT);
 			$this->bind(':descriptionProcessus', $data['descriptionProcessus']);
 			$this->execute();
-
 			$idProcessus = $this->getLastInsertId();
 
-			$bacsMap = [];
-			if (isset($data['bacs']) && is_array($data['bacs'])) {
-				foreach ($data['bacs'] as $bac) {
-					try {
-						$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
-						$this->bind(':numeroBac', $bac['numeroBac']);
-						$this->bind(':contenance', $bac['contenance']);
-						$this->bind(':idProcessus', $idProcessus);
-						$this->execute();
-					} catch (PDOException $e) {
-						echo "Erreur lors de l'insertion du bac : " . $e->getMessage();  // Afficher le message complet
-					}
-
-					$idBac = $this->getLastInsertId();
-					$bacsMap[$bac['numeroBac']] = $idBac;
-				}
+			foreach ($data['bacs'] as $bac) {
+				$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
+				$this->bind(':numeroBac', $bac['numeroBac']);
+				$this->bind(':contenance', $bac['contenance']);
+				$this->bind(':idProcessus', $idProcessus);
+				$this->execute();
 			}
+
 			foreach ($data['etapes'] as $etape) {
 				$idImageEtape = null;
 				if (isset($etape['image'])) {
-					$idImageEtape = $this->insererImageDepuisJson($etape['image']);
+					$idImageEtape = $this->insererImageDepuisFichier($tempDir . '/' . $etape['image']);
 				}
 
-				$numeroBac = $etape['bac']['numeroBac'] ?? null;
 				$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
 								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
 				$this->bind(':nomEtape', $etape['nomEtape']);
 				$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
 				$this->bind(':idProcessus', $idProcessus);
 				$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
-				$this->bind(':idBac', $numeroBac, PDO::PARAM_INT);
+				$this->bind(':idBac', $etape['bac']['numeroBac'], PDO::PARAM_INT);
 				$this->bind(':numeroEtape', $etape['numeroEtape']);
 				$this->execute();
 			}
+
+			array_map('unlink', glob("$tempDir/images/*"));
+			rmdir("$tempDir/images");
+			unlink("$tempDir/data.json");
+			rmdir($tempDir);
 		}
 	}
+
 
 	public function statistiqueAssemblage($idProcessus) 
 	{
@@ -357,19 +421,25 @@ class ProcessusModel extends Model
 		return $AssemblageData;
 	}
 
-	private function insererImageDepuisJson($image)
-	{
-		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
-					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
 
-		$this->bind(':nomFichier', $image['nomFichier']);
-		$this->bind(':typeMIME', $image['typeMIME']);
-		$this->bind(':contenuBlob', base64_decode($image['contenu']), PDO::PARAM_LOB);
-		$this->bind(':tailleImage', $image['tailleImage'], PDO::PARAM_INT);
+	private function insererImageDepuisFichier($chemin)
+	{
+		$nomFichier = basename($chemin);
+		$typeMIME = mime_content_type($chemin);
+		$contenuBlob = file_get_contents($chemin);
+		$tailleImage = filesize($chemin);
+
+		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage)
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+		$this->bind(':nomFichier', $nomFichier);
+		$this->bind(':typeMIME', $typeMIME);
+		$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+		$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
 		$this->execute();
 
 		return $this->getLastInsertId();
 	}
+
 
 	private function fetchAllByQuery($sql, $params = [])
 	{

@@ -1,6 +1,6 @@
 <div class="col-12">
 	<a class="btn btn-primary btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/add">Créer</a>
-	<a class="btn btn-info btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/import">Importer</a>
+	<a class="btn btn-info btn-share mt-0" href="<?php echo ROOT_PATH; ?>processus/importZip">Importer</a>
 	<?php foreach ($datas as $item) : ?>
 		<div class="card mb-4">
 			<h3 class="card-header"><?php echo $item['nomProcessus']; ?></h3>
@@ -24,7 +24,7 @@
 					<a class="card-link text-warning" href="<?php echo ROOT_PATH; ?>processus/view/<?php echo $item['idProcessus']; ?>">Voir</a>
 					<a class="card-link text-primary" href="<?php echo ROOT_PATH; ?>processus/edit/<?php echo $item['idProcessus']; ?>">Modifier</a>
 					<a class="card-link text-danger" href="<?php echo ROOT_PATH; ?>processus/delete/<?php echo $item['idProcessus']; ?>">Supprimer</a>
-					<a class="card-link text-info" href="<?php echo ROOT_PATH; ?>processus/export/<?php echo $item['idProcessus']; ?>">Exporter</a>
+					<a class="card-link text-info" href="<?php echo ROOT_PATH; ?>processus/exportZip/<?php echo $item['idProcessus']; ?>">Exporter</a>
 					<a class="card-link text-secondary" href="<?php echo ROOT_PATH; ?>processus/statistique/<?php echo $item['idProcessus']; ?>">Statistique</a>
 				</small>
 			</div>

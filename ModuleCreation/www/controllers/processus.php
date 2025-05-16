@@ -101,23 +101,14 @@ class Processus extends Controller
 		}
 	}
 
-	public function export()
+	public function exportZip()
 	{
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
 			if ($idProcessus > 0) {
+				$this->viewmodel->exportZip($idProcessus); // méthode déjà prête
 			} else {
 				header('Location: ' . URL_PATH . 'processus');
-			}
-			$json = $this->viewmodel->export($idProcessus);
-			if (defined('DEBUG') && DEBUG === true) {
-				$this->display(['json' => $json]);
-			} else {
-				header('Content-Type: application/json');
-				header('Content-Disposition: attachment; filename="processus_export.json"');
-				header('Content-Length: ' . strlen($json));
-				echo $json;
-				exit;
 			}
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
@@ -128,10 +119,10 @@ class Processus extends Controller
 		}
 	}
 
-	public function import()
+	public function importZip()
 	{
 		if (NO_LOGIN) {
-			$this->viewmodel->import();
+			$this->viewmodel->importZip(); // méthode déjà prête
 			$this->display();
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
