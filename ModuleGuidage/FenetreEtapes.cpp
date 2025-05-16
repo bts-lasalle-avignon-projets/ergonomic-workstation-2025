@@ -1,5 +1,6 @@
 #include "FenetreEtapes.h"
 #include "BaseDeDonnees.h"
+#include "Communication.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QGroupBox>

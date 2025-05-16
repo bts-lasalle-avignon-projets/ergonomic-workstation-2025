@@ -12,6 +12,7 @@
 #include <QVector>
 #include <QPair>
 #include "Etape.h"
+#include "Communication.h"
 
 #define LARGEUR_UI 1080
 #define HAUTEUR_IMAGE_ETAPE 500

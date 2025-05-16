@@ -22,9 +22,8 @@
  * @param parent L'adresse de l'objet parent, si nullptr FenetreDemarrage sera
  * la fenêtre principale de l'application
  */
-FenetreDemarrage::FenetreDemarrage(QWidget* parent) :
-    QMainWindow(parent), etapeActuelIndex(0), idProcessusActuel(-1),
-    fenetreEtapes(nullptr)
+FenetreDemarrage::FenetreDemarrage(Communication* comm, QWidget* parent) :
+    QMainWindow(parent), etapeActuelIndex(0), idProcessusActuel(-1), fenetreEtapes(nullptr), communication(comm)
 {
     qDebug() << Q_FUNC_INFO << this;
 
@@ -199,7 +198,7 @@ void FenetreDemarrage::demarrerProcessus()
             this->showFullScreen();
         });
     }
-
+    communication->envoyerDebutProcessus();
     fenetreEtapes->chargerEtape(idProcessusActuel);
     fenetreEtapes->showFullScreen(); // showFullScreen ici
     this->hide();
