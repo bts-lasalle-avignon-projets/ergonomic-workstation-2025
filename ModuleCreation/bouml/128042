@@ -1,0 +1,62 @@
+format 224
+"Etape" // www::views::Etape
+  revision 1
+  modified_by 42 "beber"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "C:/Users/beber/OneDrive/Bureau/ergonomic-workstation-2025/ModuleCreation/bouml/../www/./views/Etape/"
+  deploymentview 128042 "Etape"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 128426 "add"
+      stereotype "source"
+      php_src "<div class=\"col col-lg-8 mt-3 mx-3 mx-lg-auto text-center\">
+    <h1>Processus : <?php echo htmlspecialchars($datas['nomProcessus']['nomProcessus']); ?></h1>
+</div>
+<div class=\"card col col-lg-5 mx-3 mb-3 mx-lg-auto p-0\">
+    <div class=\"card-header\">
+        <h3 class=\"card-title\">Ajouter étape n° <?php echo htmlspecialchars($datas['numeroEtape']['numeroEtape']); ?>"
+      associated_elems
+      end
+    end
+
+    artifact 128554 "edit"
+      stereotype "source"
+      php_src "<div class=\"col col-lg-8 mt-3 mx-3 mx-lg-auto text-center\">
+    <h1>Processus : <?php echo htmlspecialchars($datas['nomProcessus']['nomProcessus']); ?></h1>
+</div>
+<div class=\"card col col-lg-5 mx-3 mb-3 mx-lg-auto p-0\">
+    <div class=\"card-header\">
+        <h3 class=\"card-title\">Ajouter étape n° <?php echo htmlspecialchars($datas['numeroEtape']); ?>"
+      associated_elems
+      end
+    end
+  end
+end
