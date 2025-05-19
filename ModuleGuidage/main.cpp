@@ -1,38 +1,34 @@
 /**
  * @file main.cpp
- *
  * @brief Programme principal
+ * @details Initialise l'application, la communication Bluetooth, et lance la fenêtre principale.
  * @author BOUSQUET-SOLFRINI Valentin
- * @version 1.0
+ * @version 1.1
  */
+
 #include "FenetreDemarrage.h"
 #include "Communication.h"
 #include <QApplication>
 #include <QFile>
+#include <QDebug>
 
-/**
- * @brief Programme principal
- * @details Crée et affiche la fenêtre principale de l'application
- *
- * @fn main
- * @param argc
- * @param argv[]
- * @return int
- *
- */
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
 
-    Communication communication;
-    if (!communication.connecter())  // Pas de paramètre ici
+    // Initialisation de la communication Bluetooth
+    Communication* communication = new Communication();
+    if (!communication->connecter())
     {
         qCritical() << "Erreur : Impossible de se connecter à l'ESP32 via Bluetooth.";
+        delete communication;
         return -1;
     }
 
-    FenetreDemarrage fenetreDemarrage(&communication);
+    // Création de la fenêtre principale en injectant la communication
+    FenetreDemarrage* fenetreDemarrage = new FenetreDemarrage(communication, nullptr);
 
+    // Chargement de la feuille de style (QSS)
     QFile fichier(":/qss/ModuleGuidage.qss");
     if (fichier.open(QFile::ReadOnly))
     {
@@ -40,7 +36,14 @@ int main(int argc, char* argv[])
         a.setStyleSheet(feuilleStyle);
     }
 
-    fenetreDemarrage.show();
+    fenetreDemarrage->show();
 
-    return a.exec();
+    int retour = a.exec();
+
+    // Nettoyage mémoire
+    delete fenetreDemarrage;
+    delete communication;
+
+    return retour;
 }
+

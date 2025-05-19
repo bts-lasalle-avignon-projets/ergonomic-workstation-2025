@@ -11,6 +11,7 @@
 #include <QShowEvent>
 #include <QVector>
 #include <QPair>
+#include <QMessageBox>
 #include "Etape.h"
 #include "Communication.h"
 
@@ -25,14 +26,11 @@ signals:
     void fermerEtapes();
 
 public:
-    explicit FenetreEtapes(QWidget* parent = nullptr);
+    explicit FenetreEtapes(Communication* comm, QWidget* parent = nullptr);
     void chargerEtape(int idProcessus);
 
 protected:
     void showEvent(QShowEvent* event) override;
-
-private slots:
-
 
 private:
     void initialiserFenetre();
@@ -46,6 +44,7 @@ private:
     QVector<QPair<int, QString>> recupererBacsProcessus(int idProcessus);
     void afficherBacs(const QVector<QPair<int, QString>>& bacs, int bacDeLEtape);
     void afficherTexteEtape(const Etape& e);
+    void afficherPopupDemandePiochage();
     void quitterProcessus();
     void sauvegarderEtatProcessus();
 
@@ -54,6 +53,9 @@ private:
     int etapeActuelIndex;
     int idProcessusActuel;
     int recupererIndexDerniereEtape(int idProcessus);
+
+    // Traiter les trames
+    void traiterTrameRecue(const QString &trame);
 
     QSqlDatabase db;
 
@@ -68,6 +70,9 @@ private:
 
     QHBoxLayout* layoutBacs;
     QVector<QGroupBox*> groupesBacs;     // pour nettoyer
+    Communication *communication;
+
+    QMessageBox* popupPiochage = nullptr;
 };
 
 #endif // FENETREETAPES_H

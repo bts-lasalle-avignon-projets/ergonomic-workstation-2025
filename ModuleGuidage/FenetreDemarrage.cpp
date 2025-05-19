@@ -189,7 +189,7 @@ void FenetreDemarrage::demarrerProcessus()
 
     // Création ou réutilisation de la fenêtre d'étapes
     if (fenetreEtapes == nullptr) {
-        fenetreEtapes = new FenetreEtapes(this);
+        fenetreEtapes = new FenetreEtapes(communication, this);
         fenetreEtapes->setAttribute(Qt::WA_DeleteOnClose);
 
         connect(fenetreEtapes, &FenetreEtapes::fermerEtapes, this, [this]() {

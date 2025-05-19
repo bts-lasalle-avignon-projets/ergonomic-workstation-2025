@@ -17,7 +17,7 @@ Communication::~Communication()
 
 bool Communication::connecter()
 {
-    QString nomPort = "/dev/rfcomm0";  // Port Bluetooth RFCOMM forcé ici
+    QString nomPort = "/dev/rfcomm1";  // Port Bluetooth RFCOMM forcé ici
     portSerie->setPortName(nomPort);
     if (!portSerie->open(QIODevice::ReadWrite))
         return false;
@@ -54,6 +54,7 @@ void Communication::envoyerDebutProcessus()
 
 void Communication::envoyerFinProcessusOuEtape()
 {
+    qDebug() << Q_FUNC_INFO << "Envoi trame fin processus / étape : $F%";
     envoyerTrame("$F%");
 }
 
