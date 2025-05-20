@@ -1,15 +1,18 @@
 #include "FenetreEtapes.h"
 #include "BaseDeDonnees.h"
+#include "Communication.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QRandomGenerator>
 
-FenetreEtapes::FenetreEtapes(QWidget* parent)
+FenetreEtapes::FenetreEtapes(Communication* comm, QWidget* parent)
     : QWidget(parent),
       etapeActuelIndex(0),
-      idProcessusActuel(-1)
+      idProcessusActuel(-1),
+      communication(comm)
 {
     setObjectName("FenetreEtape");
     initialiserFenetre();
@@ -19,7 +22,14 @@ FenetreEtapes::FenetreEtapes(QWidget* parent)
             this,
             &FenetreEtapes::chargerEtapeSuivante);
 
+    // Connexion pour réagir aux trames reçues
+    if (communication) {
+        connect(communication, &Communication::trameRecue,
+                this, &FenetreEtapes::traiterTrameRecue);
+    }
+
     showFullScreen();
+
 #ifdef RASPBERRY_PI
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 #else
@@ -28,9 +38,11 @@ FenetreEtapes::FenetreEtapes(QWidget* parent)
     setWindowModality(Qt::WindowModal);
 }
 
-void FenetreEtapes::showEvent(QShowEvent*)
+
+void FenetreEtapes::showEvent(QShowEvent* event)
 {
     qDebug() << Q_FUNC_INFO << this;
+    QWidget::showEvent(event);
 }
 
 void FenetreEtapes::initialiserFenetre()
@@ -243,8 +255,17 @@ int FenetreEtapes::recupererBacDeLEtape(int idEtape)
     QSqlQuery q(db);
     q.prepare("SELECT idBac FROM Etape WHERE idEtape = :eid");
     q.bindValue(":eid", idEtape);
-    if (q.exec() && q.next())
-        return q.value(0).toInt();
+    if (q.exec() && q.next()) {
+        int idBac = q.value(0).toInt();
+
+        if (communication) {
+            QString trame = QString("$%1%").arg(idBac);
+            communication->envoyerTrame(trame);
+            qDebug() << "Trame envoyée au Bluetooth:" << trame;
+        }
+
+        return idBac;
+    }
 
     qWarning() << "Erreur récupération bac de l'étape:" << q.lastError().text();
     return -1;
@@ -320,6 +341,7 @@ void FenetreEtapes::chargerEtapeSuivante()
     if (etapeActuelIndex + 1 < listeDesEtapes.size()) {
         ++etapeActuelIndex;
         afficherEtapeActuelle();
+        communication->envoyerFinProcessusOuEtape();
     } else {
         labelEtatRequete->setText("Processus terminé !");
         boutonEtapeSuivante->setEnabled(false);
@@ -333,6 +355,8 @@ void FenetreEtapes::chargerEtapeSuivante()
         } else {
             qDebug() << "État du processus réinitialisé.";
         }
+        communication->envoyerFinProcessusOuEtape();
+
     }
 }
 
@@ -343,4 +367,57 @@ void FenetreEtapes::quitterProcessus()
     }
     close();
     emit fermerEtapes();
+}
+
+void FenetreEtapes::traiterTrameRecue(const QString &trame)
+{
+    qDebug() << Q_FUNC_INFO << "Trame reçue:" << trame;
+
+    // Envoyer acquittement
+    if (communication) {
+        communication->envoyerTrame("$A%");
+        qDebug() << "Trame d'acquittement envoyée: $A%";
+    }
+
+    if (trame == "$V%") {
+        chargerEtapeSuivante();
+    }
+    else if (trame == "$E%") {
+        afficherPopupDemandePiochage();
+    }
+    else if (trame == "$C%") {
+        if (popupPiochage) {
+            popupPiochage->close();
+            popupPiochage->deleteLater();
+            popupPiochage = nullptr;
+            boutonEtapeSuivante->setEnabled(true);
+        }
+    }
+}
+
+
+void FenetreEtapes::afficherPopupDemandePiochage()
+{
+    if (popupPiochage != nullptr) {
+        // Déjà affichée
+        return;
+    }
+
+    popupPiochage = new QMessageBox(this);
+    popupPiochage->setWindowTitle("Action requise");
+    popupPiochage->setText("Veuillez piocher dans le bac indiqué avant de continuer.");
+    popupPiochage->setIcon(QMessageBox::Information);
+    popupPiochage->setStandardButtons(QMessageBox::NoButton); // Pas de boutons
+
+    // Appliquer style au texte
+    QLabel* label = popupPiochage->findChild<QLabel*>("qt_msgbox_label");
+    if (label) {
+        QFont font = label->font();
+        font.setPointSize(10);
+        label->setFont(font);
+        label->setStyleSheet("color: black;");
+    }
+
+    boutonEtapeSuivante->setEnabled(false);
+    popupPiochage->show();
 }

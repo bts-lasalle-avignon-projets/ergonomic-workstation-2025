@@ -10,6 +10,7 @@
 #define FENETREDEMARRAGE_H
 
 #include "ui_FenetreDemarrage.h"
+#include "Communication.h"
 #include <QtWidgets>
 #include <QSqlDatabase>
 
@@ -50,7 +51,7 @@ class FenetreDemarrage : public QMainWindow, public Ui::FenetreDemarrage
     Q_OBJECT
 
   public:
-    explicit FenetreDemarrage(QWidget* parent = nullptr);
+    explicit FenetreDemarrage(Communication* comm, QWidget* parent = nullptr);
     ~FenetreDemarrage();
 
   private:
@@ -64,6 +65,7 @@ class FenetreDemarrage : public QMainWindow, public Ui::FenetreDemarrage
     int          etapeActuelIndex;
     int          idProcessusActuel;
 
+    Communication* communication; // Pointeur vers la communication
     FenetreEtapes* fenetreEtapes; // Pointeur vers la fenêtre des étapes
 
     /**
