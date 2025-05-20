@@ -340,8 +340,8 @@ void FenetreEtapes::chargerEtapeSuivante()
 
     if (etapeActuelIndex + 1 < listeDesEtapes.size()) {
         ++etapeActuelIndex;
-        afficherEtapeActuelle();
         communication->envoyerFinProcessusOuEtape();
+        afficherEtapeActuelle();
     } else {
         labelEtatRequete->setText("Processus terminé !");
         boutonEtapeSuivante->setEnabled(false);
@@ -374,11 +374,12 @@ void FenetreEtapes::traiterTrameRecue(const QString &trame)
     qDebug() << Q_FUNC_INFO << "Trame reçue:" << trame;
 
     // Envoyer acquittement
-    if (communication) {
-        communication->envoyerTrame("$A%");
-        qDebug() << "Trame d'acquittement envoyée: $A%";
+    if (!trame.contains('A')) {
+        if (communication) {
+            communication->envoyerTrame("$A%");
+            qDebug() << "Trame d'acquittement envoyée: $A%";
+        }
     }
-
     if (trame == "$V%") {
         chargerEtapeSuivante();
     }
