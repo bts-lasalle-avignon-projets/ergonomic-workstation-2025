@@ -50,13 +50,25 @@ class Etape extends Controller
           if ($idEtape > 0) {
               if ($this->viewmodel->edit($idEtape)) {
                   $etape = $this->viewmodel->getEtapeParID($idEtape);
-                  // Accéder au premier élément du tableau
+                  $bac = $this->viewmodel->getBacEtape($idEtape);
+                  $imageData = $this->viewmodel->getImageEtape($idEtape);
+                  $imageData = $imageData[0] ?? []; // sécurise l'accès
                   $etapeData = $etape[0]; // Puisque $etape est un tableau avec un élément à l'index 0 
-                                   
+                  $bacData = $bac[0];
                   if (isset($etapeData['idProcessus']) && isset($etapeData['numeroEtape'])) {
                       $nomProcessus = $this->viewmodel->getTitre($etapeData['idProcessus']);
                       $numeroEtape = $etapeData['numeroEtape'];
-                      $this->display(['nomProcessus' => $nomProcessus, 'numeroEtape' => $numeroEtape]);
+
+                      $this->display(array_merge($etapeData, [
+                          'nomProcessus' => $nomProcessus,
+                          'numeroEtape' => $numeroEtape,
+                          'contenance' => $bacData['contenance'] ?? '',
+                          'numeroBac' => $bacData['numeroBac'] ?? '',
+                          'imageBase64' => isset($imageData['contenuBlob'])
+                              ? 'data:' . $imageData['typeMIME'] . ';base64,' . base64_encode($imageData['contenuBlob'])
+                              : null,
+                          'nomImage' => $imageData['nomFichier'] ?? null
+                      ]));
                   } else {
                       echo "Données manquantes pour cette étape.";
                   }
