@@ -53,6 +53,8 @@ private:
     int etapeActuelIndex;
     int idProcessusActuel;
     int recupererIndexDerniereEtape(int idProcessus);
+    bool attenteConfirmationPiochage = false;
+
 
     // Traiter les trames
     void traiterTrameRecue(const QString &trame);
