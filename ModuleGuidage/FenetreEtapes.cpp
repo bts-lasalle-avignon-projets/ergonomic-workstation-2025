@@ -1,12 +1,10 @@
 #include "FenetreEtapes.h"
 #include "BaseDeDonnees.h"
-#include "Communication.h"
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QGroupBox>
-#include <QVBoxLayout>
-#include <QDebug>
+
 #include <QRandomGenerator>
+#include <QDebug>
+#include <QVector>
+#include <QPair>
 
 FenetreEtapes::FenetreEtapes(Communication* comm, QWidget* parent)
     : QWidget(parent),
@@ -357,14 +355,35 @@ void FenetreEtapes::chargerEtapeSuivante()
         }
         communication->envoyerFinProcessusOuEtape();
 
+        if (processusTermine) {
+            if (timer.isValid())
+                dureeAccumulee += timer.elapsed();
+
+            FenetreFinProcessus *fenetreFin = new FenetreFinProcessus(idAssemblageActuel, dureeAccumulee);
+            fenetreFin->setAttribute(Qt::WA_DeleteOnClose); // Nettoyage auto
+            fenetreFin->showFullScreen();
+
+            close(); // Ferme la fenêtre actuelle
+        }
+
     }
 }
 
 void FenetreEtapes::quitterProcessus()
 {
-    if (etapeActuelIndex < listeDesEtapes.size() - 1) {
+    // Si on a atteint la fin du processus
+    if (etapeActuelIndex >= listeDesEtapes.size() - 1) {
+        if (timer.isValid())
+            dureeAccumulee += timer.elapsed();
+
+        FenetreFinProcessus *fenetreFin = new FenetreFinProcessus(idAssemblageActuel, dureeAccumulee, this);
+        fenetreFin->exec(); // Affichage modal
+    }
+    else {
+        // Sauvegarde de l'étape courante si le processus n'est pas terminé
         sauvegarderEtatProcessus();
     }
+
     close();
     emit fermerEtapes();
 }
@@ -380,13 +399,13 @@ void FenetreEtapes::traiterTrameRecue(const QString &trame)
             qDebug() << "Trame d'acquittement envoyée: $A%";
         }
     }
-    if (trame == "$V%") {
+    if (trame == "$V") {
         chargerEtapeSuivante();
     }
-    else if (trame == "$E%") {
+    else if (trame == "$E") {
         afficherPopupDemandePiochage();
     }
-    else if (trame == "$C%") {
+    else if (trame == "$C") {
         if (popupPiochage) {
             popupPiochage->close();
             popupPiochage->deleteLater();

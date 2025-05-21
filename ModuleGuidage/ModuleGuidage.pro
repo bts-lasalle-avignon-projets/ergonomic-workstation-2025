@@ -10,6 +10,7 @@ SOURCES += \
     Communication.cpp \
     FenetreDemarrage.cpp \
     FenetreEtapes.cpp \
+    FenetreFinProcessus.cpp \
     main.cpp
 
 HEADERS += \
@@ -17,7 +18,8 @@ HEADERS += \
     Communication.h \
     Etape.h \
     FenetreDemarrage.h \
-    FenetreEtapes.h
+    FenetreEtapes.h \
+    FenetreFinProcessus.h
 
 FORMS += \
     FenetreDemarrage.ui

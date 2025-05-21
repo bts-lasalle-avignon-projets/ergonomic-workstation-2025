@@ -1,19 +1,21 @@
 #ifndef FENETREETAPES_H
 #define FENETREETAPES_H
 
+#include "Etape.h"
+#include "Communication.h"
+#include "FenetreFinProcessus.h"
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlDatabase>
+#include <QElapsedTimer>
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QSqlDatabase>
 #include <QShowEvent>
-#include <QVector>
-#include <QPair>
 #include <QMessageBox>
-#include "Etape.h"
-#include "Communication.h"
 
 #define LARGEUR_UI 1080
 #define HAUTEUR_IMAGE_ETAPE 500
@@ -38,7 +40,13 @@ private:
     void chargerImagePourEtape(int idEtape);
     void chargerEtapeSuivante();
 
-    // Méthodes ajoutées pour organiser le code
+    // Attributs liés au suivi du processus
+    bool processusTermine = false;
+    QElapsedTimer timer;                     // Chronométrer la durée
+    qint64 dureeAccumulee = 0;               // Temps total
+    int idAssemblageActuel = -1;
+
+    // Méthodes utilitaires
     void nettoyerLayoutBacs();
     int recupererBacDeLEtape(int idEtape);
     QVector<QPair<int, QString>> recupererBacsProcessus(int idProcessus);
@@ -48,15 +56,12 @@ private:
     void quitterProcessus();
     void sauvegarderEtatProcessus();
 
-    // données
     QVector<Etape> listeDesEtapes;
     int etapeActuelIndex;
     int idProcessusActuel;
     int recupererIndexDerniereEtape(int idProcessus);
 
-    // Traiter les trames
     void traiterTrameRecue(const QString &trame);
-
     QSqlDatabase db;
 
     // UI
@@ -67,11 +72,10 @@ private:
     QLabel* imageEtape;
     QPushButton* boutonEtapeSuivante;
     QPushButton* boutonQuitter;
-
     QHBoxLayout* layoutBacs;
-    QVector<QGroupBox*> groupesBacs;     // pour nettoyer
-    Communication *communication;
+    QVector<QGroupBox*> groupesBacs;
 
+    Communication *communication;
     QMessageBox* popupPiochage = nullptr;
 };
 

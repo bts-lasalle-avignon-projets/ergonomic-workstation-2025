@@ -23,7 +23,8 @@
  * la fenêtre principale de l'application
  */
 FenetreDemarrage::FenetreDemarrage(Communication* comm, QWidget* parent) :
-    QMainWindow(parent), etapeActuelIndex(0), idProcessusActuel(-1), fenetreEtapes(nullptr), communication(comm)
+    QMainWindow(parent), etapeActuelIndex(0), idProcessusActuel(-1),
+    fenetreEtapes(nullptr), communication(comm)
 {
     qDebug() << Q_FUNC_INFO << this;
 
@@ -31,7 +32,6 @@ FenetreDemarrage::FenetreDemarrage(Communication* comm, QWidget* parent) :
 
     setWindowTitle(QString(APPLICATION) + QString(" v") + QString(VERSION));
     showFullScreen();
-
 
     imageProcessus->setMinimumSize(LARGEUR_IMAGE, HAUTEUR_IMAGE);
     imageProcessus->setAlignment(Qt::AlignCenter);
@@ -178,23 +178,27 @@ void FenetreDemarrage::demarrerProcessus()
     QVariant processusSelectionne = comboBoxListeProcessus->currentData();
     qDebug() << Q_FUNC_INFO << "processusSelectionne" << processusSelectionne;
 
-    if (!processusSelectionne.isValid()) {
+    if(!processusSelectionne.isValid())
+    {
         labelEtatRequete->setText("Veuillez sélectionner un processus !");
         return;
-    } else {
+    }
+    else
+    {
         labelEtatRequete->setText("");
     }
 
     idProcessusActuel = processusSelectionne.toInt();
 
     // Création ou réutilisation de la fenêtre d'étapes
-    if (fenetreEtapes == nullptr) {
+    if(fenetreEtapes == nullptr)
+    {
         fenetreEtapes = new FenetreEtapes(communication, this);
         fenetreEtapes->setAttribute(Qt::WA_DeleteOnClose);
 
         connect(fenetreEtapes, &FenetreEtapes::fermerEtapes, this, [this]() {
             this->showFullScreen();
-            fenetreEtapes = nullptr;  // La fenêtre sera supprimée à la fermeture
+            fenetreEtapes = nullptr; // La fenêtre sera supprimée à la fermeture
             this->showFullScreen();
         });
     }
@@ -203,8 +207,6 @@ void FenetreDemarrage::demarrerProcessus()
     fenetreEtapes->showFullScreen(); // showFullScreen ici
     this->hide();
 }
-
-
 
 void FenetreDemarrage::revenirAccueil()
 {
