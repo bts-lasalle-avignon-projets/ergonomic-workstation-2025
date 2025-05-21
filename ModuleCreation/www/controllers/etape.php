@@ -1,11 +1,11 @@
 <?php
 class Etape extends Controller
 {
-  private int $idEtape;
-  private string $nomEtape;
-  private string $descriptionEtape;
-  private Bac $bac;
-  private int $idProcessus;
+  private  $idEtape;
+  private  $nomEtape;
+  private  $descriptionEtape;
+  private  $bac;
+  private  $idProcessus;
   private $viewmodel;
 
   public function __construct($action, $request)

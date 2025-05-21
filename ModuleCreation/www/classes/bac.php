@@ -2,8 +2,8 @@
 
 class Bac
 {
-    private int $idBac; // le numéro de bac
-    private string $contenance;
+    private $idBac; // le numéro de bac
+    private $contenance;
 
     public function __construct(int $idBac, string $contenance)
     {

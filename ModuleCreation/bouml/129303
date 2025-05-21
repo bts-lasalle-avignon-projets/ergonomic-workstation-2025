@@ -1,7 +1,7 @@
 format 224
 "controllers" // www::controllers
-  revision 6
-  modified_by 42 "beber"
+  revision 7
+  modified_by 30 "btssn2"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -497,6 +497,15 @@ ${members}}
 "
 	
 	
+      end
+
+      classrelation 128030 // <unidirectional association>
+	relation 128030 --->
+	  a role_name "" private
+	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	    classrelation_ref 128030 // <unidirectional association>
+	  b parent class_ref 128298 // EtapeModel
       end
     end
   end
