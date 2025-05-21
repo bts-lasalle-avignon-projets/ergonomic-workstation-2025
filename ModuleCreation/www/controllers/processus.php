@@ -38,11 +38,15 @@ class Processus extends Controller
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
 			if ($idProcessus > 0) {
+				if($this->viewmodel->edit($idProcessus))
+				{
+					$processus = $this->viewmodel->getProcessus($idProcessus);
+					var_dump($processus);
+					$this->display($processus);
+				}
 			} else {
 				header('Location: ' . URL_PATH . 'processus');
 			}
-			$processus = $this->viewmodel->edit($idProcessus);
-			$this->display($processus);
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');

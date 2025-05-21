@@ -6,11 +6,11 @@
 		<form method="post" action="<?php $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="nomProcessus">Nom</label>
-				<input type="text" name="nomProcessus" class="form-control" id="nomProcessus" required />
+				<input type="text" name="nomProcessus" class="form-control" id="nomProcessus" required value="<?php echo htmlspecialchars($datas[0]['nomProcessus'])?>"/>
 			</div>			
 			<div class="form-group">
 				<label for="descriptionProcessus">Description</label>
-				<textarea class="form-control" name="descriptionProcessus" id="descriptionProcessus" rows="4" required></textarea>
+				<textarea class="form-control" name="descriptionProcessus" id="descriptionProcessus" rows="4" required><?php echo htmlspecialchars($datas[0]['descriptionProcessus'])?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="image">Image :</label>
