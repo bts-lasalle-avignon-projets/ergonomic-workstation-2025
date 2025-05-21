@@ -340,7 +340,6 @@ void FenetreEtapes::chargerEtapeSuivante()
 
     if (etapeActuelIndex + 1 < listeDesEtapes.size()) {
         ++etapeActuelIndex;
-        communication->envoyerFinProcessusOuEtape();
         afficherEtapeActuelle();
     } else {
         labelEtatRequete->setText("Processus terminé !");
@@ -380,21 +379,29 @@ void FenetreEtapes::traiterTrameRecue(const QString &trame)
             qDebug() << "Trame d'acquittement envoyée: $A%";
         }
     }
-    if (trame == "$V%") {
-        chargerEtapeSuivante();
+
+    if (trame == "$V") {
+        if (!attenteConfirmationPiochage) {
+            chargerEtapeSuivante();
+        } else {
+            qDebug() << "Trame $V ignorée car attente du $C après $E.";
+        }
     }
-    else if (trame == "$E%") {
+    else if (trame == "$E") {
         afficherPopupDemandePiochage();
+        attenteConfirmationPiochage = true;
     }
-    else if (trame == "$C%") {
+    else if (trame == "$C") {
         if (popupPiochage) {
             popupPiochage->close();
             popupPiochage->deleteLater();
             popupPiochage = nullptr;
             boutonEtapeSuivante->setEnabled(true);
         }
+        attenteConfirmationPiochage = false;  // Autorise $V après $C
     }
 }
+
 
 
 void FenetreEtapes::afficherPopupDemandePiochage()
