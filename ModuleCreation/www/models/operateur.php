@@ -3,39 +3,43 @@
 class OperateurModel extends Model
 {
 	public function register()
-	{
-		// Sanitize POST
-		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+{
+    // Sanitize POST
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-		if (isset($post['password'])) {
-			$password = password_hash($post['password'], PASSWORD_DEFAULT);
-		} else {
-			$password = '';
-		}
+    if (isset($post['password'])) {
+        $password = password_hash($post['password'], PASSWORD_DEFAULT);
+    } else {
+        $password = '';
+    }
 
-		if (isset($post['submit'])) {
-			if ($post['name'] == '' || $post['email'] == '' || $post['password'] == '') {
-				Messages::setMsg('Please fill in the required fields', 'error');
-				return;
-			}
-			// Insert into mySQL
-			$this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
-			$this->bind(':name', $post['name']);
-			$this->bind(':email', $post['email']);
-			$this->bind(':password', $password);
-			$this->execute();
+    if (isset($post['submit'])) {
+        if ($post['name'] == '' || $post['email'] == '' || $post['password'] == '') {
+            Messages::setMsg('Please fill in the required fields', 'error');
+            return;
+        }
+        // Insert into mySQL
+        $this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+        $this->bind(':name', $post['name']);
+        $this->bind(':email', $post['email']);
+        $this->bind(':password', $password);
+        $this->execute();
 
-			// Verify
-			if ($this->getLastInsertId()) {
-				Messages::setMsg('Account created. You can now login', 'success');
-				// Redirect
-				header('Location: ' . ROOT_PATH . 'users/login');
-				exit(0);
-			}
-		}
+        // Vérifier si l'insertion a réussi
+        if ($this->getLastInsertId()) {
+            // Création du fichier .installed
+            touch(".install");
 
-		return;
-	}
+            Messages::setMsg('Compte administrateur créé. Vous pouvez maintenant vous connecter.', 'success');
+            // Redirection vers la page de login ou accueil
+            header('Location: ' . ROOT_PATH . 'operateurs/login');
+            exit(0);
+        }
+    }
+
+    return;
+}
+
 
 	public function login()
 	{

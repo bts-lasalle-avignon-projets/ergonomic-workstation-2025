@@ -21,6 +21,15 @@ require('models/operateur.php');
 require('models/processus.php');
 require('models/etape.php');
 
+if (!NO_LOGIN && !file_exists('./.installed')) {
+    
+    $controllerName = 'Operateurs';
+    $actionName = 'register';
+	$controller = new $controllerName($actionName, $_GET);
+    $controller->executeAction();
+	exit;
+}
+
 // Forme de l'URL, après réécriture : http://root/controleur/action/id
 $router = new Router($_GET);
 $controller = $router->createController();
@@ -28,3 +37,4 @@ $controller = $router->createController();
 if ($controller) {
 	$controller->executeAction();
 }
+
