@@ -36,7 +36,7 @@ void Communication::envoyerTrame(const QString &trame)
     if (portSerie->isOpen())
     {
         QByteArray data = trame.toUtf8();
-        portSerie->write(data);
+       portSerie->write(data + "\r\n");
     }
 }
 
