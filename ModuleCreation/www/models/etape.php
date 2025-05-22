@@ -286,4 +286,27 @@ class EtapeModel extends Model
         return $result;
     }
 
+    public function getBacEtape($idEtape)
+    {
+        $this->query( "SELECT b.numeroBac, b.contenance
+                FROM Etape e
+                JOIN Bac b ON e.idProcessus = b.idProcessus
+                WHERE e.idEtape = :idEtape");
+
+        $this->bind(':idEtape', $idEtape);
+        $bac = $this->getResults();
+        return $bac;
+    }
+
+    public function getImageEtape($idEtape)
+    {
+        $this->query( "SELECT i.*
+                FROM Etape e
+                JOIN Image i ON e.idImage = i.idImage
+                WHERE e.idEtape = :idEtape");
+
+        $this->bind(':idEtape', $idEtape);
+        $image = $this->getResults();
+        return $image;
+    }
 }
