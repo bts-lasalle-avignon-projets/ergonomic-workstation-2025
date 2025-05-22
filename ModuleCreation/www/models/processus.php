@@ -121,10 +121,13 @@ class ProcessusModel extends Model
 				$this->execute();
 
 				Messages::setMsg("Processus modifié avec succès !", "success");
+				return true;
 			} catch (PDOException $e) {
 				Messages::setMsg("Erreur lors de la modification : " . $e->getMessage(), "erreur");
+				return false;
 			}
 		}
+		return true;
 	}
 
 
@@ -449,5 +452,24 @@ class ProcessusModel extends Model
 		}
 		$this->execute();
 		return $this->getResults();
+	}
+
+	public function getProcessus($idProcessus)
+	{
+		$this->query("SELECT * FROM Processus WHERE idProcessus = :idProcessus");
+		$this->bind(':idProcessus', $idProcessus);
+		$processus = $this->getResults();
+		$idImage = $processus[0]['idImage'];
+		$image = $this->getImage($idImage);
+		$processusData = array_merge($processus, $image);
+		return $processusData;
+	}
+
+	private function getImage($idImage)
+	{
+		$this->query("SELECT * FROM Image WHERE idImage = :idImage");
+		$this->bind(':idImage', $idImage);
+		$image = $this->getResults();
+		return $image;
 	}
 }
