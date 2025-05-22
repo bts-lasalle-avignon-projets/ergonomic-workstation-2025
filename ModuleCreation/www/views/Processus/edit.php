@@ -12,6 +12,16 @@
 				<label for="descriptionProcessus">Description</label>
 				<textarea class="form-control" name="descriptionProcessus" id="descriptionProcessus" rows="4" required><?php echo htmlspecialchars($datas[0]['descriptionProcessus'])?></textarea>
 			</div>
+			<div>
+				<?php if (!empty($datas[1]['contenuBlob'])): ?>
+					<div class="mb-2">
+						<p>Image actuelle :</p>
+							<img src="data:<?php echo htmlspecialchars($datas[1]['typeMIME']); ?>;base64,<?php echo base64_encode($datas[1]['contenuBlob']); ?>" 
+							alt="<?php echo htmlspecialchars($datas[1]['nomFichier']); ?>" 
+							class="img-fluid" style="max-height: 200px;">
+					</div>
+				<?php endif; ?>
+			</div>
 			<div class="form-group">
 				<label for="image">Image :</label>
 				<input type="file" name="image" accept="image/*">

@@ -41,7 +41,6 @@ class Processus extends Controller
 				if($this->viewmodel->edit($idProcessus))
 				{
 					$processus = $this->viewmodel->getProcessus($idProcessus);
-					var_dump($processus);
 					$this->display($processus);
 				}
 			} else {

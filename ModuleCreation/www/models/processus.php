@@ -459,6 +459,17 @@ class ProcessusModel extends Model
 		$this->query("SELECT * FROM Processus WHERE idProcessus = :idProcessus");
 		$this->bind(':idProcessus', $idProcessus);
 		$processus = $this->getResults();
-		return $processus;
+		$idImage = $processus[0]['idImage'];
+		$image = $this->getImage($idImage);
+		$processusData = array_merge($processus, $image);
+		return $processusData;
+	}
+
+	private function getImage($idImage)
+	{
+		$this->query("SELECT * FROM Image WHERE idImage = :idImage");
+		$this->bind(':idImage', $idImage);
+		$image = $this->getResults();
+		return $image;
 	}
 }
