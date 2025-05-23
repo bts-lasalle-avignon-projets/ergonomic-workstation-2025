@@ -5,10 +5,10 @@
 define("URL_NAME", "");
 
 // Pour le debug
-define("DEBUG", true);
+define("DEBUG", false);
 
 // Pour les tests
-define("NO_LOGIN", true);
+define("NO_LOGIN", false);
 
 // Pour la base de données
 define("DB_DRIVER", true); // true pour MySQL, false sans base de données

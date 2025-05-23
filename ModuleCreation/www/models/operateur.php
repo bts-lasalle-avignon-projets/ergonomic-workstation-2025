@@ -2,80 +2,82 @@
 
 class OperateurModel extends Model
 {
-	public function register()
-{
-    // Sanitize POST
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    public function register()
+    {
+        // Récupération et nettoyage des données POST
+        $name     = htmlspecialchars(strip_tags($_POST['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $email    = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+        $password = $_POST['password'] ?? '';
+        $submit   = $_POST['submit'] ?? null;
 
-    if (isset($post['password'])) {
-        $password = password_hash($post['password'], PASSWORD_DEFAULT);
-    } else {
-        $password = '';
+        if ($submit) {
+            if ($name === '' || $email === false || $password === '') {
+                Messages::setMsg('Please fill in the required fields', 'error');
+                return;
+            }
+
+            // Hash du mot de passe
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insertion dans la base de données
+            $this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+            $this->bind(':name', $name);
+            $this->bind(':email', $email);
+            $this->bind(':password', $passwordHash);
+            $this->execute();
+
+            // Vérifier si l'insertion a réussi
+            if ($this->getLastInsertId()) {
+                // Création du fichier .install
+                touch(".install");
+
+                Messages::setMsg('Compte administrateur créé. Vous pouvez maintenant vous connecter.', 'success');
+                header('Location: ' . ROOT_PATH . 'operateurs/login');
+                exit(0);
+            }
+        }
+
+        return;
     }
 
-    if (isset($post['submit'])) {
-        if ($post['name'] == '' || $post['email'] == '' || $post['password'] == '') {
-            Messages::setMsg('Please fill in the required fields', 'error');
-            return;
-        }
-        // Insert into mySQL
-        $this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
-        $this->bind(':name', $post['name']);
-        $this->bind(':email', $post['email']);
-        $this->bind(':password', $password);
-        $this->execute();
+    public function login()
+    {
+        // Récupération et nettoyage des données POST
+        $email    = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+        $password = $_POST['password'] ?? '';
+        $submit   = $_POST['submit'] ?? null;
 
-        // Vérifier si l'insertion a réussi
-        if ($this->getLastInsertId()) {
-            // Création du fichier .installed
-            touch(".install");
+        if ($submit) {
+            if ($email === false || $password === '') {
+                Messages::setMsg('Please fill in the required fields', 'error');
+                return;
+            }
 
-            Messages::setMsg('Compte administrateur créé. Vous pouvez maintenant vous connecter.', 'success');
-            // Redirection vers la page de login ou accueil
-            header('Location: ' . ROOT_PATH . 'operateurs/login');
-            exit(0);
+            // Vérification de l'email dans la base
+            $this->query('SELECT * FROM users WHERE email = :email');
+            $this->bind(':email', $email);
+            $row = $this->getResult();
+
+            if ($row) {
+                if (password_verify($password, $row['password'])) {
+                    $_SESSION['is_logged_in'] = true;
+                    $_SESSION['user_data'] = [
+                        "id"    => $row['id'],
+                        "name"  => $row['name'],
+                        "email" => $row['email']
+                    ];
+                    Messages::setMsg('You have logged in successfully', 'success');
+                    header('Location: ' . ROOT_PATH . 'processus');
+                    exit(0);
+                } else {
+                    Messages::setMsg('Password is incorrect', 'error');
+                    return;
+                }
+            } else {
+                Messages::setMsg('User not found', 'error');
+            }
         }
+
+        return;
     }
-
-    return;
-}
-
-
-	public function login()
-	{
-		// Sanitize POST
-		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		if (isset($post['submit'])) {
-			if ($post['password'] == '' || $post['email'] == '') {
-				Messages::setMsg('Please fill in the required fields', 'error');
-				return;
-			}
-			// Check if email match in database
-			$this->query('SELECT * FROM users WHERE email = :email');
-			$this->bind(':email', $post['email']);
-			$row = $this->getResult();
-
-			if ($row) {
-				if (password_verify($post['password'], $row['password'])) {
-					$_SESSION['is_logged_in'] = true;
-					$_SESSION['user_data'] = array(
-						"id" => $row['id'],
-						"name" => $row['name'],
-						"email" => $row['email']
-					);
-					Messages::setMsg('You have logged in successfully', 'success');
-					header('Location: ' . ROOT_PATH . 'shares');
-					exit(0); // This line solves the issue where $_SESSION['successMsg'] is unset after header redirection
-				} else {
-					Messages::setMsg('Password is incorrect', 'error');
-					return;
-				}
-			} else {
-				Messages::setMsg('User not found', 'error');
-			}
-		}
-
-		return;
-	}
 }

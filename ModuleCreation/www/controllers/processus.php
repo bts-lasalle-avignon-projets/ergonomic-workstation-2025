@@ -28,7 +28,8 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$this->viewmodel->add();
+				$this->display();
 			}
 		}
 	}
@@ -50,7 +51,16 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$idProcessus = $this->getID();
+				if ($idProcessus > 0) {
+					if($this->viewmodel->edit($idProcessus))
+					{
+						$processus = $this->viewmodel->getProcessus($idProcessus);
+						$this->display($processus);
+					}
+				} else {
+					header('Location: ' . URL_PATH . 'processus');
+				}
 			}
 		}
 	}
@@ -79,7 +89,22 @@ class Processus extends Controller
 				header('Location: ' . URL_PATH . 'processus');
 				exit;
 			} else {
-				// @todo : à compléter si tu veux ajouter une vérification d'accès
+				$idProcessus = $this->getID();
+
+				if ($idProcessus > 0) {
+					if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) && $_POST['submit'] === 'Oui') {
+						$this->viewmodel->delete($idProcessus);
+						Messages::setMsg("Processus supprimé avec succès.", "success");
+						header('Location: ' . URL_PATH . 'processus');
+						exit;
+					} else {
+						// Affiche le bouton "Oui" si aucune validation POST
+						$this->display($idProcessus);
+					}
+				} else {
+					header('Location: ' . URL_PATH . 'processus');
+					exit;
+				}
 			}
 		}
 	}
@@ -99,7 +124,13 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$idProcessus = $this->getID();
+				if ($idProcessus > 0) {
+					$etapesProcessus = $this->viewmodel->view($idProcessus);
+					$this->display($etapesProcessus);
+				} else {
+					header('Location: ' . URL_PATH . 'processus');
+				}
 			}
 		}
 	}
@@ -117,7 +148,12 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$idProcessus = $this->getID();
+				if ($idProcessus > 0) {
+					$this->viewmodel->exportZip($idProcessus); // méthode déjà prête
+				} else {
+					header('Location: ' . URL_PATH . 'processus');
+				}
 			}
 		}
 	}
@@ -131,7 +167,8 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$this->viewmodel->importZip(); // méthode déjà prête
+				$this->display();
 			}
 		}
 	}
@@ -149,7 +186,13 @@ class Processus extends Controller
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
-				// @todo
+				$idProcessus = $this->getID();
+				$AssemblageData = $this->viewmodel->statistiqueAssemblage($idProcessus);
+				if(DEBUG)
+				{
+					var_dump($AssemblageData);
+				}
+				$this->display($AssemblageData);
 			}
 		}
 	

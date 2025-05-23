@@ -21,7 +21,7 @@ require('models/operateur.php');
 require('models/processus.php');
 require('models/etape.php');
 
-if (!NO_LOGIN && !file_exists('./.installed')) {
+if (!NO_LOGIN && !file_exists('./.install')) {
     
     $controllerName = 'Operateurs';
     $actionName = 'register';
