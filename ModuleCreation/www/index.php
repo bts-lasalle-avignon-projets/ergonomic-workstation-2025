@@ -11,7 +11,6 @@ require('classes/controller.php');
 require('classes/model.php');
 require('classes/bac.php');
 
-
 require('controllers/accueil.php');
 require('controllers/operateurs.php');
 require('controllers/processus.php');
@@ -21,20 +20,17 @@ require('models/operateur.php');
 require('models/processus.php');
 require('models/etape.php');
 
-if (!NO_LOGIN && !file_exists('./.install')) {
-    
-    $controllerName = 'Operateurs';
-    $actionName = 'register';
-	$controller = new $controllerName($actionName, $_GET);
-    $controller->executeAction();
-	exit;
+$operateursController = new Operateurs('register', $_GET);
+$utilisateurExiste = $operateursController->verifierUtilisateur();
+if (!NO_LOGIN && !$utilisateurExiste) {
+    $_GET['controleur'] = 'operateurs';
+    $_GET['action'] = 'register';
 }
 
-// Forme de l'URL, après réécriture : http://root/controleur/action/id
+// Ensuite, créer le router avec la requête (éventuellement modifiée)
 $router = new Router($_GET);
 $controller = $router->createController();
 
 if ($controller) {
-	$controller->executeAction();
+    $controller->executeAction();
 }
-

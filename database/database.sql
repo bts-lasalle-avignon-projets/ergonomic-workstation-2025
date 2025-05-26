@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS ergonomic_workstation;
 USE ergonomic_workstation;
 
-
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Etape;
 DROP TABLE IF EXISTS Bac;
 SET foreign_key_checks = 0;

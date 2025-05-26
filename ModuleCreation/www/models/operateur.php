@@ -80,4 +80,17 @@ class OperateurModel extends Model
 
         return;
     }
+
+    public function verifierUtilisateur()
+    {
+        $this->query("SELECT * FROM users");
+        $utilisateur = $this->getResults();
+
+        if(!empty($utilisateur))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
