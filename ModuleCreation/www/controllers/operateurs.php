@@ -30,4 +30,10 @@ class Operateurs extends Controller
 		// Redirect
 		header('Location: ' . URL_PATH);
 	}
+
+	public function verifierUtilisateur()
+	{
+		$utilisateur = $this->viewmodel->verifierUtilisateur();
+		return $utilisateur;
+	}
 }

@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS ergonomic_workstation;
 USE ergonomic_workstation;
 
-
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Etape;
 DROP TABLE IF EXISTS Bac;
 SET foreign_key_checks = 0;
@@ -10,6 +10,13 @@ SET foreign_key_checks = 1;
 DROP TABLE IF EXISTS Image;
 DROP TABLE IF EXISTS Assemblage;
 DROP TABLE IF EXISTS EtatProcessus;
+
+CREATE TABLE IF NOT EXISTS users(
+    idUsers INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS Image (
     idImage INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -65,7 +72,7 @@ CREATE TABLE EtatProcessus (
     dateDerniereModification DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Simuler deux processus si non déjà existants
+/*-- Simuler deux processus si non déjà existants
 INSERT INTO Processus (nomProcessus, descriptionProcessus) VALUES
 ('Montage écran', 'Processus de montage d’un écran d’ordinateur'),
 ('Assemblage clavier', 'Processus d’assemblage d’un clavier mécanique');
@@ -77,4 +84,4 @@ INSERT INTO Assemblage (idProcessus, nombreEchecs, dureeProcessus, dateStatistiq
 (1, 1, '00:45:00', '2025-05-02 09:00:00'),
 (2, 3, '00:30:00', '2025-05-01 11:00:00'),
 (2, 1, '00:28:00', '2025-05-02 08:30:00'),
-(2, 0, '00:25:00', '2025-05-03 14:00:00');
+(2, 0, '00:25:00', '2025-05-03 14:00:00');*/

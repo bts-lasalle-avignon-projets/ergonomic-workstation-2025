@@ -11,7 +11,6 @@ require('classes/controller.php');
 require('classes/model.php');
 require('classes/bac.php');
 
-
 require('controllers/accueil.php');
 require('controllers/operateurs.php');
 require('controllers/processus.php');
@@ -21,10 +20,17 @@ require('models/operateur.php');
 require('models/processus.php');
 require('models/etape.php');
 
-// Forme de l'URL, après réécriture : http://root/controleur/action/id
+$operateursController = new Operateurs('register', $_GET);
+$utilisateurExiste = $operateursController->verifierUtilisateur();
+if (!NO_LOGIN && !$utilisateurExiste) {
+    $_GET['controleur'] = 'operateurs';
+    $_GET['action'] = 'register';
+}
+
+// Ensuite, créer le router avec la requête (éventuellement modifiée)
 $router = new Router($_GET);
 $controller = $router->createController();
 
 if ($controller) {
-	$controller->executeAction();
+    $controller->executeAction();
 }
