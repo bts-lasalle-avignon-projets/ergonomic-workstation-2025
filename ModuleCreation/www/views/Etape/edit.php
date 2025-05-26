@@ -7,7 +7,13 @@
         <h3 class="card-title">Modifier étape n° <?php echo htmlspecialchars($datas['numeroEtape']); ?></h3>
     </div>
     
-    <form class="p-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" enctype="multipart/form-data">
+    <form class="p-3" 
+          action="<?php $_SERVER['PHP_SELF']; ?>" 
+          method="POST" 
+          enctype="multipart/form-data">
+        
+        <input type="hidden" name="id" value="<?php echo intval($datas['idEtape']); ?>">
+
         <div class="form-group">
             <label for="nomEtape">Nom de l'étape</label>
             <input type="text" name="nomEtape" class="form-control" id="nomEtape" required
@@ -30,17 +36,17 @@
             <input type="text" name="numeroBac" class="form-control" id="numeroBac" required
                    value="<?php echo htmlspecialchars($datas['numeroBac'] ?? ''); ?>">
         </div>
-        <div>
-            <?php if (!empty($datas['imageBase64'])): ?>
-                <div class="mb-2">
-                    <p>Image actuelle :</p>
-                    <img src="<?php echo $datas['imageBase64']; ?>" alt="<?php echo htmlspecialchars($datas['nomImage']); ?>" class="img-fluid" style="max-height: 200px;">
-                </div>
-            <?php endif; ?>
-        </div>
+
+        <?php if (!empty($datas['imageBase64'])): ?>
+            <div class="mb-2">
+                <p>Image actuelle :</p>
+                <img src="<?php echo $datas['imageBase64']; ?>" alt="<?php echo htmlspecialchars($datas['nomImage']); ?>" class="img-fluid" style="max-height: 200px;">
+            </div>
+        <?php endif; ?>
+
         <div class="form-group">
-            <label for='image'>Image :</label>
-            <input type='file' name='image' accept='image/*'>
+            <label for="image">Image :</label>
+            <input type="file" name="image" accept="image/*" id="image">
         </div>
 
         <button type="submit" class="btn btn-primary">Modifier étape</button>

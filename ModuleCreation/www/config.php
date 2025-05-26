@@ -8,7 +8,7 @@ define("URL_NAME", "");
 define("DEBUG", false);
 
 // Pour les tests
-define("NO_LOGIN", false);
+define("NO_LOGIN", true);
 
 // Pour la base de données
 define("DB_DRIVER", true); // true pour MySQL, false sans base de données
