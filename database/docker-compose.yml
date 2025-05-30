@@ -1,7 +1,9 @@
 version: '3'
 services:
-    mysql:
+    db:
         image: mysql:latest
+        container_name: serveur-db
+        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: 'password'
             MYSQL_DATABASE: 'ergonomic_workstation'
