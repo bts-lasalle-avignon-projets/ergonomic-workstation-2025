@@ -1,4 +1,4 @@
-# Installation Base de données
+# Installation de la base de données
 
 ## MySQL
 
@@ -45,35 +45,15 @@ $ docker compose version
 $ docker version
 ```
 
-- Fichier [docker-compose.yml](./docker-compose.yml) :
-
-```yaml
-version: '3'
-services:
-    mysql:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: 'password'
-            MYSQL_DATABASE: 'ergonomic_workstation'
-            MYSQL_USER: 'ergoWork'
-            MYSQL_PASSWORD: 'password'
-        ports:
-            - 3306:3306
-        volumes:
-            - bdd:/var/lib/mysql
-volumes:
-    bdd:
-```
+- Création d'un fichier [docker-compose.yml](./docker-compose.yml)
 
 - Création et démarrage du serveur MySQL :
 
 > Vérifier que le serveur MySQL ne s'exécute pas en local : `systemctl status mysql.service` sinon il faut l'arrêter avec `sudo systemctl stop mysql.service`.
 
 ```sh
-$ docker compose --file database/docker-compose.yml up --detach
+$ ./start-mysql.sh
 ```
-
-> Sinon pour simplement démarrer le service mysql : `$ docker compose start mysql`
 
 - Vérifications :
 
@@ -88,56 +68,30 @@ $ docker images
 $ docker compose top
 ```
 
-- Redémarrer le service mysql :
+- Redémarrer le service db :
 
 ```bash
-$ docker compose restart mysql
+$ docker compose restart db
 ```
 
 - Arrêter le service mysql :
 
 ```bash
-$ docker compose stop mysql
+$ ./stop-mysql.sh
 ```
 
-- Si besoin, supprimer l'image `mysql` :
+- Nettoyage complet :
 
 ```bash
-$ docker compose rm mysql
+$ docker system prune -f
+$ docker compose --file docker-compose.yml rm -f db
 $ docker rmi $(docker images mysql -q)
+$ docker volume rm docker_bdd
 ```
 
 ## Base de données ergonomic_workstation
 
-```sql
-CREATE DATABASE IF NOT EXISTS ergonomic_workstation;
-
-USE ergonomic_workstation;
-
-CREATE TABLE IF NOT EXISTS Processus (
-    idProcessus INT AUTO_INCREMENT PRIMARY KEY,
-    nomProcessus VARCHAR(255) NOT NULL,
-    dateCreation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    idImage INT
-);
-
-CREATE TABLE IF NOT EXISTS Etape (
-    idEtape INT AUTO_INCREMENT PRIMARY KEY,
-    idProcessus INT NOT NULL,
-    idBac INT,
-    descriptionEtape TEXT NOT NULL,
-    idImage INT,
-    FOREIGN KEY (idProcessus) REFERENCES Processus(idProcessus) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS Image (
-    idImage INT AUTO_INCREMENT PRIMARY KEY,
-    nomFichier VARCHAR(255) NOT NULL,
-    typeMIME VARCHAR(50) NOT NULL,
-    contenuBlob MEDIUMBLOB NOT NULL,  -- 16 Mo max pour le contenu de l'image
-    tailleImage INT UNSIGNED NOT NULL
-);
-```
+Fichier : [database.sql](./database.sql)
 
 - Installation :
 
