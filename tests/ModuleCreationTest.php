@@ -70,6 +70,7 @@ class ModuleCreationTest extends TestCase
             "submit" => "Envoyer"
         ];
         $response = $this->httpPost($this->urlCreationProcessus, $postData);
+        file_put_contents("test-output.html", $response);
         $this->assertStringContainsString("Processus ajouté avec succès !", $response, "Impossible de créer un processus.");
     }
 
