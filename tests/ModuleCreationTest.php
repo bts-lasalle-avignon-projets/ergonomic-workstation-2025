@@ -8,10 +8,43 @@ class ModuleCreationTest extends TestCase
     private $urlProcessus = 'http://localhost:8000/index.php?controleur=processus';
     private $urlCreationProcessus = 'http://localhost:8000/index.php?controleur=processus&action=add';
     private $urlCreationProcessusId = 'http://localhost:8000/index.php?controleur=processus&action=view&id=1';
+    private $urlRegister = 'http://localhost:8000/index.php?controleur=operateurs&action=register';
+    private $urlLogin = 'http://localhost:8000/index.php?controleur=operateurs&action=login';
 
-    /* Exemples : quelques tests */
+    public function testRegister()
+    {
+        $email = 'test_' . rand(1000, 9999) . '@test.com';
+        $postData = [
+            'name' => 'Testeur',
+            'email' => $email,
+            'password' => 'azerty123',
+            'submit' => 'true'
+        ];
+        $response = $this->httpPost($this->urlRegister, $postData);
+        $this->assertStringContainsString("Compte administrateur créé", $response);
+    }
 
-    /** 🔹 Test 1 : Vérifier que la page Accueil est accessible */
+    public function testLogin()
+    {
+        $email = 'test_' . rand(1000, 9999) . '@test.com';
+
+        $registerData = [
+            'name' => 'Testeur',
+            'email' => $email,
+            'password' => 'azerty123',
+            'submit' => 'true'
+        ];
+        $this->httpPost($this->urlRegister, $registerData);
+
+        $loginData = [
+            'email' => $email,
+            'password' => 'azerty123',
+            'submit' => 'true'
+        ];
+        $response = $this->httpPost($this->urlLogin, $loginData);
+        $this->assertStringContainsString("You have logged in successfully", $response);
+    }
+
     public function testPageAccueilIsAccessible()
     {
         $response = $this->httpGet($this->urlAccueil);
@@ -20,7 +53,6 @@ class ModuleCreationTest extends TestCase
         $this->assertStringContainsString("Ergonomic Workstation", $response, "Le titre n'est pas présent sur la page.");
     }
 
-    /** 🔹 Test 2 : Vérifier que la page Processus est accessible */
     public function testUrlProcessusIsAccessible()
     {
         $response = $this->httpGet($this->urlProcessus);
@@ -28,10 +60,8 @@ class ModuleCreationTest extends TestCase
         $this->assertNotFalse($response, "La page Processus n'est pas accessible.");
         $this->assertStringContainsString("href=\"/processus/add\"", $response, "Le lien pour Créer un processus n'est pas présent sur la page.");
         $this->assertStringContainsString("href=\"/processus/importZip\"", $response, "Le lien pour Importer un processus n'est pas présent sur la page.");
-        // etc ...
     }
 
-    /** 🔹 Test 3 : Vérifier que l'on peut créer un processus */
     public function testCreerProcessus()
     {
         $postData = [
@@ -43,16 +73,13 @@ class ModuleCreationTest extends TestCase
         $this->assertStringContainsString("Processus ajouté avec succès !", $response, "Impossible de créer un processus.");
     }
 
-    /** 🔹 Test 4 : Vérifier que l'on peut consulter un procesuus */
     public function testUrlProcessusId()
     {
         $response = $this->httpGet($this->urlCreationProcessusId);
         $response = preg_replace('/\s+/', ' ', trim($response));
         $this->assertNotFalse($response, "La page du processus n'est pas accessible.");
-        // etc ...
     }
 
-    /** 🔹 Fonction GET pour récupérer la page */
     private function httpGet($url)
     {
         $ch = curl_init();
@@ -63,7 +90,6 @@ class ModuleCreationTest extends TestCase
         return $response;
     }
 
-    /** 🔹 Fonction POST pour soumettre un formulaire */
     private function httpPost($url, $postData)
     {
         $ch = curl_init();
