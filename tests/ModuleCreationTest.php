@@ -16,18 +16,18 @@ class ModuleCreationTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$testEmail = 'test_' . rand(1000, 9999) . '@test.com';
-
+        self::$testEmail = 'test_@test.com';
+    
         $postData = [
             'name' => 'Testeur',
             'email' => self::$testEmail,
             'password' => self::$testPassword,
             'submit' => 'true'
         ];
-
-        $temp = new self();
-        $temp->httpPost('http://localhost:8000/index.php?controleur=operateurs&action=register', $postData);
+    
+        self::staticHttpPost('http://localhost:8000/index.php?controleur=operateurs&action=register', $postData);
     }
+    
 
     public function testLogin()
     {
@@ -64,7 +64,7 @@ class ModuleCreationTest extends TestCase
             "descriptionProcessus" => "Ceci est un processus d'assemblage de test !",
             "submit" => "Envoyer"
         ];
-        $response = $this->httpPost($this->urlCreationProcessus, $postData);
+        $response = $this->HttpPost($this->urlCreationProcessus, $postData);
         file_put_contents("test-output.html", $response);
         $this->assertStringContainsString("Processus ajouté avec succès !", $response, "Impossible de créer un processus.");
     }
@@ -82,11 +82,29 @@ class ModuleCreationTest extends TestCase
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, __DIR__ . '/cookie.txt');
+        curl_setopt($ch, CURLOPT_COOKIEFILE, __DIR__ . '/cookie.txt');
         $response = curl_exec($ch);
         curl_close($ch);
         return $response;
     }
+    
 
+    private static function staticHttpPost($url, $postData)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, __DIR__ . '/cookie.txt');
+        curl_setopt($ch, CURLOPT_COOKIEFILE, __DIR__ . '/cookie.txt');
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+    
     private function httpPost($url, $postData)
     {
         $ch = curl_init();
@@ -95,8 +113,12 @@ class ModuleCreationTest extends TestCase
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, __DIR__ . '/cookie.txt');
+        curl_setopt($ch, CURLOPT_COOKIEFILE, __DIR__ . '/cookie.txt');
         $response = curl_exec($ch);
         curl_close($ch);
         return $response;
     }
+    
+    
 }
