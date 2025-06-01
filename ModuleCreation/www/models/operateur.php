@@ -20,7 +20,7 @@ class OperateurModel extends Model
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
             // Insertion dans la base de données
-            $this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+            $this->query('INSERT INTO Superviseur (name, email, password) VALUES (:name, :email, :password)');
             $this->bind(':name', $name);
             $this->bind(':email', $email);
             $this->bind(':password', $passwordHash);
@@ -54,7 +54,7 @@ class OperateurModel extends Model
             }
 
             // Vérification de l'email dans la base
-            $this->query('SELECT * FROM users WHERE email = :email');
+            $this->query('SELECT * FROM Superviseur WHERE email = :email');
             $this->bind(':email', $email);
             $row = $this->getResult();
 
@@ -83,7 +83,7 @@ class OperateurModel extends Model
 
     public function verifierUtilisateur()
     {
-        $this->query("SELECT * FROM users");
+        $this->query("SELECT * FROM Superviseur");
         $utilisateur = $this->getResults();
 
         if(!empty($utilisateur))
