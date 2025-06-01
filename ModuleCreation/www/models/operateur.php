@@ -78,7 +78,7 @@ class OperateurModel extends Model
         return;
     }
 
-    public function verifierUtilisateur()
+    public function superviseurExiste()
     {
         $this->query("SELECT * FROM Superviseur");
         $utilisateur = $this->getResults();
