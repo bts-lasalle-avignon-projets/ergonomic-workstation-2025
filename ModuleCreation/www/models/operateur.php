@@ -59,10 +59,10 @@ class OperateurModel extends Model
                 if (password_verify($password, $row['password'])) {
                     $_SESSION['is_logged_in'] = true;
                     $_SESSION['user_data'] = [
-                        "id"    => $row['id'],
+                        "id"    => $row['idSuperviseur'],
                         "name"  => $row['name'],
                         "email" => $row['email']
-                    ];
+                    ];                    
                     Messages::setMsg('Vous vous êtes connecté avec succès', 'success');
                     header('Location: ' . ROOT_PATH . 'processus');
                     exit(0);
