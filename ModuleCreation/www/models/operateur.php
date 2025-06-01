@@ -28,10 +28,7 @@ class OperateurModel extends Model
 
             // Vérifier si l'insertion a réussi
             if ($this->getLastInsertId()) {
-                // Création du fichier .install
-                touch(".install");
-
-                Messages::setMsg('Compte administrateur créé. Vous pouvez maintenant vous connecter.', 'success');
+                Messages::setMsg('Compte superviseur créé. Vous pouvez maintenant vous connecter.', 'success');
                 header('Location: ' . ROOT_PATH . 'operateurs/login');
                 exit(0);
             }
