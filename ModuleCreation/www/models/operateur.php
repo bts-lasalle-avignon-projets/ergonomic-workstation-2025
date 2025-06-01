@@ -46,7 +46,7 @@ class OperateurModel extends Model
 
         if ($submit) {
             if ($email === false || $password === '') {
-                Messages::setMsg('Please fill in the required fields', 'error');
+                Messages::setMsg('Veuillez remplir les champs obligatoires', 'error');
                 return;
             }
 
@@ -63,15 +63,15 @@ class OperateurModel extends Model
                         "name"  => $row['name'],
                         "email" => $row['email']
                     ];
-                    Messages::setMsg('You have logged in successfully', 'success');
+                    Messages::setMsg('Vous vous êtes connecté avec succès', 'success');
                     header('Location: ' . ROOT_PATH . 'processus');
                     exit(0);
                 } else {
-                    Messages::setMsg('Password is incorrect', 'error');
+                    Messages::setMsg('Le mot de passe est incorrect', 'error');
                     return;
                 }
             } else {
-                Messages::setMsg('User not found', 'error');
+                Messages::setMsg('Superviseur introuvable', 'error');
             }
         }
 
