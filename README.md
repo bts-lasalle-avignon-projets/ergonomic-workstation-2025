@@ -1,4 +1,6 @@
 [![release](https://img.shields.io/github/v/release/bts-lasalle-avignon-projets/ergonomic-workstation-2025)](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/releases)
+![Tests](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/actions/workflows/php-ew.yml/badge.svg)
+
 
 # Projet BTS CIEL 2025 : Ergonomic-Workstation-2025
 
