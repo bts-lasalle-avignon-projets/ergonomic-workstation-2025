@@ -37,7 +37,7 @@ class ModuleCreationTest extends TestCase
             'submit' => 'true'
         ];
         $response = $this->httpPost($this->urlLogin, $loginData);
-        $this->assertStringContainsString("You have logged in successfully", $response);
+        $this->assertStringContainsString("Vous vous êtes connecté avec succès", $response);
     }
 
     public function testPageAccueilIsAccessible()
