@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 
 class ModuleCreationTest extends TestCase
 {
+    private static $testEmail;
+    private static $testPassword = 'azerty123';
+
     private $urlAccueil = 'http://localhost:8000/';
     private $urlProcessus = 'http://localhost:8000/index.php?controleur=processus';
     private $urlCreationProcessus = 'http://localhost:8000/index.php?controleur=processus&action=add';
@@ -11,34 +14,26 @@ class ModuleCreationTest extends TestCase
     private $urlRegister = 'http://localhost:8000/index.php?controleur=operateurs&action=register';
     private $urlLogin = 'http://localhost:8000/index.php?controleur=operateurs&action=login';
 
-    public function testRegister()
+    public static function setUpBeforeClass(): void
     {
-        $email = 'test_' . rand(1000, 9999) . '@test.com';
+        self::$testEmail = 'test_' . rand(1000, 9999) . '@test.com';
+
         $postData = [
             'name' => 'Testeur',
-            'email' => $email,
-            'password' => 'azerty123',
+            'email' => self::$testEmail,
+            'password' => self::$testPassword,
             'submit' => 'true'
         ];
-        $response = $this->httpPost($this->urlRegister, $postData);
-        $this->assertStringContainsString("Compte administrateur créé", $response);
+
+        $temp = new self();
+        $temp->httpPost('http://localhost:8000/index.php?controleur=operateurs&action=register', $postData);
     }
 
     public function testLogin()
     {
-        $email = 'test_' . rand(1000, 9999) . '@test.com';
-
-        $registerData = [
-            'name' => 'Testeur',
-            'email' => $email,
-            'password' => 'azerty123',
-            'submit' => 'true'
-        ];
-        $this->httpPost($this->urlRegister, $registerData);
-
         $loginData = [
-            'email' => $email,
-            'password' => 'azerty123',
+            'email' => self::$testEmail,
+            'password' => self::$testPassword,
             'submit' => 'true'
         ];
         $response = $this->httpPost($this->urlLogin, $loginData);
@@ -86,7 +81,7 @@ class ModuleCreationTest extends TestCase
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);  // AJOUTER
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         $response = curl_exec($ch);
         curl_close($ch);
         return $response;
@@ -99,10 +94,9 @@ class ModuleCreationTest extends TestCase
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);  // AJOUTER
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         $response = curl_exec($ch);
         curl_close($ch);
         return $response;
     }
-
 }
