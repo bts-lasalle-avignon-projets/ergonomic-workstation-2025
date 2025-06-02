@@ -12,7 +12,7 @@ class OperateurModel extends Model
 
         if ($submit) {
             if ($name === '' || $email === false || $password === '') {
-                Messages::setMsg('Please fill in the required fields', 'error');
+                Messages::setMsg('Veuillez remplir les champs obligatoires', 'error');
                 return;
             }
 
@@ -62,7 +62,7 @@ class OperateurModel extends Model
                         "id"    => $row['idSuperviseur'],
                         "name"  => $row['name'],
                         "email" => $row['email']
-                    ];                    
+                    ];
                     Messages::setMsg('Vous vous êtes connecté avec succès', 'success');
                     header('Location: ' . ROOT_PATH . 'processus');
                     exit(0);
@@ -83,8 +83,7 @@ class OperateurModel extends Model
         $this->query("SELECT * FROM Superviseur");
         $utilisateur = $this->getResults();
 
-        if(!empty($utilisateur))
-        {
+        if (!empty($utilisateur)) {
             return true;
         }
 
