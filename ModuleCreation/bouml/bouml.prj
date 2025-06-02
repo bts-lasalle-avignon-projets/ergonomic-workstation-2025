@@ -1,6 +1,6 @@
 format 224
 "bouml"
-  revision 6
+  revision 7
   modified_by 42 "tv"
   php_root_dir "../www/"
 
@@ -46,4 +46,152 @@ format 224
   mark_for_import
   
   package_ref 129047 // www
+
+  deploymentview 134698 "deploiement"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    deploymentdiagram 134570 "dd"
+      deploymentdiagramsettings
+       end
+      size A0
+    end
+
+    deploymentnode 134570 "Raspberry Pi"
+    end
+
+    deploymentnode 134698 "ESP32"
+    end
+
+    deploymentnode 134826 "PC Serveur"
+    end
+
+    deploymentnode 134954 "PC Superviseur"
+    end
+
+    deploymentnode 135082 "Apache"
+    end
+
+    deploymentnode 135210 "MySQL"
+    end
+
+    deploymentnode 135338 "�cran"
+    end
+
+    artifact 135594 "config"
+      stereotype "source"
+      php_src "<?php
+
+// le nom à ajouter dans l'URL
+//define(\"URL_NAME\", \"ergonomic-workstation\");
+define(\"URL_NAME\", \"\");
+
+// Pour le debug
+define(\"DEBUG\", false);
+
+// Pour les tests
+define(\"NO_LOGIN\", false);
+
+// Pour la base de données
+define(\"DB_DRIVER\", true); // true pour MySQL, false sans base de données
+define(\"DB_HOST\", \"127.0.0.1\");
+define(\"DB_USER\", \"ergoWork\");
+define(\"DB_PASS\", \"password\");
+define(\"DB_NAME\", \"ergonomic_workstation\");
+
+// URL
+if (!empty(URL_NAME)) {
+    define(\"ROOT_PATH\", \"/\" . URL_NAME . \"/\");
+    define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\" . URL_NAME . \"/\");
+} else {
+    define(\"ROOT_PATH\", \"/\");
+    define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
+}
+
+// Divers
+define(\"TITRE_SITE\", \"Ergonomic Workstation\");
+
+if (DEBUG) {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+}
+
+define('PRECISION_POURCENTAGE', 2);
+define('TEMPS_MINUTE', 60);
+
+define('TEMPS_AFFICHAGE_MESSAGE', 3000);
+define('TEMPS_ANIMATION_OPACITE', 500);"
+      associated_elems
+      end
+    end
+
+    artifact 135722 "index"
+      stereotype "source"
+      php_src "<?php
+// Démarre la session PHP
+session_start();
+
+require('config.php');
+
+require('classes/message.php');
+require('classes/messages.php');
+require('classes/router.php');
+require('classes/controller.php');
+require('classes/model.php');
+require('classes/bac.php');
+
+require('controllers/accueil.php');
+require('controllers/operateurs.php');
+require('controllers/processus.php');
+require('controllers/etape.php');
+require('models/accueil.php');
+require('models/operateur.php');
+require('models/processus.php');
+require('models/etape.php');
+
+$operateursController = new Operateurs('register', $_GET);
+$utilisateurExiste = $operateursController->superviseurExiste();
+if (!NO_LOGIN && !$utilisateurExiste) {
+    $_GET['controleur'] = 'operateurs';
+    $_GET['action'] = 'register';
+}
+
+// Ensuite, créer le router avec la requête (éventuellement modifiée)
+$router = new Router($_GET);
+$controller = $router->createController();
+
+if ($controller) {
+    $controller->executeAction();
+}
+"
+      associated_elems
+      end
+    end
+  end
+
+  componentview 134570 "composant"
+    //component diagram settings
+    componentdiagramsettings
+     end
+    component 134570 "ModuleGuidage"
+      stereotype "executable"
+    end
+
+    component 134698 "Navigateur web"
+      stereotype "executable"
+    end
+
+    component 134826 "ModuleCreation"
+      stereotype "script"
+      simplerelation 134570
+	-_->
+	  on component_ref 134954 // ergonomic_workstation
+      end
+    end
+
+    component 134954 "ergonomic_workstation"
+      stereotype "database"
+    end
+  end
+
 end

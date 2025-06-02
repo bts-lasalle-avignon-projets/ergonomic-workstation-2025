@@ -1,6 +1,6 @@
 format 224
 "classes" // www::classes
-  revision 6
+  revision 7
   modified_by 42 "tv"
   // class settings
   
@@ -83,6 +83,17 @@ ${definition}
       stereotype "source"
       php_src "<?php"
       associated_elems
+      end
+    end
+
+    artifact 134570 "bac"
+      stereotype "source"
+      php_src "<?php
+${definition}
+
+"
+      associated_elems
+	class_ref 134570 // Bac
       end
     end
   end
@@ -198,7 +209,6 @@ ${members}}
 	
 	
       end
-
     end
 
     class 129559 "Message"
@@ -432,7 +442,6 @@ ${members}}
 	
 	
       end
-
     end
 
     class 129943 "Router"
@@ -519,6 +528,100 @@ ${members}}
 "
 	    classrelation_ref 129559 // controller (<unidirectional association>)
 	  b parent class_ref 129431 // Controller
+      end
+    end
+
+    class 134570 "Bac"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 170154 "__construct"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "idBac" explicit_type "int"
+	  param in name "contenance" explicit_type "string"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+	comment "private int $idBac; // le numéro de bac
+private string $contenance;"
+      end
+
+      operation 170282 "getIdBac"
+	public explicit_return_type "int"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 170410 "getContenance"
+	public explicit_return_type "string"
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 170538 "setContenance"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "contenance" explicit_type "string"
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${t0} ${p0}${v0}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      attribute 142634 "idBac"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 142762 "contenance"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

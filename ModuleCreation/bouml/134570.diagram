@@ -1,0 +1,70 @@
+format 224
+
+deploymentnodecanvas 128042 deploymentnode_ref 134570 // Raspberry Pi
+  xyzwh 720 121 2000 267 183
+end
+componentcanvas 128170 component_ref 134570 // ModuleGuidage
+  
+  xyzwh 744 188 2000 215 65
+end
+deploymentnodecanvas 128298 deploymentnode_ref 134698 // ESP32
+  xyzwh 1136 194 2000 79 36
+end
+fragment 128554 "Poste de travail"
+  xyzwh 693 77 1995 557 356
+end
+textcanvas 128682 "1"
+  xyzwh 1119 213 2000 19 21
+textcanvas 128810 "1"
+  xyzwh 991 214 2000 18 21
+deploymentnodecanvas 128938 deploymentnode_ref 134826 // PC Serveur
+  xyzwh 16 25 1995 347 375
+end
+textcanvas 129706 "1"
+  xyzwh 373 188 2000 23 24
+textcanvas 129834 "*"
+  xyzwh 700 187 2000 16 28
+deploymentnodecanvas 129962 deploymentnode_ref 134954 // PC Superviseur
+  xyzwh 60 514 2000 259 177
+end
+componentcanvas 130090 component_ref 134698 // Navigateur web
+  
+  xyzwh 84 583 2005 211 65
+end
+componentcanvas 130346 component_ref 134826 // ModuleCreation
+  
+  xyzwh 105 120 2006 175 65
+end
+deploymentnodecanvas 130474 deploymentnode_ref 135082 // Apache
+  color verylightgray xyzwh 80 71 2000 225 129
+end
+deploymentnodecanvas 130602 deploymentnode_ref 135210 // MySQL
+  color verylightgray xyzwh 68 247 2000 249 129
+end
+componentcanvas 130730 component_ref 134954 // ergonomic_workstation
+  
+  xyzwh 83 288 2005 219 65
+end
+textcanvas 131114 "1"
+  xyzwh 191 408 2000 24 27
+textcanvas 131242 "*"
+  xyzwh 194 497 2000 22 23
+deploymentnodecanvas 131370 deploymentnode_ref 135338 // Écran
+  xyzwh 818 383 2000 71 36
+end
+note 131754 "Fonction pick-to-light (détection de la prise d'une pièce dans un bac avec signalisation lumineuse) pour 8 bacs"
+  xyzwh 961 319 2000 281 105
+line 128426 ----
+  from ref 128042 z 2001 stereotype "<<Bluetooth>>" xyz 1000 188 3000 to ref 128298
+line 129450 ----
+  from ref 128938 z 2001 stereotype "<<TCP/IP>>" xyz 489.5 189.5 3000 to ref 128042
+line 130218 ----
+  from ref 129962 z 2001 stereotype "<<TCP/IP>>" xyz 138 456 3000 to ref 128938
+simplerelationcanvas 130858 simplerelation_ref 134570
+  from ref 130346 z 2007 to ref 130730
+end
+line 131498 ----
+  from ref 128042 z 2001 stereotype "<<HDMI>>" xyz 807.5 342 3000 to ref 131370
+line 131882 -_-_
+  from ref 131754 z 2001 to ref 128298
+end

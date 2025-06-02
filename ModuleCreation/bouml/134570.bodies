@@ -1,0 +1,19 @@
+class Bac
+!!!170154.php!!!	__construct(in idBac : int, in contenance : string)
+        $this->idBac = $idBac;
+        $this->contenance = $contenance;
+!!!170282.php!!!	getIdBac() : int
+        return $this->idBac;
+!!!170410.php!!!	getContenance() : string
+        return $this->contenance;
+!!!170538.php!!!	setContenance(in contenance : string) : void
+        if (empty($contenance)) {
+            throw new InvalidArgumentException("La contenance ne peut pas être vide.");
+        }
+        if (!is_string($contenance)) {
+            throw new InvalidArgumentException("La contenance doit être une chaîne de caractères.");
+        }
+        if ($this->contenance === $contenance) {
+            return;
+        }
+        $this->contenance = $contenance;

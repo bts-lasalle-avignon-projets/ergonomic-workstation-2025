@@ -14,3 +14,6 @@ class Operateurs
 		session_destroy();
 		// Redirect
 		header('Location: ' . URL_PATH);
+!!!158378.php!!!	superviseurExiste()
+		$utilisateur = $this->viewmodel->superviseurExiste();
+		return $utilisateur;

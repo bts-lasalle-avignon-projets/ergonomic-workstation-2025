@@ -1,6 +1,6 @@
 format 224
 "www" // www
-  revision 6
+  revision 7
   modified_by 42 "tv"
   // class settings
   
@@ -39,11 +39,15 @@ format 224
       stereotype "source"
       php_src "<?php
 
+// le nom à ajouter dans l'URL
+//define(\"URL_NAME\", \"ergonomic-workstation\");
+define(\"URL_NAME\", \"\");
+
 // Pour le debug
 define(\"DEBUG\", false);
 
 // Pour les tests
-define(\"NO_LOGIN\", true);
+define(\"NO_LOGIN\", false);
 
 // Pour la base de données
 define(\"DB_DRIVER\", true); // true pour MySQL, false sans base de données
@@ -53,13 +57,27 @@ define(\"DB_PASS\", \"password\");
 define(\"DB_NAME\", \"ergonomic_workstation\");
 
 // URL
-define(\"ROOT_PATH\", \"/ergonomic-workstation/\");
-define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/ergonomic-workstation/\");
-//define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
+if (!empty(URL_NAME)) {
+    define(\"ROOT_PATH\", \"/\" . URL_NAME . \"/\");
+    define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\" . URL_NAME . \"/\");
+} else {
+    define(\"ROOT_PATH\", \"/\");
+    define(\"URL_PATH\", \"http://\" . $_SERVER['HTTP_HOST'] . \"/\");
+}
 
 // Divers
 define(\"TITRE_SITE\", \"Ergonomic Workstation\");
-"
+
+if (DEBUG) {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+}
+
+define('PRECISION_POURCENTAGE', 2);
+define('TEMPS_MINUTE', 60);
+
+define('TEMPS_AFFICHAGE_MESSAGE', 3000);
+define('TEMPS_ANIMATION_OPACITE', 500);"
       associated_elems
       end
     end
@@ -77,21 +95,30 @@ require('classes/messages.php');
 require('classes/router.php');
 require('classes/controller.php');
 require('classes/model.php');
+require('classes/bac.php');
 
 require('controllers/accueil.php');
 require('controllers/operateurs.php');
 require('controllers/processus.php');
-
+require('controllers/etape.php');
 require('models/accueil.php');
 require('models/operateur.php');
 require('models/processus.php');
+require('models/etape.php');
 
-// Forme de l'URL, après réécriture : http://root/controleur/action/id
+$operateursController = new Operateurs('register', $_GET);
+$utilisateurExiste = $operateursController->superviseurExiste();
+if (!NO_LOGIN && !$utilisateurExiste) {
+    $_GET['controleur'] = 'operateurs';
+    $_GET['action'] = 'register';
+}
+
+// Ensuite, créer le router avec la requête (éventuellement modifiée)
 $router = new Router($_GET);
 $controller = $router->createController();
 
 if ($controller) {
-	$controller->executeAction();
+    $controller->executeAction();
 }
 "
       associated_elems
@@ -102,8 +129,6 @@ if ($controller) {
   package_ref 129175 // classes
 
   package_ref 129303 // controllers
-
-  package_ref 129431 // frontend
 
   package_ref 129559 // models
 
