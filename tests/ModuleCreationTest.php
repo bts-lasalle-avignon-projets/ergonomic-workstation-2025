@@ -11,23 +11,22 @@ class ModuleCreationTest extends TestCase
     private $urlProcessus = 'http://localhost:8000/index.php?controleur=processus';
     private $urlCreationProcessus = 'http://localhost:8000/index.php?controleur=processus&action=add';
     private $urlCreationProcessusId = 'http://localhost:8000/index.php?controleur=processus&action=view&id=1';
-    private $urlRegister = 'http://localhost:8000/index.php?controleur=operateurs&action=register';
+    private static $urlRegister = 'http://localhost:8000/index.php?controleur=operateurs&action=register';
     private $urlLogin = 'http://localhost:8000/index.php?controleur=operateurs&action=login';
 
     public static function setUpBeforeClass(): void
     {
         self::$testEmail = 'test_@test.com';
-    
+
         $postData = [
             'name' => 'Testeur',
             'email' => self::$testEmail,
             'password' => self::$testPassword,
             'submit' => 'true'
         ];
-    
-        self::staticHttpPost('http://localhost:8000/index.php?controleur=operateurs&action=register', $postData);
+
+        self::staticHttpPost(self::$urlRegister, $postData);
     }
-    
 
     public function testLogin()
     {
@@ -87,7 +86,7 @@ class ModuleCreationTest extends TestCase
         curl_close($ch);
         return $response;
     }
-    
+
 
     private static function staticHttpPost($url, $postData)
     {
@@ -103,7 +102,7 @@ class ModuleCreationTest extends TestCase
         curl_close($ch);
         return $response;
     }
-    
+
     private function httpPost($url, $postData)
     {
         $ch = curl_init();
@@ -118,6 +117,4 @@ class ModuleCreationTest extends TestCase
         curl_close($ch);
         return $response;
     }
-    
-    
 }
