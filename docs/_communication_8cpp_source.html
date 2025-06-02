@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet Ergonomic-Workstation:  Fichier source de Communication.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="projet-logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet Ergonomic-Workstation
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS CIEL IR LaSalle Avignon 2025</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_communication_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Communication.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_communication_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_communication_8h.html">Communication.h</a>&quot;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="class_communication.html#a73766a7e1b702851d13cd84b91098564">    4</a></span>&#160;<a class="code" href="class_communication.html#a73766a7e1b702851d13cd84b91098564">Communication::Communication</a>(<a class="code" href="class_q_object.html">QObject</a> *parent)</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    : <a class="code" href="class_q_object.html">QObject</a>(parent),</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;      portSerie(new QSerialPort(this)),</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;      bufferReception()</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    connect(<a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>, &amp;QSerialPort::readyRead, <span class="keyword">this</span>, &amp;<a class="code" href="class_communication.html#a0f3943583f527a97c24ab565c52162b7">Communication::lireTrame</a>);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_communication.html#aafd3d87378ebad7a5130dd42ed02e779">   12</a></span>&#160;<a class="code" href="class_communication.html#aafd3d87378ebad7a5130dd42ed02e779">Communication::~Communication</a>()</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;isOpen())</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;close();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_communication.html#a0f330e5e3a83f9afffb423384d8055be">   18</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_communication.html#a0f330e5e3a83f9afffb423384d8055be">Communication::connecter</a>()</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    QString nomPort = <span class="stringliteral">&quot;/dev/rfcomm0&quot;</span>;  <span class="comment">// Port Bluetooth RFCOMM forcé ici</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setPortName(nomPort);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;open(QIODevice::ReadWrite))</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setBaudRate(QSerialPort::Baud115200);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setParity(QSerialPort::NoParity);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setDataBits(QSerialPort::Data8);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setStopBits(QSerialPort::OneStop);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;setFlowControl(QSerialPort::NoFlowControl);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_communication.html#a428be593134938b3db9a81bc5495bb41">   34</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_communication.html#a428be593134938b3db9a81bc5495bb41">Communication::envoyerTrame</a>(<span class="keyword">const</span> QString &amp;trame)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;isOpen())</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        QByteArray data = trame.toUtf8();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;write(data);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_communication.html#acac259f99f595549d86c13c2d70fd576">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_communication.html#acac259f99f595549d86c13c2d70fd576">Communication::envoyerAcquittement</a>()</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="class_communication.html#a428be593134938b3db9a81bc5495bb41">envoyerTrame</a>(<span class="stringliteral">&quot;$A%&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_communication.html#a115698cbea0b1ab029ddacce0332cbcc">   48</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_communication.html#a115698cbea0b1ab029ddacce0332cbcc">Communication::envoyerDebutProcessus</a>()</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    qDebug() &lt;&lt; Q_FUNC_INFO &lt;&lt; <span class="stringliteral">&quot;Envoi trame début processus : $D%&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="class_communication.html#a428be593134938b3db9a81bc5495bb41">envoyerTrame</a>(<span class="stringliteral">&quot;$D%&quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="class_communication.html#a051688904ce731b76b117d40a54513e8">   55</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_communication.html#a051688904ce731b76b117d40a54513e8">Communication::envoyerFinProcessusOuEtape</a>()</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    qDebug() &lt;&lt; Q_FUNC_INFO &lt;&lt; <span class="stringliteral">&quot;Envoi trame fin processus / étape : $F%&quot;</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="class_communication.html#a428be593134938b3db9a81bc5495bb41">envoyerTrame</a>(<span class="stringliteral">&quot;$F%&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="class_communication.html#a0f3943583f527a97c24ab565c52162b7">   61</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_communication.html#a0f3943583f527a97c24ab565c52162b7">Communication::lireTrame</a>()</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">bufferReception</a>.append(<a class="code" href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">portSerie</a>-&gt;readAll());</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">int</span> posFin = <a class="code" href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">bufferReception</a>.indexOf(<span class="charliteral">&#39;%&#39;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">while</span> (posFin != -1)</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        QString trameComplete = <a class="code" href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">bufferReception</a>.left(posFin + 1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">bufferReception</a>.remove(0, posFin + 1);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        emit <a class="code" href="class_communication.html#acc1ba042362ac32364157b6e9ac39834">trameRecue</a>(trameComplete.left(trameComplete.length() - 1));</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        posFin = <a class="code" href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">bufferReception</a>.indexOf(<span class="charliteral">&#39;%&#39;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="ttc" id="a_communication_8h_html"><div class="ttname"><a href="_communication_8h.html">Communication.h</a></div></div>
+<div class="ttc" id="aclass_communication_html_a051688904ce731b76b117d40a54513e8"><div class="ttname"><a href="class_communication.html#a051688904ce731b76b117d40a54513e8">Communication::envoyerFinProcessusOuEtape</a></div><div class="ttdeci">void envoyerFinProcessusOuEtape()</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00055">Communication.cpp:55</a></div></div>
+<div class="ttc" id="aclass_communication_html_a0f330e5e3a83f9afffb423384d8055be"><div class="ttname"><a href="class_communication.html#a0f330e5e3a83f9afffb423384d8055be">Communication::connecter</a></div><div class="ttdeci">bool connecter()</div><div class="ttdoc">Connecte la communication au port série Bluetooth donné.</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00018">Communication.cpp:18</a></div></div>
+<div class="ttc" id="aclass_communication_html_a0f3943583f527a97c24ab565c52162b7"><div class="ttname"><a href="class_communication.html#a0f3943583f527a97c24ab565c52162b7">Communication::lireTrame</a></div><div class="ttdeci">void lireTrame()</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00061">Communication.cpp:61</a></div></div>
+<div class="ttc" id="aclass_communication_html_a115698cbea0b1ab029ddacce0332cbcc"><div class="ttname"><a href="class_communication.html#a115698cbea0b1ab029ddacce0332cbcc">Communication::envoyerDebutProcessus</a></div><div class="ttdeci">void envoyerDebutProcessus()</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00048">Communication.cpp:48</a></div></div>
+<div class="ttc" id="aclass_communication_html_a1be4fe081158aa088cf923b945626ffa"><div class="ttname"><a href="class_communication.html#a1be4fe081158aa088cf923b945626ffa">Communication::portSerie</a></div><div class="ttdeci">QSerialPort * portSerie</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8h_source.html#l00047">Communication.h:47</a></div></div>
+<div class="ttc" id="aclass_communication_html_a428be593134938b3db9a81bc5495bb41"><div class="ttname"><a href="class_communication.html#a428be593134938b3db9a81bc5495bb41">Communication::envoyerTrame</a></div><div class="ttdeci">void envoyerTrame(const QString &amp;trame)</div><div class="ttdoc">Envoie une trame au module ESP32.</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00034">Communication.cpp:34</a></div></div>
+<div class="ttc" id="aclass_communication_html_a73766a7e1b702851d13cd84b91098564"><div class="ttname"><a href="class_communication.html#a73766a7e1b702851d13cd84b91098564">Communication::Communication</a></div><div class="ttdeci">Communication(QObject *parent=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00004">Communication.cpp:4</a></div></div>
+<div class="ttc" id="aclass_communication_html_a9444c5bfd40a230a0abb26bde04ecdf1"><div class="ttname"><a href="class_communication.html#a9444c5bfd40a230a0abb26bde04ecdf1">Communication::bufferReception</a></div><div class="ttdeci">QString bufferReception</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8h_source.html#l00048">Communication.h:48</a></div></div>
+<div class="ttc" id="aclass_communication_html_aafd3d87378ebad7a5130dd42ed02e779"><div class="ttname"><a href="class_communication.html#aafd3d87378ebad7a5130dd42ed02e779">Communication::~Communication</a></div><div class="ttdeci">~Communication()</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00012">Communication.cpp:12</a></div></div>
+<div class="ttc" id="aclass_communication_html_acac259f99f595549d86c13c2d70fd576"><div class="ttname"><a href="class_communication.html#acac259f99f595549d86c13c2d70fd576">Communication::envoyerAcquittement</a></div><div class="ttdeci">void envoyerAcquittement()</div><div class="ttdoc">Envoie des trames.</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8cpp_source.html#l00043">Communication.cpp:43</a></div></div>
+<div class="ttc" id="aclass_communication_html_acc1ba042362ac32364157b6e9ac39834"><div class="ttname"><a href="class_communication.html#acc1ba042362ac32364157b6e9ac39834">Communication::trameRecue</a></div><div class="ttdeci">void trameRecue(const QString &amp;trame)</div><div class="ttdoc">Signal émis lorsqu'une trame complète est reçue.</div></div>
+<div class="ttc" id="aclass_q_object_html"><div class="ttname"><a href="class_q_object.html">QObject</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_2a4d9f3cac79f1af45f0b6e8df810395.html">ModuleGuidage</a></li><li class="navelem"><a class="el" href="_communication_8cpp.html">Communication.cpp</a></li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Lundi 2 Juin 2025 09:10:39 pour Projet Ergonomic-Workstation par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.9.1&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>

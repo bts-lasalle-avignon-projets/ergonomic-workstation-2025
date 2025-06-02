@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet Ergonomic-Workstation:  Fichier source de Etape.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="projet-logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet Ergonomic-Workstation
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS CIEL IR LaSalle Avignon 2025</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_etape_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Etape.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_etape_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ETAPE_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define ETAPE_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QPair&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QVector&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">struct </span><a class="code" href="class_etape.html">Etape</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_etape.html#abad2be8d6d8d7330e2e96ba7f55a9df3">   13</a></span>&#160;    <span class="keywordtype">int</span>     <a class="code" href="class_etape.html#abad2be8d6d8d7330e2e96ba7f55a9df3">idEtape</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_etape.html#a0b42d5f2e21ac00f83c23fa5c6ba07b4">   14</a></span>&#160;    <span class="keywordtype">int</span>     <a class="code" href="class_etape.html#a0b42d5f2e21ac00f83c23fa5c6ba07b4">numeroEtape</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_etape.html#a813f6a8f7388d3d939efaa20fe632e41">   15</a></span>&#160;    QString <a class="code" href="class_etape.html#a813f6a8f7388d3d939efaa20fe632e41">nomEtape</a>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_etape.html#af8c9100c3a5e9afad2614f23de3efe89">   16</a></span>&#160;    QString <a class="code" href="class_etape.html#af8c9100c3a5e9afad2614f23de3efe89">descriptionEtape</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_etape.html#a9858cdbf5d27e482fe2d7b592912de94">   17</a></span>&#160;    <span class="keywordtype">int</span>     <a class="code" href="class_etape.html#a9858cdbf5d27e482fe2d7b592912de94">numeroBac</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_etape.html#aedecd483b4e1c48bcfc8434eaae5992e">   18</a></span>&#160;    QString <a class="code" href="class_etape.html#aedecd483b4e1c48bcfc8434eaae5992e">contenance</a>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="comment">// QVector&lt;QPair&lt;int, QString&gt; &gt; bacs; // (numéro, contenance)</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728">   27</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728">TableEtape</a></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a2f9beea5c708bc720e9a0843fd80d461">   29</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a2f9beea5c708bc720e9a0843fd80d461">TE_ID_ETAPE</a>          = 0,</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728afdb4dd8362a1aaeb55f2ebea512e3b74">   30</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728afdb4dd8362a1aaeb55f2ebea512e3b74">TE_ID_PROCESSUS</a>      = 1,</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728ad641ab927b67608ad9469dc16d85f8f9">   31</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728ad641ab927b67608ad9469dc16d85f8f9">TE_ID_BAC</a>            = 2,</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a4628382b8f3842d116a3d7dbd8a936cd">   32</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a4628382b8f3842d116a3d7dbd8a936cd">TE_NOM_ETAPE</a>         = 3,</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a110eafcd92fda8c2cc01752b700edda3">   33</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a110eafcd92fda8c2cc01752b700edda3">TE_NUMERO_ETAPE</a>      = 4,</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a31ae2e99a6003647f8f98abd3e5afab3">   34</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a31ae2e99a6003647f8f98abd3e5afab3">TE_DESCRIPTION_ETAPE</a> = 5,</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728accb44911b433f4a2428d7b15c0d2c8fb">   35</a></span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728accb44911b433f4a2428d7b15c0d2c8fb">TE_ID_IMAGE</a>          = 6,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a6f7792169bad52ade470504346d354ac">NbColonnesTableEtape</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a6f7792169bad52ade470504346d354ac">   37</a></span>&#160;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5">   44</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5">TableBac</a></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5ad360ddf5067cc4c85fb3fa010ec55ade">   46</a></span>&#160;    <a class="code" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5ad360ddf5067cc4c85fb3fa010ec55ade">TB_NUMERO_BAC</a> = 0,</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a0f87897bb4543f70ad508ca9ff7b9082">   47</a></span>&#160;    <a class="code" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a0f87897bb4543f70ad508ca9ff7b9082">TB_CONTENANCE</a> = 1,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a880511699baac376f7d91356f5f94724">NbColonnesTableBac</a></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a880511699baac376f7d91356f5f94724">   49</a></span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ETAPE_H</span></div>
+<div class="ttc" id="a_etape_8h_html_a6ef84b36b2c1fbaa9896d4108e2b77f5"><div class="ttname"><a href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5">TableBac</a></div><div class="ttdeci">TableBac</div><div class="ttdoc">Définit les numéros de colonne de la table Bac.</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00044">Etape.h:45</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a6ef84b36b2c1fbaa9896d4108e2b77f5a0f87897bb4543f70ad508ca9ff7b9082"><div class="ttname"><a href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a0f87897bb4543f70ad508ca9ff7b9082">TB_CONTENANCE</a></div><div class="ttdeci">@ TB_CONTENANCE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00047">Etape.h:47</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a6ef84b36b2c1fbaa9896d4108e2b77f5a880511699baac376f7d91356f5f94724"><div class="ttname"><a href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5a880511699baac376f7d91356f5f94724">NbColonnesTableBac</a></div><div class="ttdeci">@ NbColonnesTableBac</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00049">Etape.h:48</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a6ef84b36b2c1fbaa9896d4108e2b77f5ad360ddf5067cc4c85fb3fa010ec55ade"><div class="ttname"><a href="_etape_8h.html#a6ef84b36b2c1fbaa9896d4108e2b77f5ad360ddf5067cc4c85fb3fa010ec55ade">TB_NUMERO_BAC</a></div><div class="ttdeci">@ TB_NUMERO_BAC</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00046">Etape.h:46</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728">TableEtape</a></div><div class="ttdeci">TableEtape</div><div class="ttdoc">Définit les numéros de colonne de la table Etape.</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00027">Etape.h:28</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728a110eafcd92fda8c2cc01752b700edda3"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a110eafcd92fda8c2cc01752b700edda3">TE_NUMERO_ETAPE</a></div><div class="ttdeci">@ TE_NUMERO_ETAPE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00033">Etape.h:33</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728a2f9beea5c708bc720e9a0843fd80d461"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a2f9beea5c708bc720e9a0843fd80d461">TE_ID_ETAPE</a></div><div class="ttdeci">@ TE_ID_ETAPE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00029">Etape.h:29</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728a31ae2e99a6003647f8f98abd3e5afab3"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a31ae2e99a6003647f8f98abd3e5afab3">TE_DESCRIPTION_ETAPE</a></div><div class="ttdeci">@ TE_DESCRIPTION_ETAPE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00034">Etape.h:34</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728a4628382b8f3842d116a3d7dbd8a936cd"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a4628382b8f3842d116a3d7dbd8a936cd">TE_NOM_ETAPE</a></div><div class="ttdeci">@ TE_NOM_ETAPE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00032">Etape.h:32</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728a6f7792169bad52ade470504346d354ac"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728a6f7792169bad52ade470504346d354ac">NbColonnesTableEtape</a></div><div class="ttdeci">@ NbColonnesTableEtape</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00037">Etape.h:36</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728accb44911b433f4a2428d7b15c0d2c8fb"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728accb44911b433f4a2428d7b15c0d2c8fb">TE_ID_IMAGE</a></div><div class="ttdeci">@ TE_ID_IMAGE</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00035">Etape.h:35</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728ad641ab927b67608ad9469dc16d85f8f9"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728ad641ab927b67608ad9469dc16d85f8f9">TE_ID_BAC</a></div><div class="ttdeci">@ TE_ID_BAC</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00031">Etape.h:31</a></div></div>
+<div class="ttc" id="a_etape_8h_html_a87287e13bebe6068d9b615f8e1eb7728afdb4dd8362a1aaeb55f2ebea512e3b74"><div class="ttname"><a href="_etape_8h.html#a87287e13bebe6068d9b615f8e1eb7728afdb4dd8362a1aaeb55f2ebea512e3b74">TE_ID_PROCESSUS</a></div><div class="ttdeci">@ TE_ID_PROCESSUS</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00030">Etape.h:30</a></div></div>
+<div class="ttc" id="aclass_etape_html"><div class="ttname"><a href="class_etape.html">Etape</a></div><div class="ttdoc">Structure contenant les informations complètes d'une étape.</div><div class="ttdef"><b>Definition:</b> <a href="controllers_2etape_8php_source.html#l00002">controllers/etape.php:3</a></div></div>
+<div class="ttc" id="aclass_etape_html_a0b42d5f2e21ac00f83c23fa5c6ba07b4"><div class="ttname"><a href="class_etape.html#a0b42d5f2e21ac00f83c23fa5c6ba07b4">Etape::numeroEtape</a></div><div class="ttdeci">int numeroEtape</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00014">Etape.h:14</a></div></div>
+<div class="ttc" id="aclass_etape_html_a813f6a8f7388d3d939efaa20fe632e41"><div class="ttname"><a href="class_etape.html#a813f6a8f7388d3d939efaa20fe632e41">Etape::nomEtape</a></div><div class="ttdeci">QString nomEtape</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00015">Etape.h:15</a></div></div>
+<div class="ttc" id="aclass_etape_html_a9858cdbf5d27e482fe2d7b592912de94"><div class="ttname"><a href="class_etape.html#a9858cdbf5d27e482fe2d7b592912de94">Etape::numeroBac</a></div><div class="ttdeci">int numeroBac</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00017">Etape.h:17</a></div></div>
+<div class="ttc" id="aclass_etape_html_abad2be8d6d8d7330e2e96ba7f55a9df3"><div class="ttname"><a href="class_etape.html#abad2be8d6d8d7330e2e96ba7f55a9df3">Etape::idEtape</a></div><div class="ttdeci">int idEtape</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00013">Etape.h:13</a></div></div>
+<div class="ttc" id="aclass_etape_html_aedecd483b4e1c48bcfc8434eaae5992e"><div class="ttname"><a href="class_etape.html#aedecd483b4e1c48bcfc8434eaae5992e">Etape::contenance</a></div><div class="ttdeci">QString contenance</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00018">Etape.h:18</a></div></div>
+<div class="ttc" id="aclass_etape_html_af8c9100c3a5e9afad2614f23de3efe89"><div class="ttname"><a href="class_etape.html#af8c9100c3a5e9afad2614f23de3efe89">Etape::descriptionEtape</a></div><div class="ttdeci">QString descriptionEtape</div><div class="ttdef"><b>Definition:</b> <a href="_etape_8h_source.html#l00016">Etape.h:16</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_2a4d9f3cac79f1af45f0b6e8df810395.html">ModuleGuidage</a></li><li class="navelem"><a class="el" href="_etape_8h.html">Etape.h</a></li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Lundi 2 Juin 2025 09:10:39 pour Projet Ergonomic-Workstation par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.9.1&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>
