@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet Ergonomic-Workstation: Installation Serveur HTTP</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="projet-logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet Ergonomic-Workstation
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS CIEL IR LaSalle Avignon 2025</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md__mnt_sda_home_tv__documents_git_projets_2025_ergonomic_workstation_2025__module_creation__i_n_s_t_a_l_l.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">Installation Serveur HTTP </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1>Apache</h1>
+<p>Le logiciel libre <a href="https://httpd.apache.org/">Apache HTTP Server</a> (<b>Apache</b>) est un serveur HTTP créé et maintenu au sein de la fondation Apache. C’est l’un des serveurs HTTP les plus populaires du World Wide Web.</p>
+<p>La version 2 d’Apache propose entre autres le support de plusieurs plates-formes (Windows, Linux et UNIX, Solaris, BSD, MAC OS X), le support de processus légers UNIX (threads), une nouvelle API et le support IPv6.</p>
+<p>Apache est conçu pour prendre en charge de nombreux modules lui donnant des fonctionnalités supplémentaires : interprétation du langage Perl, PHP, Python et Ruby, serveur proxy, <em>Common Gateway Interface</em>, Server Side Includes, <b>réécriture d’URL</b>, négociation de contenu, protocoles de communication additionnels, etc ...</p>
+<h2>Solution n°1 : paquet Ubuntu</h2>
+<div class="fragment"><div class="line">$ sudo apt install apache2</div>
+<div class="line"> </div>
+<div class="line">$ apache2 -v</div>
+<div class="line"> </div>
+<div class="line">$ sudo systemctl status apache2.service -l --no-pager</div>
+</div><!-- fragment --><ul>
+<li>Installation de l'application PHP</li>
+</ul>
+<div class="fragment"><div class="line">$ sudo ln -s ./ModuleCreation/www /var/www/html/ergonomic-workstation</div>
+</div><!-- fragment --><ul>
+<li>Configuration de l'application PHP</li>
+</ul>
+<div class="fragment"><div class="line">$ sudo vim /etc/apache2/apache2.conf</div>
+</div><!-- fragment --><p>En phase de développement, on peut appliquer la configuration suivante :</p>
+<div class="fragment"><div class="line">&lt;Directory /var/www/html/ergonomic-workstation/&gt;</div>
+<div class="line">        AllowOverride All</div>
+<div class="line">        Require all granted</div>
+<div class="line">&lt;/Directory&gt;</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line">&lt;FilesMatch &quot;^\.ht&quot;&gt;</div>
+<div class="line">        #Require all denied</div>
+<div class="line">        Require all granted</div>
+<div class="line">&lt;/FilesMatch&gt;</div>
+</div><!-- fragment --><p>L'application PHP utile une reécriture de l'URL à partir du fichier <a href="./www/.htaccess">.htaccess</a> :</p>
+<div class="fragment"><div class="line">Options +FollowSymLinks</div>
+<div class="line">RewriteEngine on</div>
+<div class="line">RewriteRule ^([a-zA-Z]*)/?([a-zA-Z]*)?/?([a-zA-Z0-9]*)?/?$ index.php?controleur=$1&amp;action=$2&amp;<span class="keywordtype">id</span>=$3 [NC,L]</div>
+</div><!-- fragment --><p>Il faut activer le module de reécriture :</p>
+<div class="fragment"><div class="line">$ sudo a2enmod rewrite</div>
+<div class="line">$ sudo systemctl restart apache2.service</div>
+</div><!-- fragment --><p>Dans le fichier <a href="./www/config.php">config.php</a>:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line"><span class="comment">// URL</span></div>
+<div class="line">define(<span class="stringliteral">&quot;ROOT_PATH&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line">define(<span class="stringliteral">&quot;URL_PATH&quot;</span>, <span class="stringliteral">&quot;http://&quot;</span> . <a class="code" href="_etape_2add_8php.html#ae4cb516593d277dd3ad071d6955da24e">$_SERVER</a>[<span class="stringliteral">&#39;HTTP_HOST&#39;</span>] . <span class="stringliteral">&quot;/ergonomic-workstation/&quot;</span>);</div>
+<div class="line">...</div>
+<div class="ttc" id="a_etape_2add_8php_html_ae4cb516593d277dd3ad071d6955da24e"><div class="ttname"><a href="_etape_2add_8php.html#ae4cb516593d277dd3ad071d6955da24e">$_SERVER</a></div><div class="ttdeci">$_SERVER['PHP_SELF']</div><div class="ttdef"><b>Definition:</b> <a href="_etape_2add_8php_source.html#l00008">Etape/add.php:2</a></div></div>
+</div><!-- fragment --><h2>Solution n°2 : serveur intégré</h2>
+<div class="fragment"><div class="line">$ php -S localhost:8000 -t ModuleCreation/www/ &amp;</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>Le serveur web intégré à PHP ne dispose de module de récriture d'URL ! </p>
+</blockquote>
+<p>Dans le fichier <a href="./www/config.php">config.php</a>:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line"><span class="comment">// URL</span></div>
+<div class="line">define(<span class="stringliteral">&quot;ROOT_PATH&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line">define(<span class="stringliteral">&quot;URL_PATH&quot;</span>, <span class="stringliteral">&quot;http://&quot;</span> . <a class="code" href="_etape_2add_8php.html#ae4cb516593d277dd3ad071d6955da24e">$_SERVER</a>[<span class="stringliteral">&#39;HTTP_HOST&#39;</span>] . <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line">...</div>
+</div><!-- fragment --><hr  />
+<p> &copy; 2024-2025 LaSalle Avignon </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Lundi 2 Juin 2025 09:10:39 pour Projet Ergonomic-Workstation par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.9.1&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>

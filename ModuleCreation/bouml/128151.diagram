@@ -1,0 +1,107 @@
+format 224
+
+classcanvas 128023 class_ref 129431 // Controller
+  classdiagramsettings member_max_width 0 end
+  xyz 334 540 2000
+end
+classcanvas 128042 class_ref 130583 // OperateurModel
+  classdiagramsettings member_max_width 0 end
+  xyz 1143 234 2006
+end
+classcanvas 128151 class_ref 129815 // Model
+  classdiagramsettings member_max_width 0 end
+  xyz 1689 488 2000
+end
+classcanvas 128279 class_ref 129943 // Router
+  classdiagramsettings member_max_width 0 end
+  xyz 15 551 2000
+end
+classcanvas 128298 class_ref 130455 // AccueilModel
+  classdiagramsettings member_max_width 0 end
+  xyz 1173 21 2006
+end
+classcanvas 128554 class_ref 134826 // EtapeModel
+  classdiagramsettings member_max_width 0 end
+  xyz 1112 853 2006
+end
+classcanvas 128663 class_ref 130071 // Accueil
+  classdiagramsettings member_max_width 0 end
+  xyz 721 11 2006
+end
+classcanvas 128810 class_ref 134698 // Etape
+  classdiagramsettings member_max_width 0 end
+  xyz 721 853 2006
+end
+classcanvas 128919 class_ref 130199 // Operateurs
+  classdiagramsettings member_max_width 0 end
+  xyz 695 213 2006
+end
+classcanvas 129066 class_ref 134570 // Bac
+  classdiagramsettings member_max_width 0 end
+  xyz 706 1025 2000
+end
+classcanvas 129175 class_ref 130711 // ProcessusModel
+  classdiagramsettings member_max_width 0 end
+  xyz 1107 432 2006
+end
+relationcanvas 128170 relation_ref 136599 // <generalisation>
+  from ref 128042 z 2007 to ref 128151
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128426 relation_ref 136471 // <generalisation>
+  from ref 128298 z 2007 to ref 128151
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128682 relation_ref 134698 // <generalisation>
+  from ref 128554 z 2007 to ref 128151
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128938 relation_ref 134570 // <generalisation>
+  from ref 128810 z 2007 to ref 128023
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129194 relation_ref 134826 // <unidirectional association>
+  from ref 128663 z 2007 to ref 128298
+  role_a_pos 1069 25 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129322 relation_ref 134954 // <unidirectional association>
+  from ref 128919 z 2007 to ref 128042
+  role_a_pos 1039 259 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129431 relation_ref 129559 // <unidirectional association>
+  from ref 128279 z 2001 to ref 128023
+  role_a_pos 242 583 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129687 relation_ref 136087 // <generalisation>
+  from ref 128663 z 2007 to ref 128023
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129815 relation_ref 136215 // <generalisation>
+  from ref 128919 z 2007 to ref 128023
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129834 relation_ref 137386 // <unidirectional association>
+  from ref 128810 z 2007 to ref 128554
+  role_a_pos 1008 947 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129943 relation_ref 136727 // <generalisation>
+  from ref 129175 z 2007 to ref 128151
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129962 relation_ref 137514 // <dependency>
+  from ref 128810 z 2007 to ref 129066
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

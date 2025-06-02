@@ -1,0 +1,125 @@
+format 224
+"Processus" // www::views::Processus
+  revision 4
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "./views/Processus/"
+  deploymentview 129943 "Processus"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 132375 "edit"
+      stereotype "source"
+      associated_elems
+      end
+    end
+
+    artifact 132503 "index"
+      stereotype "source"
+      php_src "<div class=\"col-12\">
+	<a class=\"btn btn-primary btn-share mt-0\" href=\"<?php echo ROOT_PATH; ?>processus/add\">Créer</a>
+	<a class=\"btn btn-info btn-share mt-0\" href=\"<?php echo ROOT_PATH; ?>processus/importZip\">Importer</a>
+	<?php foreach ($datas as $item) : ?>
+		<div class=\"card mb-4\">
+			<h3 class=\"card-header\"><?php echo $item['nomProcessus']; ?></h3>
+			<div class=\"card-body\">
+				<div>
+					<small class=\"card-subtitle\"><?php echo $item['dateCreation']; ?></small>
+				</div>
+				<div>
+					<small class=\"card-subtitle\"><?php echo $item['descriptionProcessus']; ?>"
+      associated_elems
+      end
+    end
+
+    artifact 135210 "export"
+      stereotype "source"
+      php_src "<!-- Partage/export.php -->
+<div class=\"container mt-5\">
+    <h2>Export du processus en JSON</h2>
+    <pre>
+        <?php
+        // Vérification si la donnée 'json' existe dans $datas
+        if (isset($datas['json']) && !empty($datas['json'])) {
+            // Si elle existe et n'est pas vide, on l'affiche
+            echo htmlspecialchars($datas['json']);
+        } else {
+            // Si elle est vide ou n'existe pas
+            echo \"Aucune donnée à afficher.\";
+        }
+        ?>"
+      associated_elems
+      end
+    end
+
+    artifact 135338 "statistique"
+      stereotype "source"
+      php_src "<div class=\"col-12\">
+    <div class=\"card-header\">
+        <h3 class=\"card-title\">Statistique du processus : <?php echo htmlspecialchars($datas[0]['nomProcessus']); ?>"
+      associated_elems
+      end
+    end
+
+    artifact 135466 "view"
+      stereotype "source"
+      php_src "<div class=\"container d-flex flex-column align-items-center\">
+	<?php foreach ($datas as $etape) : ?>
+		<div class=\"card col-12 col-lg-6\" style=\"margin-bottom: 20px; max-height: 600px;\">
+			<div class=\"card-header\">
+				<h3 class=\"card-title\">Étape n° <?php echo htmlspecialchars($etape['numeroEtape']) ?></h3>
+			</div>
+			<div class=\"card-body\">
+				<h5>Description Étape</h5>
+				<p><?php echo htmlspecialchars($etape['descriptionEtape']); ?></p>
+
+				<h5>Bac</h5>
+				<p><?php echo htmlspecialchars($etape['bac']); ?></p>
+
+				<h5>Image</h5>
+				<?php if (!empty($etape['image']['contenuBlob'])) : ?>
+					<img src=\"data:<?php echo htmlspecialchars($etape['image']['typeMIME']); ?>;base64,<?php echo base64_encode($etape['image']['contenuBlob']); ?>\" 
+						alt=\"Image du processus\" 
+						class=\"img-fluid\" 
+						style=\"max-width: 100%; max-height: 300px; object-fit: contain;\" />
+				<?php else : ?>
+					<p class=\"mt-3\">Aucune image disponible.</p>
+				<?php endif; ?>
+			</div>
+			<small>
+				<a class=\"card-link text-primary\" href=\"<?php echo ROOT_PATH; ?>etape/edit/<?php echo $etape['idEtape']; ?>\">Modifier</a>
+			</small>
+		</div>
+	<?php endforeach; ?>"
+      associated_elems
+      end
+    end
+  end
+end

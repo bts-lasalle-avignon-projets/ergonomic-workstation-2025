@@ -1,0 +1,467 @@
+<?php
+
+class ProcessusModel extends Model
+{
+	public function index()
+	{
+		$this->query("
+			SELECT p.idProcessus, p.nomProcessus, p.dateCreation, p.idImage, p.descriptionProcessus
+			FROM Processus p
+			ORDER BY p.dateCreation
+		");
+
+		$processus = $this->getResults();
+
+		foreach ($processus as &$p) {
+			$timestamp = strtotime($p['dateCreation']);
+			$dateFormatee = date("d/m/Y à G:i", $timestamp);
+			$p['dateCreation'] = $dateFormatee;
+			if (!empty($p['idImage'])) {  // Vérifier si une image est associée
+				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
+				$this->bind(':idImage', $p['idImage']);
+				$imageData = $this->getResult();
+				$p['image'] = $imageData ? $imageData : null;
+			} else {
+				$p['image'] = null; // Aucune image associée
+			}
+		}
+
+		return $processus;
+	}
+
+
+	public function add()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+			$nomProcessus = trim($_POST['nomProcessus']);
+			$descriptionProcessus = trim($_POST['descriptionProcessus']);
+
+			if (empty($nomProcessus)) {
+				Message::afficher("Le nom est requis !", "erreur");
+				return;
+			}
+
+			try {
+				$idImage = null;
+
+				if (!empty($_FILES['image']['name'])) {
+					$idImage = $this->ajouterImage(); // Ajoute l'image et récupère son ID
+				}
+
+				$this->query("INSERT INTO Processus (nomProcessus, descriptionProcessus, idImage) VALUES (:nomProcessus, :descriptionProcessus, :idImage)");
+				$this->bind(':nomProcessus', $nomProcessus);
+				$this->bind(':descriptionProcessus', $descriptionProcessus);
+				$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+				$this->execute();
+
+				Messages::setMsg("Processus ajouté avec succès !", "success");
+			} catch (PDOException $e) {
+				Messages::setMsg("Erreur lors de l'insertion : " . $e->getMessage(), "erreur");
+			}
+		}
+	}
+
+
+	private function ajouterImage()
+	{
+		$nomFichier = $_FILES['image']['name'];
+		$typeMIME = $_FILES['image']['type'];
+		$tailleImage = $_FILES['image']['size'];
+		$contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+
+		$typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+		if (!in_array($typeMIME, $typesAutorises)) {
+			Message::afficher("Format d'image non autorisé !", "erreur");
+			return null;
+		}
+
+		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage) 
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+		$this->bind(':nomFichier', $nomFichier);
+		$this->bind(':typeMIME', $typeMIME);
+		$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+		$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+		$this->execute();
+
+		$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
+		$this->bind(':nomFichier', $nomFichier);
+		$image = $this->getResult();
+
+		return $image['idImage'] ?? null;
+	}
+
+
+	public function edit($idProcessus)
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+			$nomProcessus = trim($_POST['nomProcessus']);
+			$descriptionProcessus = trim($_POST['descriptionProcessus']);
+
+			try {
+				$this->query("SELECT idImage FROM Processus WHERE idProcessus = :idProcessus");
+				$this->bind(':idProcessus', $idProcessus);
+				$result = $this->getResult();
+				$idImageActuel = $result['idImage'] ?? null;
+
+				if (!empty($_FILES['image']['name'])) {
+					$idImage = $this->updateImage($idImageActuel);
+				} else {
+					$idImage = $idImageActuel;
+				}
+
+				$this->query("UPDATE Processus 
+							SET nomProcessus = :nomProcessus, 
+								descriptionProcessus = :descriptionProcessus, 
+								idImage = :idImage 
+							WHERE idProcessus = :idProcessus");
+				$this->bind(':nomProcessus', $nomProcessus);
+				$this->bind(':descriptionProcessus', $descriptionProcessus);
+				$this->bind(':idImage', $idImage);
+				$this->bind(':idProcessus', $idProcessus);
+				$this->execute();
+
+				Messages::setMsg("Processus modifié avec succès !", "success");
+				return true;
+			} catch (PDOException $e) {
+				Messages::setMsg("Erreur lors de la modification : " . $e->getMessage(), "erreur");
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public function updateImage($idImage)
+	{
+		$nomFichier = $_FILES['image']['name'];
+		$typeMIME = $_FILES['image']['type'];
+		$tailleImage = $_FILES['image']['size'];
+		$contenuBlob = file_get_contents($_FILES['image']['tmp_name']);
+
+		$typesAutorises = ['image/jpeg', 'image/png', 'image/webp'];
+		if (!in_array($typeMIME, $typesAutorises)) {
+			Message::afficher("Format d'image non autorisé !", "erreur");
+			return null;
+		}
+
+		if ($idImage == NULL) {
+			$idImage = $this->ajouterImage();
+			return $idImage;
+		} else {
+
+			$this->query("UPDATE Image
+			JOIN Processus ON Processus.idImage = Image.idImage
+			SET Image.nomFichier = :nomFichier,
+				Image.typeMIME = :typeMIME,
+				Image.tailleImage = :tailleImage,
+				Image.contenuBlob = :contenuBlob
+			WHERE Processus.idImage = :idImage");
+
+			$this->bind(':nomFichier', $nomFichier);
+			$this->bind(':typeMIME', $typeMIME);
+			$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+			$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+			$this->bind(':idImage', $idImage);
+			$idImage = $this->execute();
+
+			$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
+			$this->bind(':nomFichier', $nomFichier);
+			$image = $this->getResult();
+
+			return $image['idImage'] ?? null;
+		}
+	}
+
+	public function delete($idProcessus)
+	{
+		try {
+			// Récupérer toutes les idImage associées (étapes et processus)
+			$this->query("SELECT idImage FROM Etape WHERE idProcessus = :idProcessus AND idImage IS NOT NULL
+						UNION
+						SELECT idImage FROM Processus WHERE idProcessus = :idProcessus AND idImage IS NOT NULL");
+			$this->bind(':idProcessus', $idProcessus);
+			$imagesAssociees = $this->getResults(); // suppose que getResults retourne un tableau de lignes
+
+			// Supprimer le processus (cascade : supprime aussi étapes, bacs, assemblages)
+			$this->query("DELETE FROM Processus WHERE idProcessus = :idProcessus");
+			$this->bind(':idProcessus', $idProcessus);
+			$this->execute();
+
+			// Supprimer manuellement les images récupérées
+			foreach ($imagesAssociees as $img) {
+				$this->query("DELETE FROM Image WHERE idImage = :idImage");
+				$this->bind(':idImage', $img['idImage']);
+				$this->execute();
+			}
+
+			Messages::setMsg("Processus supprimé avec succès.", "success");
+		} catch (PDOException $e) {
+			Messages::setMsg("Erreur lors de la suppression : " . $e->getMessage(), "erreur");
+		}
+	}
+
+
+	public function view($idProcessus)
+	{
+		$this->query("SELECT e.*, b.contenance AS bac
+						FROM Etape e
+						LEFT JOIN Bac b ON e.idBac = b.numeroBac AND b.idProcessus = :idProcessus
+						WHERE e.idProcessus = :idProcessus 
+						ORDER BY e.numeroEtape ");
+		$this->bind(':idProcessus', $idProcessus);
+		$etape = $this->getResults();
+
+		foreach ($etape as $index => $e) {
+			if (!empty($e['idImage'])) {
+				$this->query("SELECT contenuBlob, typeMIME FROM Image WHERE idImage = :idImage LIMIT 1");
+				$this->bind(':idImage', $e['idImage']);
+				$imageData = $this->getResult();
+				$etape[$index]['image'] = $imageData ? $imageData : null;
+			} else {
+				$etape[$index]['image'] = null;
+			}
+		}
+
+		return $etape;
+	}
+
+
+	public function creerJSON($idProcessus)
+	{
+		$params = [":idProcessus" => $idProcessus];
+		$processus = $this->fetchAllByQuery("SELECT * FROM Processus WHERE idProcessus = :idProcessus", $params);
+		$etapes = $this->fetchAllByQuery("SELECT * FROM Etape WHERE idProcessus = :idProcessus", $params);
+		$bacs = $this->fetchAllByQuery("SELECT Bac.numeroBac, Bac.contenance FROM Bac WHERE idProcessus = :idProcessus", $params);
+		$images = $this->fetchAllByQuery("SELECT * FROM Image WHERE idImage IN (
+                SELECT idImage FROM Processus WHERE idProcessus = :idProcessus
+                UNION
+                SELECT idImage FROM Etape WHERE idProcessus = :idProcessus
+            )", $params);
+
+		$imagesById = array_column($images, null, 'idImage');
+		foreach ($imagesById as $id => $img) {
+			$imagesById[$id] = [
+				'nomFichier' => $img['nomFichier'],
+				'typeMIME' => $img['typeMIME'],
+				'tailleImage' => $img['tailleImage'],
+				'contenu' => base64_encode($img['contenuBlob'])
+			];
+		}
+
+		$bacsByNumero = array_column($bacs, null, 'numeroBac');
+
+		$processusExport = $processus[0];
+		if ($processusExport['idImage'] && isset($imagesById[$processusExport['idImage']])) {
+			$processusExport['image'] = $imagesById[$processusExport['idImage']];
+		}
+
+		$processusExport['bacs'] = array_values($bacsByNumero);
+
+		$etapesExport = array_map(function ($etape) use ($bacsByNumero, $imagesById) {
+			if (isset($bacsByNumero[$etape['idBac']])) {
+				$etape['bac'] = $bacsByNumero[$etape['idBac']];
+			}
+
+			if ($etape['idImage'] && isset($imagesById[$etape['idImage']])) {
+				$etape['image'] = $imagesById[$etape['idImage']];
+			}
+
+			return $etape;
+		}, $etapes);
+
+		$processusExport['etapes'] = $etapesExport;
+
+		return json_encode($processusExport, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+	}
+
+
+	public function exportZip($idProcessus)
+	{
+		$processus = json_decode($this->creerJSON($idProcessus), true);
+
+		$tempDir = sys_get_temp_dir() . '/export_' . uniqid();
+		mkdir($tempDir . '/images', 0777, true);
+
+		$imageMapping = [];
+
+		if (isset($processus['image'])) {
+			$img = $processus['image'];
+			$ext = explode('/', $img['typeMIME'])[1];
+			$filename = 'processus.' . $ext;
+			file_put_contents("$tempDir/images/$filename", base64_decode($img['contenu']));
+			$imageMapping[$img['nomFichier']] = 'images/' . $filename;
+			$processus['image'] = $imageMapping[$img['nomFichier']];
+		}
+
+		foreach ($processus['etapes'] as &$etape) {
+			if (isset($etape['image'])) {
+				$img = $etape['image'];
+				$ext = explode('/', $img['typeMIME'])[1];
+				$filename = 'etape_' . $etape['numeroEtape'] . '.' . $ext;
+				file_put_contents("$tempDir/images/$filename", base64_decode($img['contenu']));
+				$imageMapping[$img['nomFichier']] = 'images/' . $filename;
+				$etape['image'] = $imageMapping[$img['nomFichier']];
+			}
+		}
+
+		file_put_contents("$tempDir/data.json", json_encode($processus, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+		$zipPath = "$tempDir.zip";
+		$zip = new ZipArchive();
+		$zip->open($zipPath, ZipArchive::CREATE);
+		$zip->addFile("$tempDir/data.json", "data.json");
+
+		foreach (glob("$tempDir/images/*") as $file) {
+			$zip->addFile($file, 'images/' . basename($file));
+		}
+
+		$zip->close();
+
+		header('Content-Type: application/zip');
+		header('Content-Disposition: attachment; filename="processus_export.zip"');
+		header('Content-Length: ' . filesize($zipPath));
+		readfile($zipPath);
+
+		array_map('unlink', glob("$tempDir/images/*"));
+		rmdir("$tempDir/images");
+		unlink("$tempDir/data.json");
+		rmdir($tempDir);
+		unlink($zipPath);
+		exit;
+	}
+
+
+	public function importZip()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['fichier']) && $_FILES['fichier']['error'] === UPLOAD_ERR_OK) {
+			$tmpZip = $_FILES['fichier']['tmp_name'];
+			$tempDir = sys_get_temp_dir() . '/import_' . uniqid();
+			mkdir($tempDir, 0777, true);
+
+			$zip = new ZipArchive();
+			if ($zip->open($tmpZip) === TRUE) {
+				$zip->extractTo($tempDir);
+				$zip->close();
+			} else {
+				Message::afficher("Impossible de décompresser l'archive.", "erreur");
+				return;
+			}
+
+			$jsonContent = file_get_contents("$tempDir/data.json");
+			$data = json_decode($jsonContent, true);
+
+			if (!$data || !isset($data['nomProcessus'])) {
+				Message::afficher("Le fichier JSON est invalide.", "erreur");
+				return;
+			}
+
+			$idImage = null;
+			if (isset($data['image'])) {
+				$idImage = $this->insererImageDepuisFichier($tempDir . '/' . $data['image']);
+			}
+
+			$this->query("INSERT INTO Processus (nomProcessus, idImage, descriptionProcessus) VALUES (:nomProcessus, :idImage, :descriptionProcessus)");
+			$this->bind(':nomProcessus', $data['nomProcessus']);
+			$this->bind(':idImage', $idImage, PDO::PARAM_INT);
+			$this->bind(':descriptionProcessus', $data['descriptionProcessus']);
+			$this->execute();
+			$idProcessus = $this->getLastInsertId();
+
+			foreach ($data['bacs'] as $bac) {
+				$this->query("INSERT INTO Bac (numeroBac, contenance, idProcessus) VALUES (:numeroBac, :contenance, :idProcessus)");
+				$this->bind(':numeroBac', $bac['numeroBac']);
+				$this->bind(':contenance', $bac['contenance']);
+				$this->bind(':idProcessus', $idProcessus);
+				$this->execute();
+			}
+
+			foreach ($data['etapes'] as $etape) {
+				$idImageEtape = null;
+				if (isset($etape['image'])) {
+					$idImageEtape = $this->insererImageDepuisFichier($tempDir . '/' . $etape['image']);
+				}
+
+				$this->query("INSERT INTO Etape (nomEtape, descriptionEtape, idProcessus, idImage, idBac, numeroEtape) 
+								VALUES (:nomEtape, :descriptionEtape, :idProcessus, :idImage, :idBac, :numeroEtape)");
+				$this->bind(':nomEtape', $etape['nomEtape']);
+				$this->bind(':descriptionEtape', $etape['descriptionEtape'] ?? '');
+				$this->bind(':idProcessus', $idProcessus);
+				$this->bind(':idImage', $idImageEtape, PDO::PARAM_INT);
+				$this->bind(':idBac', $etape['bac']['numeroBac'], PDO::PARAM_INT);
+				$this->bind(':numeroEtape', $etape['numeroEtape']);
+				$this->execute();
+			}
+
+			array_map('unlink', glob("$tempDir/images/*"));
+			rmdir("$tempDir/images");
+			unlink("$tempDir/data.json");
+			rmdir($tempDir);
+		}
+	}
+
+
+	public function statistiqueAssemblage($idProcessus)
+	{
+		$this->query("SELECT 
+						a.idAssemblage,
+						p.nomProcessus, 
+						a.nombreEchecs AS tauxErreur, 
+						a.dureeProcessus
+					FROM Assemblage a
+					JOIN Processus p ON a.idProcessus = p.idProcessus
+					WHERE a.idProcessus = :idProcessus");
+
+		$this->bind(':idProcessus', $idProcessus);
+		$AssemblageData = $this->getResults();
+		return $AssemblageData;
+	}
+
+
+	private function insererImageDepuisFichier($chemin)
+	{
+		$nomFichier = basename($chemin);
+		$typeMIME = mime_content_type($chemin);
+		$contenuBlob = file_get_contents($chemin);
+		$tailleImage = filesize($chemin);
+
+		$this->query("INSERT INTO Image (nomFichier, typeMIME, contenuBlob, tailleImage)
+					VALUES (:nomFichier, :typeMIME, :contenuBlob, :tailleImage)");
+		$this->bind(':nomFichier', $nomFichier);
+		$this->bind(':typeMIME', $typeMIME);
+		$this->bind(':contenuBlob', $contenuBlob, PDO::PARAM_LOB);
+		$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
+		$this->execute();
+
+		return $this->getLastInsertId();
+	}
+
+
+	private function fetchAllByQuery($sql, $params = [])
+	{
+		$this->query($sql);
+		foreach ($params as $key => $value) {
+			$this->bind($key, $value);
+		}
+		$this->execute();
+		return $this->getResults();
+	}
+
+	public function getProcessus($idProcessus)
+	{
+		$this->query("SELECT * FROM Processus WHERE idProcessus = :idProcessus");
+		$this->bind(':idProcessus', $idProcessus);
+		$processus = $this->getResults();
+		$idImage = $processus[0]['idImage'];
+		$image = $this->getImage($idImage);
+		$processusData = array_merge($processus, $image);
+		return $processusData;
+	}
+
+	private function getImage($idImage)
+	{
+		$this->query("SELECT * FROM Image WHERE idImage = :idImage");
+		$this->bind(':idImage', $idImage);
+		$image = $this->getResults();
+		return $image;
+	}
+}

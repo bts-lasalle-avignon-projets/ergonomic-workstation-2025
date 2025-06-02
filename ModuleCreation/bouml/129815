@@ -1,0 +1,46 @@
+format 224
+"Accueil" // www::views::Accueil
+  revision 2
+  modified_by 42 "tv"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  classcompositediagramsettings end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  objectcompositediagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  php_dir "./views/Accueil/"
+  deploymentview 129815 "Accueil"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 132247 "index"
+      stereotype "source"
+      php_src "<div class=\"col col-lg-8 mt-5 mx-3 mx-lg-auto text-center\">
+	<h1><?php echo TITRE_SITE; ?>"
+      associated_elems
+      end
+    end
+  end
+end

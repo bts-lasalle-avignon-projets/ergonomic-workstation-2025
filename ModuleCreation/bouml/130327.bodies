@@ -1,0 +1,53 @@
+class Processus
+!!!1075479.php!!!	__construct(in action : string, in request : array)
+		parent::__construct($action, $request);
+		$this->viewmodel = new ProcessusModel();
+!!!1075607.php!!!	index()
+		//$viewmodel = new ProcessusModel();
+		$this->returnView($this->viewmodel->index(), true);
+!!!1075735.php!!!	add()
+		if (NO_LOGIN) {
+			//$viewmodel = new ProcessusModel();
+			$this->returnView($this->viewmodel->add(), true);
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				//$viewmodel = new ProcessusModel();
+				$this->returnView($this->viewmodel->add(), true);
+			}
+		}
+!!!1075863.php!!!	edit()
+		if (!empty($this->request['id'])) {
+			$this->id = $this->request['id'];
+		} else {
+			header('Location: ' . URL_PATH . 'processus');
+		}
+		if (NO_LOGIN) {
+			//$viewmodel = new ProcessusModel();
+			$this->returnView($this->viewmodel->edit(), true);
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				//$viewmodel = new ProcessusModel();
+				$this->returnView($this->viewmodel->edit(), true);
+			}
+		}
+!!!1075991.php!!!	delete()
+		if (!empty($this->request['id'])) {
+			$this->id = $this->request['id'];
+		} else {
+			header('Location: ' . URL_PATH . 'processus');
+		}
+		if (NO_LOGIN) {
+			//$viewmodel = new ProcessusModel();
+			$this->returnView($this->viewmodel->delete(), true);
+		} else {
+			if (!isset($_SESSION['is_logged_in'])) {
+				header('Location: ' . URL_PATH . 'processus');
+			} else {
+				//$viewmodel = new ProcessusModel();
+				$this->returnView($this->viewmodel->delete(), true);
+			}
+		}
