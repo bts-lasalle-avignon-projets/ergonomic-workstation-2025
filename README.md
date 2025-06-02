@@ -1,6 +1,4 @@
-[![release](https://img.shields.io/github/v/release/bts-lasalle-avignon-projets/ergonomic-workstation-2025)](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/releases)
-![Tests](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/actions/workflows/php-ew.yml/badge.svg)
-
+![Tests](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/actions/workflows/php-ew.yml/badge.svg) [![release](https://img.shields.io/github/v/release/bts-lasalle-avignon-projets/ergonomic-workstation-2025)](https://github.com/bts-lasalle-avignon-projets/ergonomic-workstation-2025/releases)
 
 # Projet BTS CIEL 2025 : Ergonomic-Workstation-2025
 
@@ -164,7 +162,7 @@ Le poste de travail est aussi équipé d'un module de détection (ER) permettant
 
 ## Diagramme de déploiement
 
-![diagrammeDeploiement](images/diagrammeDeploiementModuleCreation.png)
+![diagrammeDeploiement](images/diagrammeDeploiement.png)
 
 ## Équipe de développement
 
