@@ -31,9 +31,9 @@ class Operateurs extends Controller
 		header('Location: ' . URL_PATH);
 	}
 
-	public function verifierUtilisateur()
+	public function superviseurExiste()
 	{
-		$utilisateur = $this->viewmodel->verifierUtilisateur();
+		$utilisateur = $this->viewmodel->superviseurExiste();
 		return $utilisateur;
 	}
 }

@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet Ergonomic-Workstation:  Fichier source de FenetreEtapes.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="projet-logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet Ergonomic-Workstation
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS CIEL IR LaSalle Avignon 2025</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_fenetre_etapes_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">FenetreEtapes.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_fenetre_etapes_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef FENETREETAPES_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define FENETREETAPES_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QWidget&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QLabel&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QPushButton&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;QHBoxLayout&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;QVBoxLayout&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;QGroupBox&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;QSqlDatabase&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;QShowEvent&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;QVector&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;QPair&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;QMessageBox&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_etape_8h.html">Etape.h</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_communication_8h.html">Communication.h</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="_fenetre_etapes_8h.html#a717657ab294fcee5d03af89d10d5f899">   18</a></span>&#160;<span class="preprocessor">#define LARGEUR_UI 1080</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="_fenetre_etapes_8h.html#a6920556020bb46dea6340abd0a0e9db4">   19</a></span>&#160;<span class="preprocessor">#define HAUTEUR_IMAGE_ETAPE 500</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_fenetre_etapes.html">FenetreEtapes</a> : <span class="keyword">public</span> <a class="code" href="class_q_widget.html">QWidget</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;signals:</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a08cab60bdca1dcf0898b6a7add9b4b70">   26</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a08cab60bdca1dcf0898b6a7add9b4b70">fermerEtapes</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="class_fenetre_etapes.html#af521790ffcdd1e43e32ba3b4b3040dab">FenetreEtapes</a>(<a class="code" href="class_communication.html">Communication</a>* comm, <a class="code" href="class_q_widget.html">QWidget</a>* parent = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a26d78115546df851899481ace6b5ebdd">chargerEtape</a>(<span class="keywordtype">int</span> idProcessus);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a26eb1890b4d4dfb7bf76fb7c44cbdebf">showEvent</a>(QShowEvent* event) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a5f16d20a4a84acbfa051a59cbbe53b85">initialiserFenetre</a>();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#ae55d608bb06fb09e29d7a62e82a2a52c">afficherEtapeActuelle</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a297229f800b902a61b703d54fe10275b">chargerImagePourEtape</a>(<span class="keywordtype">int</span> idEtape);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#abbb17b3e76822dad9840324711c630b3">chargerEtapeSuivante</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="comment">// Méthodes ajoutées pour organiser le code</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a4d14b278cfc84e1e83a05e2be01fa652">nettoyerLayoutBacs</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_fenetre_etapes.html#a419f265e03404a7333eaf5fd7c6e1711">recupererBacDeLEtape</a>(<span class="keywordtype">int</span> idEtape);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    QVector&lt;QPair&lt;int, QString&gt;&gt; <a class="code" href="class_fenetre_etapes.html#a2e01a340d3f6bba61fe7d3d11a2427ae">recupererBacsProcessus</a>(<span class="keywordtype">int</span> idProcessus);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a180eea3ebfd8957e04acdcdd8857c2cd">afficherBacs</a>(<span class="keyword">const</span> QVector&lt;QPair&lt;int, QString&gt;&gt;&amp; bacs, <span class="keywordtype">int</span> bacDeLEtape);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#aa2c9422b476e4c4c8f9d073bad5cd0be">afficherTexteEtape</a>(<span class="keyword">const</span> <a class="code" href="class_etape.html">Etape</a>&amp; e);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#a9dd2f5c9aaa158c5ba512b4874abe87c">afficherPopupDemandePiochage</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#ac3a9101de3f62130b51b4a0892284276">quitterProcessus</a>();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#ab8ed1187744209fb39edc0299bb74bfa">sauvegarderEtatProcessus</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="comment">// données</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a6c0afd7587445036982b430a75b964b3">   52</a></span>&#160;    QVector&lt;Etape&gt; <a class="code" href="class_fenetre_etapes.html#a6c0afd7587445036982b430a75b964b3">listeDesEtapes</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#ad9593afdc816194cafcb2d997311a50a">   53</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_fenetre_etapes.html#ad9593afdc816194cafcb2d997311a50a">etapeActuelIndex</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a29b897ed201e1adf101cb86fa008ed37">   54</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_fenetre_etapes.html#a29b897ed201e1adf101cb86fa008ed37">idProcessusActuel</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_fenetre_etapes.html#a374a80c75e3d45945b67b02f490e25a1">recupererIndexDerniereEtape</a>(<span class="keywordtype">int</span> idProcessus);</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a012350126d8bec8312c3d79fe35e7684">   56</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_fenetre_etapes.html#a012350126d8bec8312c3d79fe35e7684">attenteConfirmationPiochage</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">// Traiter les trames</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_fenetre_etapes.html#af4aff9b42e43ceaa46f4215ad174a3ba">traiterTrameRecue</a>(<span class="keyword">const</span> QString &amp;trame);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#ab8e4486a24e60e3db67b34782e49f416">   62</a></span>&#160;    QSqlDatabase <a class="code" href="class_fenetre_etapes.html#ab8e4486a24e60e3db67b34782e49f416">db</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">// UI</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a8a1808a934829d3ebb131777d85dd752">   65</a></span>&#160;    QLabel* <a class="code" href="class_fenetre_etapes.html#a8a1808a934829d3ebb131777d85dd752">labelNumeroEtape</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a250aa6bf07d4e146bc4db073e3dec956">   66</a></span>&#160;    QLabel* <a class="code" href="class_fenetre_etapes.html#a250aa6bf07d4e146bc4db073e3dec956">labelNomEtape</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a0d4c9c482e1ffc552953fbef0a2d8064">   67</a></span>&#160;    QLabel* <a class="code" href="class_fenetre_etapes.html#a0d4c9c482e1ffc552953fbef0a2d8064">labelDescriptionEtape</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#ab8b81b7d02e4b5edb9291c1d097352a5">   68</a></span>&#160;    QLabel* <a class="code" href="class_fenetre_etapes.html#ab8b81b7d02e4b5edb9291c1d097352a5">labelEtatRequete</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a110e7f2a488fef8ed4bc523f20aa80d2">   69</a></span>&#160;    QLabel* <a class="code" href="class_fenetre_etapes.html#a110e7f2a488fef8ed4bc523f20aa80d2">imageEtape</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#ae1b9d9339dd982a5a7ea215d4aeb9c54">   70</a></span>&#160;    QPushButton* <a class="code" href="class_fenetre_etapes.html#ae1b9d9339dd982a5a7ea215d4aeb9c54">boutonEtapeSuivante</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a2f8057f2ebbf7f750f72b6e5e23e0404">   71</a></span>&#160;    QPushButton* <a class="code" href="class_fenetre_etapes.html#a2f8057f2ebbf7f750f72b6e5e23e0404">boutonQuitter</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#aee98d0c230a7bb9c3b13539edf76d85e">   73</a></span>&#160;    QHBoxLayout* <a class="code" href="class_fenetre_etapes.html#aee98d0c230a7bb9c3b13539edf76d85e">layoutBacs</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#af2df5a97581875776e65ae4304290fdb">   74</a></span>&#160;    QVector&lt;QGroupBox*&gt; <a class="code" href="class_fenetre_etapes.html#af2df5a97581875776e65ae4304290fdb">groupesBacs</a>;     <span class="comment">// pour nettoyer</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#a7fac40c5a36095dbb480e069eca0b48f">   75</a></span>&#160;    <a class="code" href="class_communication.html">Communication</a> *<a class="code" href="class_fenetre_etapes.html#a7fac40c5a36095dbb480e069eca0b48f">communication</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_fenetre_etapes.html#ada4643da7c373a1f3345941d97010472">   77</a></span>&#160;    QMessageBox* <a class="code" href="class_fenetre_etapes.html#ada4643da7c373a1f3345941d97010472">popupPiochage</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// FENETREETAPES_H</span></div>
+<div class="ttc" id="a_communication_8h_html"><div class="ttname"><a href="_communication_8h.html">Communication.h</a></div></div>
+<div class="ttc" id="a_etape_8h_html"><div class="ttname"><a href="_etape_8h.html">Etape.h</a></div></div>
+<div class="ttc" id="aclass_communication_html"><div class="ttname"><a href="class_communication.html">Communication</a></div><div class="ttdoc">La classe Communication gère la communication série avec l'ESP32 via Bluetooth.</div><div class="ttdef"><b>Definition:</b> <a href="_communication_8h_source.html#l00011">Communication.h:12</a></div></div>
+<div class="ttc" id="aclass_etape_html"><div class="ttname"><a href="class_etape.html">Etape</a></div><div class="ttdoc">Structure contenant les informations complètes d'une étape.</div><div class="ttdef"><b>Definition:</b> <a href="controllers_2etape_8php_source.html#l00002">controllers/etape.php:3</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html"><div class="ttname"><a href="class_fenetre_etapes.html">FenetreEtapes</a></div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00021">FenetreEtapes.h:22</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a012350126d8bec8312c3d79fe35e7684"><div class="ttname"><a href="class_fenetre_etapes.html#a012350126d8bec8312c3d79fe35e7684">FenetreEtapes::attenteConfirmationPiochage</a></div><div class="ttdeci">bool attenteConfirmationPiochage</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00056">FenetreEtapes.h:56</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a08cab60bdca1dcf0898b6a7add9b4b70"><div class="ttname"><a href="class_fenetre_etapes.html#a08cab60bdca1dcf0898b6a7add9b4b70">FenetreEtapes::fermerEtapes</a></div><div class="ttdeci">void fermerEtapes()</div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a0d4c9c482e1ffc552953fbef0a2d8064"><div class="ttname"><a href="class_fenetre_etapes.html#a0d4c9c482e1ffc552953fbef0a2d8064">FenetreEtapes::labelDescriptionEtape</a></div><div class="ttdeci">QLabel * labelDescriptionEtape</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00067">FenetreEtapes.h:67</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a110e7f2a488fef8ed4bc523f20aa80d2"><div class="ttname"><a href="class_fenetre_etapes.html#a110e7f2a488fef8ed4bc523f20aa80d2">FenetreEtapes::imageEtape</a></div><div class="ttdeci">QLabel * imageEtape</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00069">FenetreEtapes.h:69</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a180eea3ebfd8957e04acdcdd8857c2cd"><div class="ttname"><a href="class_fenetre_etapes.html#a180eea3ebfd8957e04acdcdd8857c2cd">FenetreEtapes::afficherBacs</a></div><div class="ttdeci">void afficherBacs(const QVector&lt; QPair&lt; int, QString &gt;&gt; &amp;bacs, int bacDeLEtape)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00194">FenetreEtapes.cpp:194</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a250aa6bf07d4e146bc4db073e3dec956"><div class="ttname"><a href="class_fenetre_etapes.html#a250aa6bf07d4e146bc4db073e3dec956">FenetreEtapes::labelNomEtape</a></div><div class="ttdeci">QLabel * labelNomEtape</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00066">FenetreEtapes.h:66</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a26d78115546df851899481ace6b5ebdd"><div class="ttname"><a href="class_fenetre_etapes.html#a26d78115546df851899481ace6b5ebdd">FenetreEtapes::chargerEtape</a></div><div class="ttdeci">void chargerEtape(int idProcessus)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00104">FenetreEtapes.cpp:104</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a26eb1890b4d4dfb7bf76fb7c44cbdebf"><div class="ttname"><a href="class_fenetre_etapes.html#a26eb1890b4d4dfb7bf76fb7c44cbdebf">FenetreEtapes::showEvent</a></div><div class="ttdeci">void showEvent(QShowEvent *event) override</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00042">FenetreEtapes.cpp:42</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a297229f800b902a61b703d54fe10275b"><div class="ttname"><a href="class_fenetre_etapes.html#a297229f800b902a61b703d54fe10275b">FenetreEtapes::chargerImagePourEtape</a></div><div class="ttdeci">void chargerImagePourEtape(int idEtape)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00307">FenetreEtapes.cpp:307</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a29b897ed201e1adf101cb86fa008ed37"><div class="ttname"><a href="class_fenetre_etapes.html#a29b897ed201e1adf101cb86fa008ed37">FenetreEtapes::idProcessusActuel</a></div><div class="ttdeci">int idProcessusActuel</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00054">FenetreEtapes.h:54</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a2e01a340d3f6bba61fe7d3d11a2427ae"><div class="ttname"><a href="class_fenetre_etapes.html#a2e01a340d3f6bba61fe7d3d11a2427ae">FenetreEtapes::recupererBacsProcessus</a></div><div class="ttdeci">QVector&lt; QPair&lt; int, QString &gt; &gt; recupererBacsProcessus(int idProcessus)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00274">FenetreEtapes.cpp:274</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a2f8057f2ebbf7f750f72b6e5e23e0404"><div class="ttname"><a href="class_fenetre_etapes.html#a2f8057f2ebbf7f750f72b6e5e23e0404">FenetreEtapes::boutonQuitter</a></div><div class="ttdeci">QPushButton * boutonQuitter</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00071">FenetreEtapes.h:71</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a374a80c75e3d45945b67b02f490e25a1"><div class="ttname"><a href="class_fenetre_etapes.html#a374a80c75e3d45945b67b02f490e25a1">FenetreEtapes::recupererIndexDerniereEtape</a></div><div class="ttdeci">int recupererIndexDerniereEtape(int idProcessus)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00179">FenetreEtapes.cpp:179</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a419f265e03404a7333eaf5fd7c6e1711"><div class="ttname"><a href="class_fenetre_etapes.html#a419f265e03404a7333eaf5fd7c6e1711">FenetreEtapes::recupererBacDeLEtape</a></div><div class="ttdeci">int recupererBacDeLEtape(int idEtape)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00253">FenetreEtapes.cpp:253</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a4d14b278cfc84e1e83a05e2be01fa652"><div class="ttname"><a href="class_fenetre_etapes.html#a4d14b278cfc84e1e83a05e2be01fa652">FenetreEtapes::nettoyerLayoutBacs</a></div><div class="ttdeci">void nettoyerLayoutBacs()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00243">FenetreEtapes.cpp:243</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a5f16d20a4a84acbfa051a59cbbe53b85"><div class="ttname"><a href="class_fenetre_etapes.html#a5f16d20a4a84acbfa051a59cbbe53b85">FenetreEtapes::initialiserFenetre</a></div><div class="ttdeci">void initialiserFenetre()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00048">FenetreEtapes.cpp:48</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a6c0afd7587445036982b430a75b964b3"><div class="ttname"><a href="class_fenetre_etapes.html#a6c0afd7587445036982b430a75b964b3">FenetreEtapes::listeDesEtapes</a></div><div class="ttdeci">QVector&lt; Etape &gt; listeDesEtapes</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00052">FenetreEtapes.h:52</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a7fac40c5a36095dbb480e069eca0b48f"><div class="ttname"><a href="class_fenetre_etapes.html#a7fac40c5a36095dbb480e069eca0b48f">FenetreEtapes::communication</a></div><div class="ttdeci">Communication * communication</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00075">FenetreEtapes.h:75</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a8a1808a934829d3ebb131777d85dd752"><div class="ttname"><a href="class_fenetre_etapes.html#a8a1808a934829d3ebb131777d85dd752">FenetreEtapes::labelNumeroEtape</a></div><div class="ttdeci">QLabel * labelNumeroEtape</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00065">FenetreEtapes.h:65</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_a9dd2f5c9aaa158c5ba512b4874abe87c"><div class="ttname"><a href="class_fenetre_etapes.html#a9dd2f5c9aaa158c5ba512b4874abe87c">FenetreEtapes::afficherPopupDemandePiochage</a></div><div class="ttdeci">void afficherPopupDemandePiochage()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00407">FenetreEtapes.cpp:407</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_aa2c9422b476e4c4c8f9d073bad5cd0be"><div class="ttname"><a href="class_fenetre_etapes.html#aa2c9422b476e4c4c8f9d073bad5cd0be">FenetreEtapes::afficherTexteEtape</a></div><div class="ttdeci">void afficherTexteEtape(const Etape &amp;e)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00298">FenetreEtapes.cpp:298</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ab8b81b7d02e4b5edb9291c1d097352a5"><div class="ttname"><a href="class_fenetre_etapes.html#ab8b81b7d02e4b5edb9291c1d097352a5">FenetreEtapes::labelEtatRequete</a></div><div class="ttdeci">QLabel * labelEtatRequete</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00068">FenetreEtapes.h:68</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ab8e4486a24e60e3db67b34782e49f416"><div class="ttname"><a href="class_fenetre_etapes.html#ab8e4486a24e60e3db67b34782e49f416">FenetreEtapes::db</a></div><div class="ttdeci">QSqlDatabase db</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00062">FenetreEtapes.h:62</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ab8ed1187744209fb39edc0299bb74bfa"><div class="ttname"><a href="class_fenetre_etapes.html#ab8ed1187744209fb39edc0299bb74bfa">FenetreEtapes::sauvegarderEtatProcessus</a></div><div class="ttdeci">void sauvegarderEtatProcessus()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00156">FenetreEtapes.cpp:156</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_abbb17b3e76822dad9840324711c630b3"><div class="ttname"><a href="class_fenetre_etapes.html#abbb17b3e76822dad9840324711c630b3">FenetreEtapes::chargerEtapeSuivante</a></div><div class="ttdeci">void chargerEtapeSuivante()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00334">FenetreEtapes.cpp:334</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ac3a9101de3f62130b51b4a0892284276"><div class="ttname"><a href="class_fenetre_etapes.html#ac3a9101de3f62130b51b4a0892284276">FenetreEtapes::quitterProcessus</a></div><div class="ttdeci">void quitterProcessus()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00362">FenetreEtapes.cpp:362</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ad9593afdc816194cafcb2d997311a50a"><div class="ttname"><a href="class_fenetre_etapes.html#ad9593afdc816194cafcb2d997311a50a">FenetreEtapes::etapeActuelIndex</a></div><div class="ttdeci">int etapeActuelIndex</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00053">FenetreEtapes.h:53</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ada4643da7c373a1f3345941d97010472"><div class="ttname"><a href="class_fenetre_etapes.html#ada4643da7c373a1f3345941d97010472">FenetreEtapes::popupPiochage</a></div><div class="ttdeci">QMessageBox * popupPiochage</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00077">FenetreEtapes.h:77</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ae1b9d9339dd982a5a7ea215d4aeb9c54"><div class="ttname"><a href="class_fenetre_etapes.html#ae1b9d9339dd982a5a7ea215d4aeb9c54">FenetreEtapes::boutonEtapeSuivante</a></div><div class="ttdeci">QPushButton * boutonEtapeSuivante</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00070">FenetreEtapes.h:70</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_ae55d608bb06fb09e29d7a62e82a2a52c"><div class="ttname"><a href="class_fenetre_etapes.html#ae55d608bb06fb09e29d7a62e82a2a52c">FenetreEtapes::afficherEtapeActuelle</a></div><div class="ttdeci">void afficherEtapeActuelle()</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00227">FenetreEtapes.cpp:227</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_aee98d0c230a7bb9c3b13539edf76d85e"><div class="ttname"><a href="class_fenetre_etapes.html#aee98d0c230a7bb9c3b13539edf76d85e">FenetreEtapes::layoutBacs</a></div><div class="ttdeci">QHBoxLayout * layoutBacs</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00073">FenetreEtapes.h:73</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_af2df5a97581875776e65ae4304290fdb"><div class="ttname"><a href="class_fenetre_etapes.html#af2df5a97581875776e65ae4304290fdb">FenetreEtapes::groupesBacs</a></div><div class="ttdeci">QVector&lt; QGroupBox * &gt; groupesBacs</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8h_source.html#l00074">FenetreEtapes.h:74</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_af4aff9b42e43ceaa46f4215ad174a3ba"><div class="ttname"><a href="class_fenetre_etapes.html#af4aff9b42e43ceaa46f4215ad174a3ba">FenetreEtapes::traiterTrameRecue</a></div><div class="ttdeci">void traiterTrameRecue(const QString &amp;trame)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00371">FenetreEtapes.cpp:371</a></div></div>
+<div class="ttc" id="aclass_fenetre_etapes_html_af521790ffcdd1e43e32ba3b4b3040dab"><div class="ttname"><a href="class_fenetre_etapes.html#af521790ffcdd1e43e32ba3b4b3040dab">FenetreEtapes::FenetreEtapes</a></div><div class="ttdeci">FenetreEtapes(Communication *comm, QWidget *parent=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="_fenetre_etapes_8cpp_source.html#l00011">FenetreEtapes.cpp:11</a></div></div>
+<div class="ttc" id="aclass_q_widget_html"><div class="ttname"><a href="class_q_widget.html">QWidget</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_2a4d9f3cac79f1af45f0b6e8df810395.html">ModuleGuidage</a></li><li class="navelem"><a class="el" href="_fenetre_etapes_8h.html">FenetreEtapes.h</a></li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Lundi 2 Juin 2025 09:10:39 pour Projet Ergonomic-Workstation par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.9.1&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -2,7 +2,6 @@
 
 class Processus extends Controller
 {
-	private $id;
 	private $viewmodel;
 
 	public function __construct($action, $request)
@@ -39,8 +38,7 @@ class Processus extends Controller
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
 			if ($idProcessus > 0) {
-				if($this->viewmodel->edit($idProcessus))
-				{
+				if ($this->viewmodel->edit($idProcessus)) {
 					$processus = $this->viewmodel->getProcessus($idProcessus);
 					$this->display($processus);
 				}
@@ -53,8 +51,7 @@ class Processus extends Controller
 			} else {
 				$idProcessus = $this->getID();
 				if ($idProcessus > 0) {
-					if($this->viewmodel->edit($idProcessus))
-					{
+					if ($this->viewmodel->edit($idProcessus)) {
 						$processus = $this->viewmodel->getProcessus($idProcessus);
 						$this->display($processus);
 					}
@@ -173,29 +170,27 @@ class Processus extends Controller
 		}
 	}
 
-	public function statistique() {
+	public function statistique()
+	{
 		if (NO_LOGIN) {
 			$idProcessus = $this->getID();
-			$AssemblageData = $this->viewmodel->statistiqueAssemblage($idProcessus);
-			if(DEBUG)
-			{
-				var_dump($AssemblageData);
+			$statistiquesAssemblage = $this->viewmodel->statistiqueAssemblage($idProcessus);
+			if (DEBUG) {
+				var_dump($statistiquesAssemblage);
 			}
-			$this->display($AssemblageData);
+			$this->display($statistiquesAssemblage);
 		} else {
 			if (!isset($_SESSION['is_logged_in'])) {
 				header('Location: ' . URL_PATH . 'processus');
 			} else {
 				$idProcessus = $this->getID();
-				$AssemblageData = $this->viewmodel->statistiqueAssemblage($idProcessus);
-				if(DEBUG)
-				{
-					var_dump($AssemblageData);
+				$statistiquesAssemblage = $this->viewmodel->statistiqueAssemblage($idProcessus);
+				if (DEBUG) {
+					var_dump($statistiquesAssemblage);
 				}
-				$this->display($AssemblageData);
+				$this->display($statistiquesAssemblage);
 			}
 		}
-	
 	}
 
 	private function getID()

@@ -1,0 +1,25 @@
+var annotated_dup =
+[
+    [ "Accueil", "class_accueil.html", "class_accueil" ],
+    [ "AccueilModel", "class_accueil_model.html", "class_accueil_model" ],
+    [ "Bac", "class_bac.html", "class_bac" ],
+    [ "BaseDeDonnees", "class_base_de_donnees.html", "class_base_de_donnees" ],
+    [ "Communication", "class_communication.html", "class_communication" ],
+    [ "Controller", "class_controller.html", "class_controller" ],
+    [ "Etape", "class_etape.html", "class_etape" ],
+    [ "EtapeModel", "class_etape_model.html", "class_etape_model" ],
+    [ "FenetreDemarrage", "class_fenetre_demarrage.html", "class_fenetre_demarrage" ],
+    [ "FenetreEtapes", "class_fenetre_etapes.html", "class_fenetre_etapes" ],
+    [ "Message", "class_message.html", "class_message" ],
+    [ "Messages", "class_messages.html", "class_messages" ],
+    [ "Model", "class_model.html", "class_model" ],
+    [ "ModuleCreationTest", "class_module_creation_test.html", "class_module_creation_test" ],
+    [ "OperateurModel", "class_operateur_model.html", "class_operateur_model" ],
+    [ "Operateurs", "class_operateurs.html", "class_operateurs" ],
+    [ "Processus", "class_processus.html", "class_processus" ],
+    [ "ProcessusModel", "class_processus_model.html", "class_processus_model" ],
+    [ "QMainWindow", "class_q_main_window.html", null ],
+    [ "QObject", "class_q_object.html", null ],
+    [ "QWidget", "class_q_widget.html", null ],
+    [ "Router", "class_router.html", "class_router" ]
+];

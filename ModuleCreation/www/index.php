@@ -21,7 +21,7 @@ require('models/processus.php');
 require('models/etape.php');
 
 $operateursController = new Operateurs('register', $_GET);
-$utilisateurExiste = $operateursController->verifierUtilisateur();
+$utilisateurExiste = $operateursController->superviseurExiste();
 if (!NO_LOGIN && !$utilisateurExiste) {
     $_GET['controleur'] = 'operateurs';
     $_GET['action'] = 'register';

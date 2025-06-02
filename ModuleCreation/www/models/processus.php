@@ -29,7 +29,7 @@ class ProcessusModel extends Model
 		return $processus;
 	}
 
-	
+
 	public function add()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
@@ -144,12 +144,10 @@ class ProcessusModel extends Model
 			return null;
 		}
 
-		if($idImage == NULL)
-		{
+		if ($idImage == NULL) {
 			$idImage = $this->ajouterImage();
 			return $idImage;
-		}
-		else {
+		} else {
 
 			$this->query("UPDATE Image
 			JOIN Processus ON Processus.idImage = Image.idImage
@@ -165,16 +163,14 @@ class ProcessusModel extends Model
 			$this->bind(':tailleImage', $tailleImage, PDO::PARAM_INT);
 			$this->bind(':idImage', $idImage);
 			$idImage = $this->execute();
-			
+
 			$this->query("SELECT idImage FROM Image WHERE nomFichier = :nomFichier ORDER BY idImage DESC LIMIT 1");
 			$this->bind(':nomFichier', $nomFichier);
 			$image = $this->getResult();
 
 			return $image['idImage'] ?? null;
-	
 		}
 	}
-
 
 	public function delete($idProcessus)
 	{
@@ -199,7 +195,6 @@ class ProcessusModel extends Model
 			}
 
 			Messages::setMsg("Processus supprimé avec succès.", "success");
-
 		} catch (PDOException $e) {
 			Messages::setMsg("Erreur lors de la suppression : " . $e->getMessage(), "erreur");
 		}
@@ -225,7 +220,6 @@ class ProcessusModel extends Model
 			} else {
 				$etape[$index]['image'] = null;
 			}
-
 		}
 
 		return $etape;
@@ -406,7 +400,7 @@ class ProcessusModel extends Model
 	}
 
 
-	public function statistiqueAssemblage($idProcessus) 
+	public function statistiqueAssemblage($idProcessus)
 	{
 		$this->query("SELECT 
 						a.idAssemblage,

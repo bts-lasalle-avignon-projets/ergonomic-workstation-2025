@@ -12,7 +12,7 @@ class OperateurModel extends Model
 
         if ($submit) {
             if ($name === '' || $email === false || $password === '') {
-                Messages::setMsg('Please fill in the required fields', 'error');
+                Messages::setMsg('Veuillez remplir les champs obligatoires', 'error');
                 return;
             }
 
@@ -20,7 +20,7 @@ class OperateurModel extends Model
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
             // Insertion dans la base de données
-            $this->query('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+            $this->query('INSERT INTO Superviseur (name, email, password) VALUES (:name, :email, :password)');
             $this->bind(':name', $name);
             $this->bind(':email', $email);
             $this->bind(':password', $passwordHash);
@@ -28,10 +28,7 @@ class OperateurModel extends Model
 
             // Vérifier si l'insertion a réussi
             if ($this->getLastInsertId()) {
-                // Création du fichier .install
-                touch(".install");
-
-                Messages::setMsg('Compte administrateur créé. Vous pouvez maintenant vous connecter.', 'success');
+                Messages::setMsg('Compte superviseur créé. Vous pouvez maintenant vous connecter.', 'success');
                 header('Location: ' . ROOT_PATH . 'operateurs/login');
                 exit(0);
             }
@@ -49,12 +46,12 @@ class OperateurModel extends Model
 
         if ($submit) {
             if ($email === false || $password === '') {
-                Messages::setMsg('Please fill in the required fields', 'error');
+                Messages::setMsg('Veuillez remplir les champs obligatoires', 'error');
                 return;
             }
 
             // Vérification de l'email dans la base
-            $this->query('SELECT * FROM users WHERE email = :email');
+            $this->query('SELECT * FROM Superviseur WHERE email = :email');
             $this->bind(':email', $email);
             $row = $this->getResult();
 
@@ -62,32 +59,31 @@ class OperateurModel extends Model
                 if (password_verify($password, $row['password'])) {
                     $_SESSION['is_logged_in'] = true;
                     $_SESSION['user_data'] = [
-                        "id"    => $row['id'],
+                        "id"    => $row['idSuperviseur'],
                         "name"  => $row['name'],
                         "email" => $row['email']
                     ];
-                    Messages::setMsg('You have logged in successfully', 'success');
+                    Messages::setMsg('Vous vous êtes connecté avec succès', 'success');
                     header('Location: ' . ROOT_PATH . 'processus');
                     exit(0);
                 } else {
-                    Messages::setMsg('Password is incorrect', 'error');
+                    Messages::setMsg('Le mot de passe est incorrect', 'error');
                     return;
                 }
             } else {
-                Messages::setMsg('User not found', 'error');
+                Messages::setMsg('Superviseur introuvable', 'error');
             }
         }
 
         return;
     }
 
-    public function verifierUtilisateur()
+    public function superviseurExiste()
     {
-        $this->query("SELECT * FROM users");
+        $this->query("SELECT * FROM Superviseur");
         $utilisateur = $this->getResults();
 
-        if(!empty($utilisateur))
-        {
+        if (!empty($utilisateur)) {
             return true;
         }
 

@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet Ergonomic-Workstation: Installation de la base de données</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="projet-logo.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Projet Ergonomic-Workstation
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS CIEL IR LaSalle Avignon 2025</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md__mnt_sda_home_tv__documents_git_projets_2025_ergonomic_workstation_2025_database__i_n_s_t_a_l_l.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">Installation de la base de données </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1>MySQL</h1>
+<p><a href="https://www.mysql.com/fr/">MySQL</a> est un système de gestion de bases de données relationnelles (SGBDR). Il fonctionne en <b>client/serveur</b>.</p>
+<p>Il est distribué sous une double licence GPL et propriétaire. Il fait partie des logiciels de gestion de base de données les plus utilisés au monde, autant par le grand public (applications web principalement) que par des professionnels, en concurrence avec Oracle, Informix, PostgreSQL, et Microsoft SQL Server.</p>
+<p>MySQL fonctionne sur de nombreux systèmes d’exploitation différents, incluant GNU/Linux, Mac OS X et Windows. Les bases de données sont accessibles en utilisant les langages de programmation C, C++, VisualBasic, VB .NET, C#, Delphi/Kylix, Eiffel, Java, Perl, PHP, Python, Windev, Ruby et Tcl. Une API spécifique est disponible pour chacun d’entre eux.</p>
+<blockquote class="doxtable">
+<p>En 2009, à la suite du rachat de MySQL par Sun Microsystems et des annonces du rachat de Sun Microsystems par Oracle Corporation, Michael Widenius, fondateur de MySQL, quitte cette société pour lancer le projet MariaDB, dans une démarche visant à remplacer MySQL tout en assurant l’interopérabilité. Le nom vient de la 2e fille de Michael Widenius, Maria (la première s’appelant My). MariaDB a été choisi par défaut sur les distributions « Debian ». </p>
+</blockquote>
+<p>Le serveur peut être installé à partir des paquets ou en utilisant un conteneur <a href="https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/docker-mysql-getting-started.html">Docker</a>.</p>
+<h2>Solution n°1 : paquet Ubuntu</h2>
+<div class="fragment"><div class="line">$ sudo apt install mysql-server</div>
+<div class="line"> </div>
+<div class="line">$ mysql --version</div>
+<div class="line"> </div>
+<div class="line">$ sudo systemctl status mysql.service</div>
+<div class="line"> </div>
+<div class="line">$ mysql -h 127.0.0.1 -u root -ppassword -e &quot;show databases;&quot;</div>
+</div><!-- fragment --><h2>Solution n°2 : Docker</h2>
+<ul>
+<li>Installation <code>docker-ce</code> :</li>
+</ul>
+<div class="fragment"><div class="line">$ sudo apt update</div>
+<div class="line">$ sudo apt install ca-certificates curl gnupg</div>
+<div class="line">$ sudo install -m 0755 -d /etc/apt/keyrings</div>
+<div class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</div>
+<div class="line">$ sudo chmod a+r /etc/apt/keyrings/docker.gpg</div>
+<div class="line">$ echo   &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</div>
+<div class="line">  $(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;) stable&quot; |   sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</div>
+<div class="line">$ sudo apt update</div>
+<div class="line"> </div>
+<div class="line">$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</div>
+<div class="line"> </div>
+<div class="line">$ docker --version</div>
+<div class="line">$ docker compose version</div>
+<div class="line">$ docker version</div>
+</div><!-- fragment --><ul>
+<li>Création d'un fichier <a href="./docker-compose.yml">docker-compose.yml</a></li>
+<li>Création et démarrage du serveur MySQL :</li>
+</ul>
+<blockquote class="doxtable">
+<p>Vérifier que le serveur MySQL ne s'exécute pas en local : <code>systemctl status mysql.service</code> sinon il faut l'arrêter avec <code>sudo systemctl stop mysql.service</code>. </p>
+</blockquote>
+<div class="fragment"><div class="line">$ ./start-mysql.sh</div>
+</div><!-- fragment --><ul>
+<li>Vérifications :</li>
+</ul>
+<div class="fragment"><div class="line">$ docker compose ls</div>
+<div class="line"> </div>
+<div class="line">$ docker compose ps</div>
+<div class="line">$ docker ps -a</div>
+<div class="line"> </div>
+<div class="line">$ docker images</div>
+<div class="line"> </div>
+<div class="line">$ docker compose top</div>
+</div><!-- fragment --><ul>
+<li>Redémarrer le service db :</li>
+</ul>
+<div class="fragment"><div class="line">$ docker compose restart db</div>
+</div><!-- fragment --><ul>
+<li>Arrêter le service mysql :</li>
+</ul>
+<div class="fragment"><div class="line">$ ./stop-mysql.sh</div>
+</div><!-- fragment --><ul>
+<li>Nettoyage complet :</li>
+</ul>
+<div class="fragment"><div class="line">$ docker system prune -f</div>
+<div class="line">$ docker compose --file docker-compose.yml rm -f db</div>
+<div class="line">$ docker rmi $(docker images mysql -q)</div>
+<div class="line">$ docker volume rm docker_bdd</div>
+</div><!-- fragment --><h1>Base de données ergonomic_workstation</h1>
+<p>Fichier : <a href="./database.sql">database.sql</a></p>
+<ul>
+<li>Installation :</li>
+</ul>
+<div class="fragment"><div class="line">$ mysql -h 127.0.0.1 -u root -ppassword ergonomic_workstation &lt; database/database.sql</div>
+<div class="line"> </div>
+<div class="line">$ mysql -h 127.0.0.1 -u root -ppassword ergonomic_workstation -e &quot;show tables;&quot;</div>
+</div><!-- fragment --><h1>PHP</h1>
+<p>Dans le fichier <a href="../ModuleCreation/www/config.php">config.php</a>:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line"><span class="comment">// Pour la base de données</span></div>
+<div class="line">define(<span class="stringliteral">&quot;DB_DRIVER&quot;</span>, <span class="keyword">true</span>); <span class="comment">// true pour MySQL, false sans base de données</span></div>
+<div class="line">define(<span class="stringliteral">&quot;DB_HOST&quot;</span>, <span class="stringliteral">&quot;127.0.0.1&quot;</span>);</div>
+<div class="line">define(<span class="stringliteral">&quot;DB_USER&quot;</span>, <span class="stringliteral">&quot;ergoWork&quot;</span>);</div>
+<div class="line">define(<span class="stringliteral">&quot;DB_PASS&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>);</div>
+<div class="line">define(<span class="stringliteral">&quot;DB_NAME&quot;</span>, <span class="stringliteral">&quot;ergonomic_workstation&quot;</span>);</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>Dans le constructeur de la classe <a href="../ModuleCreation/www/classes/model.php">Model</a> :</p>
+<div class="fragment"><div class="line"><span class="keyword">abstract</span> <span class="keyword">class </span><a class="code" href="class_model.html">Model</a></div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">protected</span> <a class="code" href="class_model.html#acc1e62674bb7200ea73767c19dc1344d">$dbh</a> = <span class="keyword">null</span>; <span class="comment">// ?PDO</span></div>
+<div class="line">    <span class="keyword">protected</span> <a class="code" href="class_model.html#af27a9140d5f2658693e7fd107f716449">$stmt</a>; <span class="comment">// PDOStatement</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_model.html#a095c5d389db211932136b53f25f39685">__construct</a>()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code" href="config_8php.html#a47a6f3afb72e2ba299cd75c4104ecc65">DB_DRIVER</a>) {</div>
+<div class="line">            <span class="keywordflow">if</span> (!in_array(<span class="stringliteral">&quot;PDO&quot;</span>, get_loaded_extensions()))</div>
+<div class="line">                die(<span class="stringliteral">&quot;L’extension PDO n’est pas présente !&lt;br&gt;&lt;br&gt;&quot;</span>);</div>
+<div class="line">            <span class="keywordflow">if</span> (!in_array(<span class="stringliteral">&quot;pdo_mysql&quot;</span>, get_loaded_extensions()))</div>
+<div class="line">                die(<span class="stringliteral">&quot;L’extension pdo_mysql n’est pas présente !&lt;br&gt;&lt;br&gt;&quot;</span>);</div>
+<div class="line">            $this-&gt;dbh = <span class="keyword">new</span> PDO(<span class="stringliteral">&quot;mysql:host=&quot;</span> . <a class="code" href="config_8php.html#a293363d7988627f671958e2d908c202a">DB_HOST</a> . <span class="stringliteral">&quot;;dbname=&quot;</span> . <a class="code" href="config_8php.html#ab5db0d3504f917f268614c50b02c53e2">DB_NAME</a>, <a class="code" href="config_8php.html#a1d1d99f8e08f387d84fe9848f3357156">DB_USER</a>, <a class="code" href="config_8php.html#a8bb9c4546d91667cfa61879d83127a92">DB_PASS</a>) or die(<span class="stringliteral">&quot;Echec de la création de l’instance PDO !&quot;</span>);</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_model_html"><div class="ttname"><a href="class_model.html">Model</a></div><div class="ttdoc">Déclaration de la classe Model.</div><div class="ttdef"><b>Definition:</b> <a href="model_8php_source.html#l00015">model.php:16</a></div></div>
+<div class="ttc" id="aclass_model_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="class_model.html#a095c5d389db211932136b53f25f39685">Model\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdef"><b>Definition:</b> <a href="model_8php_source.html#l00020">model.php:20</a></div></div>
+<div class="ttc" id="aclass_model_html_acc1e62674bb7200ea73767c19dc1344d"><div class="ttname"><a href="class_model.html#acc1e62674bb7200ea73767c19dc1344d">Model\$dbh</a></div><div class="ttdeci">$dbh</div><div class="ttdef"><b>Definition:</b> <a href="model_8php_source.html#l00017">model.php:17</a></div></div>
+<div class="ttc" id="aclass_model_html_af27a9140d5f2658693e7fd107f716449"><div class="ttname"><a href="class_model.html#af27a9140d5f2658693e7fd107f716449">Model\$stmt</a></div><div class="ttdeci">$stmt</div><div class="ttdef"><b>Definition:</b> <a href="model_8php_source.html#l00018">model.php:18</a></div></div>
+<div class="ttc" id="aconfig_8php_html_a1d1d99f8e08f387d84fe9848f3357156"><div class="ttname"><a href="config_8php.html#a1d1d99f8e08f387d84fe9848f3357156">DB_USER</a></div><div class="ttdeci">const DB_USER</div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00016">config.php:16</a></div></div>
+<div class="ttc" id="aconfig_8php_html_a293363d7988627f671958e2d908c202a"><div class="ttname"><a href="config_8php.html#a293363d7988627f671958e2d908c202a">DB_HOST</a></div><div class="ttdeci">const DB_HOST</div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00015">config.php:15</a></div></div>
+<div class="ttc" id="aconfig_8php_html_a47a6f3afb72e2ba299cd75c4104ecc65"><div class="ttname"><a href="config_8php.html#a47a6f3afb72e2ba299cd75c4104ecc65">DB_DRIVER</a></div><div class="ttdeci">const DB_DRIVER</div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00014">config.php:14</a></div></div>
+<div class="ttc" id="aconfig_8php_html_a8bb9c4546d91667cfa61879d83127a92"><div class="ttname"><a href="config_8php.html#a8bb9c4546d91667cfa61879d83127a92">DB_PASS</a></div><div class="ttdeci">const DB_PASS</div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00017">config.php:17</a></div></div>
+<div class="ttc" id="aconfig_8php_html_ab5db0d3504f917f268614c50b02c53e2"><div class="ttname"><a href="config_8php.html#ab5db0d3504f917f268614c50b02c53e2">DB_NAME</a></div><div class="ttdeci">const DB_NAME</div><div class="ttdef"><b>Definition:</b> <a href="config_8php_source.html#l00018">config.php:18</a></div></div>
+</div><!-- fragment --><hr  />
+<p> &copy; 2024-2025 LaSalle Avignon </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Lundi 2 Juin 2025 09:10:39 pour Projet Ergonomic-Workstation par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.9.1&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>

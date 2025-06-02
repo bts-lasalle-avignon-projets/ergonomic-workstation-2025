@@ -1,0 +1,8 @@
+<map id="FenetreDemarrage" name="FenetreDemarrage">
+<area shape="rect" id="node1" title="Déclaration de la classe FenetreDemarrage." alt="" coords="159,969,384,1164"/>
+<area shape="rect" id="node2" href="$class_q_main_window.html" title=" " alt="" coords="5,609,121,687"/>
+<area shape="rect" id="node3" href="$class_communication.html" title="La classe Communication gère la communication série avec l&#39;ESP32 via Bluetooth." alt="" coords="327,132,565,327"/>
+<area shape="rect" id="node5" href="$class_fenetre_etapes.html" title=" " alt="" coords="145,389,397,907"/>
+<area shape="rect" id="node4" href="$class_q_object.html" title=" " alt="" coords="409,5,483,83"/>
+<area shape="rect" id="node6" href="$class_q_widget.html" title=" " alt="" coords="224,191,303,268"/>
+</map>

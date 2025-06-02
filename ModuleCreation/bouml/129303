@@ -1,6 +1,6 @@
 format 224
 "controllers" // www::controllers
-  revision 5
+  revision 6
   modified_by 42 "tv"
   // class settings
   
@@ -37,27 +37,26 @@ format 224
      end
     artifact 131223 "accueil"
       stereotype "source"
-      php_src "<?php
-${definition}
-
-"
+      php_src "<?php"
       associated_elems
-	class_ref 130071 // Accueil
       end
     end
 
     artifact 131351 "operateurs"
       stereotype "source"
-      php_src "<?php
-${definition}
-
-"
+      php_src "<?php"
       associated_elems
-	class_ref 130199 // Operateurs
       end
     end
 
     artifact 131479 "processus"
+      stereotype "source"
+      php_src "<?php"
+      associated_elems
+      end
+    end
+
+    artifact 134698 "etape"
       stereotype "source"
       php_src "<?php"
       associated_elems
@@ -105,18 +104,6 @@ ${members}}
 	  b parent class_ref 129431 // Controller
       end
 
-      attribute 134570 "viewmodel"
-	private explicit_type ""
-	cpp_decl ""
-	java_decl ""
-	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
-"
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 151722 "__construct"
 	public explicit_return_type ""
 	nparams 2
@@ -144,6 +131,16 @@ ${members}}
 	
 	
       end
+
+      classrelation 134826 // viewmodel (<unidirectional association>)
+	relation 134826 --->
+	  a role_name "viewmodel" private
+	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	    classrelation_ref 134826 // viewmodel (<unidirectional association>)
+	  b parent class_ref 130455 // AccueilModel
+      end
+
     end
 
     class 130199 "Operateurs"
@@ -164,18 +161,6 @@ ${members}}
 	    php "${type}"
 	    classrelation_ref 136215 // <generalisation>
 	  b parent class_ref 129431 // Controller
-      end
-
-      attribute 134698 "viewmodel"
-	private explicit_type ""
-	cpp_decl ""
-	java_decl ""
-	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
-"
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       operation 151850 "__construct"
@@ -231,6 +216,29 @@ ${members}}
 	
 	
       end
+
+      operation 158378 "superviseurExiste"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      classrelation 134954 // viewmodel (<unidirectional association>)
+	relation 134954 --->
+	  a role_name "viewmodel" private
+	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	    classrelation_ref 134954 // viewmodel (<unidirectional association>)
+	  b parent class_ref 130583 // OperateurModel
+      end
+
     end
 
     class 130327 "Processus"
@@ -251,18 +259,6 @@ ${members}}
 	    php "${type}"
 	    classrelation_ref 136343 // <generalisation>
 	  b parent class_ref 129431 // Controller
-      end
-
-      attribute 128919 "id"
-	private explicit_type ""
-	cpp_decl ""
-	java_decl ""
-	php_decl "  ${comment}${visibility}${const}${static}${var}${name}${value};
-"
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       operation 1075479 "__construct"
@@ -339,6 +335,99 @@ ${members}}
 "
 	    classrelation_ref 136855 // viewmodel (<unidirectional association>)
 	  b parent class_ref 130711 // ProcessusModel
+      end
+
+    end
+
+    class 134698 "Etape"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 169642 "__construct"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "action" explicit_type ""
+	  param in name "request" explicit_type ""
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${visibility}function ${name}${(}${p0}${v0}, ${p1}${v1}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 169770 "add"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 169898 "edit"
+	public explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      operation 170026 "getID"
+	private explicit_return_type ""
+	nparams 0
+	
+	
+	preserve_php_body_indent php_def "  ${comment}${final}${visibility}${abstract}${static}function ${name}${(}${)}${type}
+{
+  ${body}}
+"
+	
+	
+      end
+
+      classrelation 134570 // <generalisation>
+	relation 134570 ---|>
+	  a public
+	    php "${type}"
+	    classrelation_ref 134570 // <generalisation>
+	  b parent class_ref 129431 // Controller
+      end
+
+      classrelation 137386 // viewmodel (<unidirectional association>)
+	relation 137386 --->
+	  a role_name "viewmodel" private
+	    php "  ${comment}${visibility}${const}${static}${var}${name}${value};
+"
+	    classrelation_ref 137386 // viewmodel (<unidirectional association>)
+	  b parent class_ref 134826 // EtapeModel
+      end
+
+      classrelation 137514 // <dependency>
+	relation 137514 -_->
+	  a public
+	    php "${type}"
+	    classrelation_ref 137514 // <dependency>
+	  b parent class_ref 134570 // Bac
       end
     end
   end
